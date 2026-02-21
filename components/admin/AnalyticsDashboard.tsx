@@ -2,7 +2,6 @@
 
 import React from 'react';
 import Card, { CardBody, CardHeader } from '../ui/Card';
-import Badge from '../ui/Badge';
 
 interface AnalyticsDashboardProps {
     data: {

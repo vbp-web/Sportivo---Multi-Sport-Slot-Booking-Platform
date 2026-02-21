@@ -19,16 +19,6 @@ interface Sport {
     name: string;
 }
 
-interface Court {
-    _id: string;
-    name: string;
-    venueId: any;
-    sportId: any;
-    capacity?: number;
-    price: number;
-    description?: string;
-}
-
 export default function EditCourtPage({ params }: { params: Promise<{ id: string }> }) {
     const resolvedParams = use(params);
     const courtId = resolvedParams.id;
@@ -46,19 +36,9 @@ export default function EditCourtPage({ params }: { params: Promise<{ id: string
         capacity: '',
         description: ''
     });
-    const [errors, setErrors] = useState<any>({});
+    const [errors, setErrors] = useState<Record<string, string>>({});
 
-    useEffect(() => {
-        const token = localStorage.getItem('token');
-        if (!token) {
-            router.push('/login');
-            return;
-        }
-
-        fetchData();
-    }, [courtId]);
-
-    const fetchData = async () => {
+    const fetchData = useCallback(async () => {
         try {
             const token = localStorage.getItem('token');
 
@@ -99,7 +79,17 @@ export default function EditCourtPage({ params }: { params: Promise<{ id: string
         } finally {
             setLoading(false);
         }
-    };
+    }, [courtId, router]);
+
+    useEffect(() => {
+        const token = localStorage.getItem('token');
+        if (!token) {
+            router.push('/login');
+            return;
+        }
+
+        fetchData();
+    }, [fetchData]);
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -107,7 +97,7 @@ export default function EditCourtPage({ params }: { params: Promise<{ id: string
         setSubmitting(true);
 
         // Validation
-        const newErrors: any = {};
+        const newErrors: Record<string, string> = {};
         if (!formData.name) newErrors.name = 'Court name is required';
         if (!formData.venueId) newErrors.venueId = 'Please select a venue';
         if (!formData.sportId) newErrors.sportId = 'Please select a sport';

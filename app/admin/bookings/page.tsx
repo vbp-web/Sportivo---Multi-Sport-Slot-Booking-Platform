@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useCallback } from 'react';
 import { useRouter } from 'next/navigation';
+import Image from 'next/image';
 import Sidebar from '@/components/shared/Sidebar';
 import Badge from '@/components/ui/Badge';
 import { getApiUrl } from '@/lib/api-config';
@@ -294,11 +295,14 @@ export default function AdminBookingsPage() {
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
                             </svg>
                         </button>
-                        <div className="p-2">
-                            <img
+                        <div className="p-2 relative">
+                            <Image
                                 src={selectedProof}
                                 alt="Payment Proof"
+                                width={800}
+                                height={1200}
                                 className="w-full h-auto max-h-[85vh] object-contain rounded-lg"
+                                unoptimized
                                 onClick={(e) => e.stopPropagation()}
                             />
                         </div>

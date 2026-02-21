@@ -4,7 +4,7 @@ import React, { useState, useEffect } from 'react';
 import Card, { CardBody, CardHeader } from '../ui/Card';
 import Input from '../ui/Input';
 import Button from '../ui/Button';
-import Badge from '../ui/Badge';
+import { getApiUrl } from '@/lib/api-config';
 
 interface Feature {
     _id: string;
@@ -74,7 +74,7 @@ export default function PlanForm({ plan, onSubmit, onCancel }: PlanFormProps) {
 
     const fetchFeatures = async () => {
         try {
-            const response = await fetch('http://localhost:5000/api/features/active');
+            const response = await fetch(getApiUrl('features/active'));
             if (response.ok) {
                 const data = await response.json();
                 setAvailableFeatures(data.data || []);
@@ -354,7 +354,7 @@ export default function PlanForm({ plan, onSubmit, onCancel }: PlanFormProps) {
                         {loadingFeatures ? (
                             <p className="text-sm text-gray-500 italic">Loading available features...</p>
                         ) : availableFeatures.length === 0 ? (
-                            <p className="text-sm text-red-500">No active features found. Please add features in "Plan Features" first.</p>
+                            <p className="text-sm text-red-500">No active features found. Please add features in &quot;Plan Features&quot; first.</p>
                         ) : (
                             <div className="space-y-4 max-h-60 overflow-y-auto pr-2">
                                 {Object.entries(groupedFeatures).map(([category, features]) => (

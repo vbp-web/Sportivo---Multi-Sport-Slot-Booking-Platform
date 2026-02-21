@@ -18,10 +18,18 @@ interface Venue {
     isActive: boolean;
 }
 
+interface Subscription {
+    planId?: {
+        _id?: string;
+        name: string;
+        maxVenues: number;
+    };
+}
+
 export default function OwnerVenuesPage() {
     const router = useRouter();
     const [venues, setVenues] = useState<Venue[]>([]);
-    const [subscription, setSubscription] = useState<any>(null);
+    const [subscription, setSubscription] = useState<Subscription | null>(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState('');
 
@@ -66,7 +74,7 @@ export default function OwnerVenuesPage() {
         } finally {
             setLoading(false);
         }
-    }, [router]);
+    }, []);
 
     useEffect(() => {
         fetchVenues();
@@ -135,9 +143,9 @@ export default function OwnerVenuesPage() {
                     </div>
                     <Button
                         onClick={handleAddVenue}
-                        disabled={subscription && venues.length >= (subscription.planId?.maxVenues || 0)}
+                        disabled={!!(subscription && venues.length >= (subscription.planId?.maxVenues || 0))}
                     >
-                        {subscription && venues.length >= (subscription.planId?.maxVenues || 0)
+                        {!!(subscription && venues.length >= (subscription.planId?.maxVenues || 0))
                             ? 'Limit Reached'
                             : '+ Add New Venue'}
                     </Button>

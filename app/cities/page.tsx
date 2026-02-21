@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { useRouter } from 'next/navigation';
 import Navbar from '@/components/shared/Navbar';
 import Footer from '@/components/shared/Footer';
@@ -21,11 +21,7 @@ export default function CitiesPage() {
     const [loading, setLoading] = useState(true);
     const [searchTerm, setSearchTerm] = useState('');
 
-    useEffect(() => {
-        fetchCities();
-    }, []);
-
-    const fetchCities = async () => {
+    const fetchCities = useCallback(async () => {
         try {
             const response = await fetch(getApiUrl('cities'));
             if (response.ok) {
@@ -37,7 +33,11 @@ export default function CitiesPage() {
         } finally {
             setLoading(false);
         }
-    };
+    }, []);
+
+    useEffect(() => {
+        fetchCities();
+    }, [fetchCities]);
 
     const filteredCities = cities.filter(city =>
         city.name.toLowerCase().includes(searchTerm.toLowerCase()) ||

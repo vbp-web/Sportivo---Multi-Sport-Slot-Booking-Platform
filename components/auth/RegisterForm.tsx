@@ -203,7 +203,7 @@ export default function RegisterForm({
                     <div className="p-4 bg-yellow-50 border border-yellow-200 rounded-lg">
                         <p className="text-sm text-yellow-800">
                             <strong>Note:</strong> Your account will be pending admin approval.
-                            You'll receive a notification once approved.
+                            You&apos;ll receive a notification once approved.
                         </p>
                     </div>
                 </>

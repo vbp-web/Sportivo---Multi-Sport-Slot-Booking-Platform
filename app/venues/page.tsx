@@ -26,7 +26,7 @@ function VenuesContent() {
     const [loading, setLoading] = useState(true);
     const [searchTerm, setSearchTerm] = useState('');
     const [selectedSport, setSelectedSport] = useState('All Sports');
-    const [city, setCity] = useState(cityParam || 'All Cities');
+    const [city] = useState(cityParam || 'All Cities');
 
     const fetchVenues = useCallback(async () => {
         try {

@@ -82,7 +82,7 @@ export default function AdminOwnersPage() {
         }
 
         fetchOwners();
-    }, [fetchOwners, router]);
+    }, [fetchOwners]);
 
     const handleApprove = async (ownerId: string) => {
         if (!confirm('Are you sure you want to approve this owner?')) return;
@@ -232,10 +232,10 @@ export default function AdminOwnersPage() {
                 {/* Filter Tabs */}
                 <div className="mb-6 border-b border-gray-200">
                     <div className="flex gap-4">
-                        {['all', 'pending', 'approved', 'rejected', 'suspended'].map((tab) => (
+                        {(['all', 'pending', 'approved', 'rejected', 'suspended'] as const).map((tab) => (
                             <button
                                 key={tab}
-                                onClick={() => setFilter(tab as any)}
+                                onClick={() => setFilter(tab)}
                                 className={`px-4 py-2 font-medium border-b-2 transition-colors capitalize ${filter === tab
                                     ? 'border-blue-600 text-blue-600'
                                     : 'border-transparent text-gray-600 hover:text-gray-900'
@@ -369,7 +369,7 @@ export default function AdminOwnersPage() {
                             Reject Owner Request
                         </h2>
                         <p className="text-gray-600 mb-4">
-                            You are about to reject <strong>{selectedOwner.ownerName}</strong>'s request.
+                            You are about to reject <strong>{selectedOwner.ownerName}</strong>&apos;s request.
                         </p>
                         <div className="mb-6">
                             <label className="block text-sm font-medium text-gray-700 mb-2">

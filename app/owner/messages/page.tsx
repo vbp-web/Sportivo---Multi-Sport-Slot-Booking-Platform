@@ -14,6 +14,16 @@ interface Customer {
     email?: string;
 }
 
+interface BookingItem {
+    userId?: {
+        _id?: string;
+        id?: string;
+        name: string;
+        phone: string;
+        email?: string;
+    };
+}
+
 export default function OwnerMessagesPage() {
     const router = useRouter();
     const [customers, setCustomers] = useState<Customer[]>([]);
@@ -35,9 +45,8 @@ export default function OwnerMessagesPage() {
 
             if (response.ok) {
                 const data = await response.json();
-                // Extract unique customers from bookings
                 const uniqueCustomers = new Map();
-                data.data?.forEach((booking: Record<string, any>) => {
+                data.data?.forEach((booking: BookingItem) => {
                     if (booking.userId && typeof booking.userId === 'object') {
                         uniqueCustomers.set(booking.userId._id || booking.userId.id, {
                             _id: booking.userId._id || booking.userId.id,
@@ -49,12 +58,10 @@ export default function OwnerMessagesPage() {
                 });
                 setCustomers(Array.from(uniqueCustomers.values()));
             }
-        } catch (err: unknown) {
-            console.error('Error fetching customers:', err);
         } finally {
             setLoading(false);
         }
-    }, [router]);
+    }, []);
 
     useEffect(() => {
         const token = localStorage.getItem('token');
@@ -64,7 +71,7 @@ export default function OwnerMessagesPage() {
         }
 
         fetchCustomers();
-    }, [fetchCustomers, router]);
+    }, [fetchCustomers]);
 
     const toggleCustomer = (customerId: string) => {
         setSelectedCustomers(prev =>

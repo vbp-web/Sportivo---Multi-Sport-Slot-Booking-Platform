@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useCallback } from 'react';
 import { useRouter } from 'next/navigation';
+import Image from 'next/image';
 import Navbar from '@/components/shared/Navbar';
 import Footer from '@/components/shared/Footer';
 import Badge from '@/components/ui/Badge';
@@ -93,7 +94,7 @@ export default function OwnerBookingsPage() {
         // Auto-refresh every 30 seconds for real-time updates
         const interval = setInterval(fetchBookings, 30000);
         return () => clearInterval(interval);
-    }, [fetchBookings, router]);
+    }, [fetchBookings]);
 
     const handleApprove = async (bookingId: string) => {
         if (!confirm('Are you sure you want to approve this booking?')) return;
@@ -166,7 +167,7 @@ export default function OwnerBookingsPage() {
         return config[status as keyof typeof config] || config.pending;
     };
 
-    const formatSlotTime = (slot: any) => {
+    const formatSlotTime = (slot: { date: string; startTime: string; endTime: string }) => {
         if (!slot) return 'N/A';
         const date = new Date(slot.date).toLocaleDateString('en-IN', {
             day: 'numeric',
@@ -219,10 +220,10 @@ export default function OwnerBookingsPage() {
                 {/* Filter Tabs */}
                 <div className="mb-6 border-b border-gray-200">
                     <div className="flex gap-4">
-                        {['all', 'pending', 'confirmed', 'rejected', 'cancelled'].map((tab) => (
+                        {(['all', 'pending', 'confirmed', 'rejected', 'cancelled'] as const).map((tab) => (
                             <button
                                 key={tab}
-                                onClick={() => setFilter(tab as any)}
+                                onClick={() => setFilter(tab)}
                                 className={`px-4 py-2 font-medium border-b-2 transition-colors capitalize ${filter === tab
                                     ? 'border-blue-600 text-blue-600'
                                     : 'border-transparent text-gray-600 hover:text-gray-900'
@@ -411,11 +412,14 @@ export default function OwnerBookingsPage() {
             {/* Payment Proof Modal */}
             {showPaymentProof && selectedProof && (
                 <div className="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50" onClick={() => setShowPaymentProof(false)}>
-                    <div className="max-w-4xl max-h-[90vh] overflow-auto">
-                        <img
+                    <div className="max-w-4xl max-h-[90vh] overflow-auto relative">
+                        <Image
                             src={selectedProof}
                             alt="Payment Proof"
+                            width={800}
+                            height={1200}
                             className="max-w-full h-auto"
+                            unoptimized
                             onClick={(e) => e.stopPropagation()}
                         />
                     </div>

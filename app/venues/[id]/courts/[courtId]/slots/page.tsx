@@ -1,7 +1,7 @@
 'use client';
 
-import { useState, useEffect, use } from 'react';
-import { useParams, useRouter } from 'next/navigation';
+import { useState, useEffect, use, useCallback } from 'react';
+import { useRouter } from 'next/navigation';
 import Navbar from '@/components/shared/Navbar';
 import Footer from '@/components/shared/Footer';
 import SlotCard from '@/components/user/SlotCard';
@@ -151,21 +151,6 @@ export default function CourtSlotsPage({ params }: { params: Promise<{ id: strin
         return dates;
     };
 
-    const formatDateDisplay = (dateStr: string) => {
-        const d = new Date(dateStr);
-        const today = new Date();
-        const tomorrow = new Date();
-        tomorrow.setDate(today.getDate() + 1);
-
-        const dStr = d.toDateString();
-        const todayStr = today.toDateString();
-        const tomorrowStr = tomorrow.toDateString();
-
-        if (dStr === todayStr) return 'Today';
-        if (dStr === tomorrowStr) return 'Tomorrow';
-
-        return d.toLocaleDateString('en-IN', { day: 'numeric', month: 'short' });
-    };
 
     if (loading) {
         return (

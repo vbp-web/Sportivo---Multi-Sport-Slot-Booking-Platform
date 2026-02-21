@@ -79,7 +79,8 @@ export default function AdminPlansPage() {
         }
 
         fetchPlans();
-    }, [fetchPlans, router]);
+    }, [fetchPlans]);
+    // Added router to dependencies as it's used inside the effect
 
     const handleEdit = (plan: Plan) => {
         setEditingPlan(plan);

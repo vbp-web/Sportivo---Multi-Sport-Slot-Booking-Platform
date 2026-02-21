@@ -42,7 +42,7 @@ export default function OwnerPaymentSettingsPage() {
         } finally {
             setLoading(false);
         }
-    }, [router]);
+    }, []);
 
     useEffect(() => {
         fetchPaymentSettings();
@@ -221,7 +221,7 @@ export default function OwnerPaymentSettingsPage() {
                             <h4 className="font-semibold text-blue-900 mb-2">How to get your UPI QR Code:</h4>
                             <ol className="text-sm text-blue-800 space-y-1 list-decimal list-inside">
                                 <li>Open your UPI app (Paytm, PhonePe, Google Pay, etc.)</li>
-                                <li>Go to "Receive Money" or "My QR Code" section</li>
+                                <li>Go to &quot;Receive Money&quot; or &quot;My QR Code&quot; section</li>
                                 <li>Take a screenshot of your QR code</li>
                                 <li>Upload the screenshot here</li>
                             </ol>

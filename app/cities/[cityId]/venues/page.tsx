@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect, use } from 'react';
-import { useParams, useRouter } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 import Navbar from '@/components/shared/Navbar';
 import Footer from '@/components/shared/Footer';
 import { getApiUrl } from '@/lib/api-config';
@@ -35,13 +35,7 @@ export default function CityVenuesPage({ params }: { params: Promise<{ cityId: s
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState('');
 
-    useEffect(() => {
-        if (cityId) {
-            fetchData();
-        }
-    }, [cityId]);
-
-    const fetchData = async () => {
+    const fetchData = useCallback(async () => {
         try {
             // Fetch city details
             const cityRes = await fetch(getApiUrl(`cities/${cityId}`));
@@ -58,12 +52,19 @@ export default function CityVenuesPage({ params }: { params: Promise<{ cityId: s
             } else {
                 setError('City not found');
             }
-        } catch (err: any) {
-            setError(err.message || 'Failed to load data');
+        } catch (err: unknown) {
+            const message = err instanceof Error ? err.message : 'Failed to load data';
+            setError(message);
         } finally {
             setLoading(false);
         }
-    };
+    }, [cityId]);
+
+    useEffect(() => {
+        if (cityId) {
+            fetchData();
+        }
+    }, [cityId, fetchData]);
 
     const handleVenueClick = (venueId: string) => {
         router.push(`/venues/${venueId}`);

@@ -2,6 +2,7 @@
 
 import { useState, useEffect, Suspense } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
+import Image from 'next/image';
 import Navbar from '@/components/shared/Navbar';
 import Footer from '@/components/shared/Footer';
 import Button from '@/components/ui/Button';
@@ -296,11 +297,14 @@ function BookingConfirmContent() {
                                             {/* QR Code */}
                                             <div className="text-center">
                                                 <p className="text-sm text-gray-600 mb-3">Or scan QR code:</p>
-                                                <div className="inline-block p-4 bg-white rounded-lg border-2 border-gray-200">
-                                                    <img
+                                                <div className="inline-block p-4 bg-white rounded-lg border-2 border-gray-200 relative">
+                                                    <Image
                                                         src={ownerPaymentSettings.qrCodeUrl}
                                                         alt="Payment QR Code"
+                                                        width={192}
+                                                        height={192}
                                                         className="w-48 h-48 mx-auto"
+                                                        unoptimized
                                                     />
                                                 </div>
                                                 {ownerPaymentSettings.businessName && (

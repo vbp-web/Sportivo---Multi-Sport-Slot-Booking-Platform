@@ -6,12 +6,48 @@ import Sidebar from '@/components/shared/Sidebar';
 import DashboardStats from '@/components/owner/DashboardStats';
 import { getApiUrl } from '@/lib/api-config';
 
+interface Activity {
+    id: string;
+    type: string;
+    message: string;
+    details: string;
+    timestamp: string;
+    amount?: number;
+}
+
+interface Stats {
+    totalBookings: number;
+    pendingBookings: number;
+    todayRevenue: number;
+    monthlyRevenue: number;
+    activeSlots: number;
+    totalCourts: number;
+    subscription?: {
+        planName: string;
+        bookingsUsage: number;
+        bookingsLimit: string | number;
+        messagesUsage: number;
+        messagesLimit: string | number;
+        daysRemaining: number;
+    } | null;
+}
+
 export default function OwnerDashboardPage() {
     const router = useRouter();
-    const [stats, setStats] = useState<Record<string, unknown> | null>(null);
-    const [recentActivity, setRecentActivity] = useState<Array<Record<string, any>>>([]);
+    const [stats, setStats] = useState<Stats | null>(null);
+    const [recentActivity, setRecentActivity] = useState<Activity[]>([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState('');
+
+    const defaultStats: Stats = {
+        totalBookings: 0,
+        pendingBookings: 0,
+        todayRevenue: 0,
+        monthlyRevenue: 0,
+        activeSlots: 0,
+        totalCourts: 0,
+        subscription: null
+    };
 
     const fetchDashboardData = useCallback(async () => {
         try {
@@ -41,7 +77,7 @@ export default function OwnerDashboardPage() {
         } finally {
             setLoading(false);
         }
-    }, [router]);
+    }, []);
 
     useEffect(() => {
         fetchDashboardData();
@@ -95,7 +131,7 @@ export default function OwnerDashboardPage() {
                     <p className="text-gray-600 mt-2">Welcome back! Here&apos;s your venue overview</p>
                 </div>
 
-                <DashboardStats stats={stats as any} />
+                <DashboardStats stats={stats || defaultStats} />
 
                 {/* Recent Activity */}
                 <div className="mt-8 bg-white rounded-lg shadow-sm p-6">

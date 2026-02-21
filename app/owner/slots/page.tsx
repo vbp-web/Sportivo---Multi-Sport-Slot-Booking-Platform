@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { useRouter } from 'next/navigation';
 import Navbar from '@/components/shared/Navbar';
 import Footer from '@/components/shared/Footer';
@@ -85,12 +85,10 @@ export default function OwnerSlotsPage() {
                 const slotsData = await slotsRes.json();
                 setSlots(slotsData.data || []);
             }
-        } catch (err: unknown) {
-            console.error('Error fetching data:', err);
         } finally {
             setLoading(false);
         }
-    }, [router]);
+    }, []);
 
     useEffect(() => {
         const token = localStorage.getItem('token');
