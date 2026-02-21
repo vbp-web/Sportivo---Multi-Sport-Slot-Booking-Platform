@@ -1,5 +1,5 @@
-import React from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import Card, { CardBody, CardFooter } from '../ui/Card';
 import Badge from '../ui/Badge';
 
@@ -22,10 +22,11 @@ export default function VenueCard({ venue }: VenueCardProps) {
             {/* Image */}
             <div className="relative h-48 bg-gradient-to-br from-blue-400 to-purple-400">
                 {venue.images && venue.images.length > 0 ? (
-                    <img
+                    <Image
                         src={venue.images[0]}
                         alt={venue.name}
-                        className="w-full h-full object-cover"
+                        fill
+                        className="object-cover"
                     />
                 ) : (
                     <div className="w-full h-full flex items-center justify-center text-white text-6xl">

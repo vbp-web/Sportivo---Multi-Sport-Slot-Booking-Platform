@@ -21,14 +21,14 @@ export default function LoginForm({
         phone: '',
         password: '',
     });
-    const [errors, setErrors] = useState<any>({});
+    const [errors, setErrors] = useState<Record<string, string>>({});
     const [isLoading, setIsLoading] = useState(false);
 
     const roles = [
         { value: 'user', label: 'User', icon: '👤', description: 'Book slots' },
         { value: 'owner', label: 'Owner', icon: '🏢', description: 'Manage venue' },
         { value: 'admin', label: 'Admin', icon: '👨‍💼', description: 'Platform admin' },
-    ].filter(r => allowedRoles.includes(r.value as any));
+    ].filter(r => allowedRoles.includes(r.value as 'user' | 'owner' | 'admin'));
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -36,7 +36,7 @@ export default function LoginForm({
         setIsLoading(true);
 
         // Validation
-        const newErrors: any = {};
+        const newErrors: Record<string, string> = {};
         if (!formData.phone) {
             newErrors.phone = 'Phone number is required';
         } else if (!/^[0-9]{10}$/.test(formData.phone)) {
@@ -54,8 +54,9 @@ export default function LoginForm({
 
         try {
             await onSubmit({ ...formData, role });
-        } catch (error: any) {
-            setErrors({ general: error.message || 'Login failed' });
+        } catch (error: unknown) {
+            const errorMessage = error instanceof Error ? error.message : 'Login failed';
+            setErrors({ general: errorMessage });
         } finally {
             setIsLoading(false);
         }

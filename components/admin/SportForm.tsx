@@ -13,7 +13,7 @@ interface SportFormProps {
         icon?: string;
         isActive: boolean;
     };
-    onSubmit: (data: any) => Promise<void>;
+    onSubmit: (data: { name: string; description: string; icon: string; isActive: boolean }) => Promise<void>;
     onCancel?: () => void;
 }
 
@@ -24,7 +24,7 @@ export default function SportForm({ sport, onSubmit, onCancel }: SportFormProps)
         icon: sport?.icon || '',
         isActive: sport?.isActive ?? true,
     });
-    const [errors, setErrors] = useState<any>({});
+    const [errors, setErrors] = useState<Record<string, string>>({});
     const [isLoading, setIsLoading] = useState(false);
 
     const handleSubmit = async (e: React.FormEvent) => {
@@ -33,7 +33,7 @@ export default function SportForm({ sport, onSubmit, onCancel }: SportFormProps)
         setIsLoading(true);
 
         // Validation
-        const newErrors: any = {};
+        const newErrors: Record<string, string> = {};
         if (!formData.name.trim()) newErrors.name = 'Sport name is required';
 
         if (Object.keys(newErrors).length > 0) {
@@ -44,8 +44,9 @@ export default function SportForm({ sport, onSubmit, onCancel }: SportFormProps)
 
         try {
             await onSubmit(formData);
-        } catch (error: any) {
-            setErrors({ general: error.message || 'Failed to save sport' });
+        } catch (error: unknown) {
+            const errorMessage = error instanceof Error ? error.message : 'Failed to save sport';
+            setErrors({ general: errorMessage });
         } finally {
             setIsLoading(false);
         }

@@ -16,14 +16,14 @@ class ApiClient {
         options: RequestOptions = {}
     ): Promise<T> {
         const { token, ...fetchOptions } = options;
+        const headers = new Headers(fetchOptions.headers as HeadersInit);
 
-        const headers: any = {
-            'Content-Type': 'application/json',
-            ...fetchOptions.headers,
-        };
+        if (!headers.has('Content-Type')) {
+            headers.set('Content-Type', 'application/json');
+        }
 
         if (token) {
-            headers['Authorization'] = `Bearer ${token}`;
+            headers.set('Authorization', `Bearer ${token}`);
         }
 
         const config: RequestInit = {
@@ -55,7 +55,7 @@ class ApiClient {
     }
 
     // POST request
-    async post<T>(endpoint: string, data?: any, token?: string): Promise<T> {
+    async post<T>(endpoint: string, data?: unknown, token?: string): Promise<T> {
         return this.request<T>(endpoint, {
             method: 'POST',
             body: JSON.stringify(data),
@@ -64,7 +64,7 @@ class ApiClient {
     }
 
     // PUT request
-    async put<T>(endpoint: string, data?: any, token?: string): Promise<T> {
+    async put<T>(endpoint: string, data?: unknown, token?: string): Promise<T> {
         return this.request<T>(endpoint, {
             method: 'PUT',
             body: JSON.stringify(data),
@@ -83,10 +83,10 @@ class ApiClient {
         formData: FormData,
         token?: string
     ): Promise<T> {
-        const headers: any = {};
+        const headers = new Headers();
 
         if (token) {
-            headers['Authorization'] = `Bearer ${token}`;
+            headers.set('Authorization', `Bearer ${token}`);
         }
 
         const response = await fetch(`${this.baseURL}${endpoint}`, {
@@ -111,8 +111,8 @@ const api = new ApiClient(API_URL);
 
 // Auth API
 export const authAPI = {
-    register: (data: any) => api.post('/auth/register', data),
-    login: (data: any) => api.post('/auth/login', data),
+    register: (data: unknown) => api.post('/auth/register', data),
+    login: (data: unknown) => api.post('/auth/login', data),
     logout: () => api.post('/auth/logout'),
     getMe: (token: string) => api.get('/auth/me', token),
     sendOTP: (phone: string) => api.post('/auth/send-otp', { phone }),
@@ -123,7 +123,7 @@ export const authAPI = {
 // User API
 export const userAPI = {
     getProfile: (token: string) => api.get('/user/profile', token),
-    updateProfile: (data: any, token: string) =>
+    updateProfile: (data: unknown, token: string) =>
         api.put('/user/profile', data, token),
     getBookings: (token: string) => api.get('/user/bookings', token),
     getBooking: (id: string, token: string) =>
@@ -134,13 +134,13 @@ export const userAPI = {
 export const ownerAPI = {
     getDashboard: (token: string) => api.get('/owner/dashboard', token),
     getVenues: (token: string) => api.get('/owner/venues', token),
-    createVenue: (data: any, token: string) =>
+    createVenue: (data: unknown, token: string) =>
         api.post('/owner/venues', data, token),
     getCourts: (token: string) => api.get('/owner/courts', token),
-    createCourt: (data: any, token: string) =>
+    createCourt: (data: unknown, token: string) =>
         api.post('/owner/courts', data, token),
     getSlots: (token: string) => api.get('/owner/slots', token),
-    createSlot: (data: any, token: string) =>
+    createSlot: (data: unknown, token: string) =>
         api.post('/owner/slots', data, token),
     getBookings: (token: string) => api.get('/owner/bookings', token),
     approveBooking: (id: string, token: string) =>
@@ -148,7 +148,7 @@ export const ownerAPI = {
     rejectBooking: (id: string, reason: string, token: string) =>
         api.put(`/owner/bookings/${id}/reject`, { reason }, token),
     getSubscription: (token: string) => api.get('/owner/subscription', token),
-    subscribe: (data: any, token: string) =>
+    subscribe: (data: unknown, token: string) =>
         api.post('/owner/subscription', data, token),
 };
 
@@ -162,13 +162,13 @@ export const adminAPI = {
     rejectOwner: (id: string, reason: string, token: string) =>
         api.put(`/admin/owners/${id}/reject`, { reason }, token),
     getCities: (token: string) => api.get('/admin/cities', token),
-    createCity: (data: any, token: string) =>
+    createCity: (data: unknown, token: string) =>
         api.post('/admin/cities', data, token),
     getSports: (token: string) => api.get('/admin/sports', token),
-    createSport: (data: any, token: string) =>
+    createSport: (data: unknown, token: string) =>
         api.post('/admin/sports', data, token),
     getPlans: (token: string) => api.get('/admin/plans', token),
-    createPlan: (data: any, token: string) =>
+    createPlan: (data: unknown, token: string) =>
         api.post('/admin/plans', data, token),
     getAnalytics: (token: string) => api.get('/admin/analytics', token),
 };
@@ -179,7 +179,7 @@ export const publicAPI = {
     getVenuesByCity: (city: string) => api.get(`/venues/city/${city}`),
     getVenue: (id: string) => api.get(`/venues/${id}`),
     getSports: () => api.get('/sports'),
-    getSlots: (params?: any) => api.get(`/slots?${new URLSearchParams(params)}`),
+    getSlots: (params?: Record<string, string>) => api.get(`/slots?${new URLSearchParams(params)}`),
     getSlotsByVenue: (venueId: string) => api.get(`/slots/venue/${venueId}`),
     createBooking: (formData: FormData, token: string) =>
         api.upload('/bookings', formData, token),

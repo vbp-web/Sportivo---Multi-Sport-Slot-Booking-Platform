@@ -14,7 +14,7 @@ interface CourtFormProps {
         capacity?: number;
     };
     sports: Array<{ id: string; name: string }>;
-    onSubmit: (data: any) => Promise<void>;
+    onSubmit: (data: { name: string; sportId: string; description: string; capacity?: number }) => Promise<void>;
     onCancel?: () => void;
 }
 
@@ -25,7 +25,7 @@ export default function CourtForm({ court, sports, onSubmit, onCancel }: CourtFo
         description: court?.description || '',
         capacity: court?.capacity?.toString() || '',
     });
-    const [errors, setErrors] = useState<any>({});
+    const [errors, setErrors] = useState<Record<string, string>>({});
     const [isLoading, setIsLoading] = useState(false);
 
     const handleSubmit = async (e: React.FormEvent) => {
@@ -34,7 +34,7 @@ export default function CourtForm({ court, sports, onSubmit, onCancel }: CourtFo
         setIsLoading(true);
 
         // Validation
-        const newErrors: any = {};
+        const newErrors: Record<string, string> = {};
         if (!formData.name.trim()) newErrors.name = 'Court name is required';
         if (!formData.sportId) newErrors.sportId = 'Please select a sport';
         if (formData.capacity && parseInt(formData.capacity) < 1) {
@@ -49,12 +49,15 @@ export default function CourtForm({ court, sports, onSubmit, onCancel }: CourtFo
 
         try {
             const submitData = {
-                ...formData,
+                name: formData.name,
+                sportId: formData.sportId,
+                description: formData.description,
                 capacity: formData.capacity ? parseInt(formData.capacity) : undefined,
             };
             await onSubmit(submitData);
-        } catch (error: any) {
-            setErrors({ general: error.message || 'Failed to save court' });
+        } catch (error: unknown) {
+            const errorMessage = error instanceof Error ? error.message : 'Failed to save court';
+            setErrors({ general: errorMessage });
         } finally {
             setIsLoading(false);
         }
@@ -90,8 +93,8 @@ export default function CourtForm({ court, sports, onSubmit, onCancel }: CourtFo
                         </label>
                         <select
                             className={`w-full px-4 py-3 rounded-lg border-2 transition-all ${errors.sportId
-                                    ? 'border-red-300 focus:border-red-500 focus:ring-red-500'
-                                    : 'border-gray-200 focus:border-blue-500 focus:ring-blue-500'
+                                ? 'border-red-300 focus:border-red-500 focus:ring-red-500'
+                                : 'border-gray-200 focus:border-blue-500 focus:ring-blue-500'
                                 } focus:outline-none focus:ring-2`}
                             value={formData.sportId}
                             onChange={(e) => setFormData({ ...formData, sportId: e.target.value })}

@@ -15,7 +15,7 @@ interface SlotFormProps {
         price: number;
     };
     courts: Array<{ id: string; name: string; sportName: string }>;
-    onSubmit: (data: any) => Promise<void>;
+    onSubmit: (data: { courtId: string; date: string; startTime: string; endTime: string; price: number }) => Promise<void>;
     onCancel?: () => void;
 }
 
@@ -27,7 +27,7 @@ export default function SlotForm({ slot, courts, onSubmit, onCancel }: SlotFormP
         endTime: slot?.endTime || '',
         price: slot?.price?.toString() || '',
     });
-    const [errors, setErrors] = useState<any>({});
+    const [errors, setErrors] = useState<Record<string, string>>({});
     const [isLoading, setIsLoading] = useState(false);
 
     const handleSubmit = async (e: React.FormEvent) => {
@@ -36,7 +36,7 @@ export default function SlotForm({ slot, courts, onSubmit, onCancel }: SlotFormP
         setIsLoading(true);
 
         // Validation
-        const newErrors: any = {};
+        const newErrors: Record<string, string> = {};
         if (!formData.courtId) newErrors.courtId = 'Please select a court';
         if (!formData.date) newErrors.date = 'Date is required';
         if (!formData.startTime) newErrors.startTime = 'Start time is required';
@@ -71,12 +71,16 @@ export default function SlotForm({ slot, courts, onSubmit, onCancel }: SlotFormP
 
         try {
             const submitData = {
-                ...formData,
+                courtId: formData.courtId,
+                date: formData.date,
+                startTime: formData.startTime,
+                endTime: formData.endTime,
                 price: parseFloat(formData.price),
             };
             await onSubmit(submitData);
-        } catch (error: any) {
-            setErrors({ general: error.message || 'Failed to save slot' });
+        } catch (error: unknown) {
+            const errorMessage = error instanceof Error ? error.message : 'Failed to save slot';
+            setErrors({ general: errorMessage });
         } finally {
             setIsLoading(false);
         }
@@ -98,8 +102,8 @@ export default function SlotForm({ slot, courts, onSubmit, onCancel }: SlotFormP
                         </label>
                         <select
                             className={`w-full px-4 py-3 rounded-lg border-2 transition-all ${errors.courtId
-                                    ? 'border-red-300 focus:border-red-500 focus:ring-red-500'
-                                    : 'border-gray-200 focus:border-blue-500 focus:ring-blue-500'
+                                ? 'border-red-300 focus:border-red-500 focus:ring-red-500'
+                                : 'border-gray-200 focus:border-blue-500 focus:ring-blue-500'
                                 } focus:outline-none focus:ring-2`}
                             value={formData.courtId}
                             onChange={(e) => setFormData({ ...formData, courtId: e.target.value })}

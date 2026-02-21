@@ -12,7 +12,7 @@ interface CityFormProps {
         state: string;
         isActive: boolean;
     };
-    onSubmit: (data: any) => Promise<void>;
+    onSubmit: (data: { name: string; state: string; isActive: boolean }) => Promise<void>;
     onCancel?: () => void;
 }
 
@@ -22,7 +22,7 @@ export default function CityForm({ city, onSubmit, onCancel }: CityFormProps) {
         state: city?.state || '',
         isActive: city?.isActive ?? true,
     });
-    const [errors, setErrors] = useState<any>({});
+    const [errors, setErrors] = useState<Record<string, string>>({});
     const [isLoading, setIsLoading] = useState(false);
 
     const handleSubmit = async (e: React.FormEvent) => {
@@ -31,7 +31,7 @@ export default function CityForm({ city, onSubmit, onCancel }: CityFormProps) {
         setIsLoading(true);
 
         // Validation
-        const newErrors: any = {};
+        const newErrors: Record<string, string> = {};
         if (!formData.name.trim()) newErrors.name = 'City name is required';
         if (!formData.state.trim()) newErrors.state = 'State is required';
 
@@ -43,8 +43,9 @@ export default function CityForm({ city, onSubmit, onCancel }: CityFormProps) {
 
         try {
             await onSubmit(formData);
-        } catch (error: any) {
-            setErrors({ general: error.message || 'Failed to save city' });
+        } catch (error: unknown) {
+            const errorMessage = error instanceof Error ? error.message : 'Failed to save city';
+            setErrors({ general: errorMessage });
         } finally {
             setIsLoading(false);
         }

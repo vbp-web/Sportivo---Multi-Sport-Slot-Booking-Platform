@@ -9,10 +9,7 @@ interface SidebarProps {
     role: 'user' | 'owner' | 'admin';
 }
 
-interface Feature {
-    name: string;
-    isActive: boolean;
-}
+// Feature interface was here but unused
 
 export default function Sidebar({ role }: SidebarProps) {
     const pathname = usePathname();
@@ -45,12 +42,12 @@ export default function Sidebar({ role }: SidebarProps) {
                     // Handle both populated featureIds and legacy features array
                     const features: string[] = [];
                     if (plan.featureIds && Array.isArray(plan.featureIds)) {
-                        plan.featureIds.forEach((f: any) => {
+                        plan.featureIds.forEach((f: { name: string; isActive: boolean }) => {
                             if (f.isActive) features.push(f.name);
                         });
                     }
                     if (plan.features && Array.isArray(plan.features)) {
-                        plan.features.forEach((f: any) => {
+                        plan.features.forEach((f: unknown) => {
                             if (typeof f === 'string') features.push(f);
                         });
                     }
@@ -159,7 +156,7 @@ export default function Sidebar({ role }: SidebarProps) {
 
             {/* Navigation */}
             <nav className="space-y-2 flex-grow">
-                {links.map((link: any) => {
+                {links.map((link: { href: string; label: string; icon: string; feature?: string; comingSoon?: boolean }) => {
                     const isActive = pathname === link.href;
                     const isComingSoon = 'comingSoon' in link && link.comingSoon;
                     const requiredFeature = link.feature;

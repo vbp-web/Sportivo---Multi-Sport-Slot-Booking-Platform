@@ -41,13 +41,13 @@ export default function RegisterForm({
         city: '',
         sportsOffered: '',
     });
-    const [errors, setErrors] = useState<any>({});
+    const [errors, setErrors] = useState<Record<string, string>>({});
     const [isLoading, setIsLoading] = useState(false);
 
     const roles = [
         { value: 'user', label: 'User', icon: '👤', description: 'Book sports slots' },
         { value: 'owner', label: 'Venue Owner', icon: '🏢', description: 'List your venue' },
-    ].filter(r => allowedRoles.includes(r.value as any));
+    ].filter(r => allowedRoles.includes(r.value as 'user' | 'owner'));
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -55,7 +55,7 @@ export default function RegisterForm({
         setIsLoading(true);
 
         // Validation
-        const newErrors: any = {};
+        const newErrors: Record<string, string> = {};
         if (!formData.name.trim()) newErrors.name = 'Name is required';
         if (!formData.phone) {
             newErrors.phone = 'Phone number is required';
@@ -86,8 +86,9 @@ export default function RegisterForm({
 
         try {
             await onSubmit({ ...formData, role });
-        } catch (error: any) {
-            setErrors({ general: error.message || 'Registration failed' });
+        } catch (error: unknown) {
+            const errorMessage = error instanceof Error ? error.message : 'Registration failed';
+            setErrors({ general: errorMessage });
         } finally {
             setIsLoading(false);
         }

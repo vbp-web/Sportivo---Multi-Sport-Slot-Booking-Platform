@@ -16,9 +16,16 @@ interface AuthContextType {
     token: string | null;
     loading: boolean;
     login: (phone: string, password: string, role: string) => Promise<void>;
-    register: (data: any) => Promise<void>;
+    register: (data: Record<string, unknown>) => Promise<void>;
     logout: () => Promise<void>;
     isAuthenticated: boolean;
+}
+
+interface ApiResponse<T = any> {
+    success: boolean;
+    data: T;
+    token?: string;
+    message?: string;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -41,7 +48,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
     const fetchUser = async (authToken: string) => {
         try {
-            const response: any = await authAPI.getMe(authToken);
+            const response = await authAPI.getMe(authToken) as ApiResponse<{ user: User }>;
             if (response.success) {
                 setUser(response.data.user);
             }
@@ -56,7 +63,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
     const login = async (phone: string, password: string, role: string) => {
         try {
-            const response: any = await authAPI.login({ phone, password, role });
+            const response = await authAPI.login({ phone, password, role }) as ApiResponse<{ user: User }>;
             if (response.success && response.token) {
                 setToken(response.token);
                 setUser(response.data.user);
@@ -67,9 +74,9 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         }
     };
 
-    const register = async (data: any) => {
+    const register = async (data: Record<string, unknown>) => {
         try {
-            const response: any = await authAPI.register(data);
+            const response = await authAPI.register(data) as ApiResponse<{ user: User }>;
             if (response.success && response.token) {
                 setToken(response.token);
                 setUser(response.data.user);

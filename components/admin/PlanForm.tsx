@@ -30,7 +30,21 @@ interface PlanFormProps {
         features: string[];
         isActive: boolean;
     };
-    onSubmit: (data: any) => Promise<void>;
+    onSubmit: (data: {
+        name: string;
+        price: number;
+        duration: number;
+        durationType: string;
+        maxVenues: number;
+        maxCourts: number;
+        maxBookings: number;
+        maxMessages: number;
+        isUnlimitedBookings: boolean;
+        isUnlimitedMessages: boolean;
+        featureIds: string[];
+        features: string[];
+        isActive: boolean;
+    }) => Promise<void>;
     onCancel?: () => void;
 }
 
@@ -50,7 +64,7 @@ export default function PlanForm({ plan, onSubmit, onCancel }: PlanFormProps) {
         isActive: plan?.isActive ?? true,
     });
     const [availableFeatures, setAvailableFeatures] = useState<Feature[]>([]);
-    const [errors, setErrors] = useState<any>({});
+    const [errors, setErrors] = useState<Record<string, string>>({});
     const [isLoading, setIsLoading] = useState(false);
     const [loadingFeatures, setLoadingFeatures] = useState(true);
 
@@ -78,7 +92,7 @@ export default function PlanForm({ plan, onSubmit, onCancel }: PlanFormProps) {
         setIsLoading(true);
 
         // Validation
-        const newErrors: any = {};
+        const newErrors: Record<string, string> = {};
         if (!formData.name.trim()) newErrors.name = 'Plan name is required';
         if (!formData.price) newErrors.price = 'Price is required';
         else if (parseFloat(formData.price) < 0) newErrors.price = 'Price cannot be negative';
@@ -120,8 +134,9 @@ export default function PlanForm({ plan, onSubmit, onCancel }: PlanFormProps) {
                 isActive: formData.isActive,
             };
             await onSubmit(submitData);
-        } catch (error: any) {
-            setErrors({ general: error.message || 'Failed to save plan' });
+        } catch (error: unknown) {
+            const errorMessage = error instanceof Error ? error.message : 'Failed to save plan';
+            setErrors({ general: errorMessage });
         } finally {
             setIsLoading(false);
         }
@@ -150,7 +165,7 @@ export default function PlanForm({ plan, onSubmit, onCancel }: PlanFormProps) {
         { name: 'Premium', price: 4999, duration: 30, durationType: 'monthly', maxVenues: 5, maxCourts: 25 },
     ];
 
-    const loadPreset = (preset: any) => {
+    const loadPreset = (preset: { name: string; price: number; duration: number; durationType: 'monthly' | 'yearly'; maxVenues: number; maxCourts: number }) => {
         setFormData({
             ...formData,
             name: preset.name,
