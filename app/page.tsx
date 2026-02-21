@@ -62,7 +62,7 @@ export default function Home() {
 
             {/* Subheading */}
             <p className="text-xl md:text-2xl text-gray-600 max-w-3xl mx-auto">
-              India's fastest growing sports booking platform. Find venues, book slots,
+              India&apos;s fastest growing sports booking platform. Find venues, book slots,
               and play your favorite sports instantly.
             </p>
 

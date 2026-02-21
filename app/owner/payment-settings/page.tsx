@@ -1,11 +1,12 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { useRouter } from 'next/navigation';
 import Navbar from '@/components/shared/Navbar';
 import Footer from '@/components/shared/Footer';
 import Button from '@/components/ui/Button';
 import Image from 'next/image';
+import { getApiUrl } from '@/lib/api-config';
 
 export default function OwnerPaymentSettingsPage() {
     const router = useRouter();
@@ -17,11 +18,7 @@ export default function OwnerPaymentSettingsPage() {
     const [error, setError] = useState('');
     const [success, setSuccess] = useState('');
 
-    useEffect(() => {
-        fetchPaymentSettings();
-    }, []);
-
-    const fetchPaymentSettings = async () => {
+    const fetchPaymentSettings = useCallback(async () => {
         try {
             const token = localStorage.getItem('token');
             if (!token) {
@@ -29,7 +26,7 @@ export default function OwnerPaymentSettingsPage() {
                 return;
             }
 
-            const response = await fetch('http://localhost:5000/api/owner/payment-settings', {
+            const response = await fetch(getApiUrl('owner/payment-settings'), {
                 headers: {
                     'Authorization': `Bearer ${token}`
                 }
@@ -40,12 +37,16 @@ export default function OwnerPaymentSettingsPage() {
                 setUpiId(data.data.upiId || '');
                 setQrCodeUrl(data.data.upiQrCode || '');
             }
-        } catch (err: any) {
+        } catch (err: unknown) {
             console.error('Error fetching payment settings:', err);
         } finally {
             setLoading(false);
         }
-    };
+    }, [router]);
+
+    useEffect(() => {
+        fetchPaymentSettings();
+    }, [fetchPaymentSettings]);
 
     const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         if (e.target.files && e.target.files[0]) {
@@ -83,7 +84,7 @@ export default function OwnerPaymentSettingsPage() {
 
             // For now, we'll send the base64 image directly
             // In production, you should upload to a cloud storage service
-            const response = await fetch('http://localhost:5000/api/owner/payment-settings', {
+            const response = await fetch(getApiUrl('owner/payment-settings'), {
                 method: 'PUT',
                 headers: {
                     'Authorization': `Bearer ${token}`,
@@ -102,7 +103,7 @@ export default function OwnerPaymentSettingsPage() {
                 const data = await response.json();
                 setError(data.message || 'Failed to save settings');
             }
-        } catch (err: any) {
+        } catch (err: unknown) {
             setError('Failed to save settings. Please try again.');
         } finally {
             setSaving(false);

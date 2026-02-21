@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { useRouter } from 'next/navigation';
 import Navbar from '@/components/shared/Navbar';
 import Footer from '@/components/shared/Footer';
@@ -25,27 +25,22 @@ export default function OwnerVenuesPage() {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState('');
 
-    useEffect(() => {
-        fetchVenues();
-        fetchSubscription();
-    }, []);
-
-    const fetchSubscription = async () => {
+    const fetchSubscription = useCallback(async () => {
         try {
             const token = localStorage.getItem('token');
-            const response = await fetch('http://localhost:5000/api/owner/subscription', {
+            const response = await fetch(getApiUrl('owner/subscription'), {
                 headers: { 'Authorization': `Bearer ${token}` }
             });
             if (response.ok) {
                 const data = await response.json();
                 setSubscription(data.data);
             }
-        } catch (err) {
+        } catch (err: unknown) {
             console.error('Error fetching subscription:', err);
         }
-    };
+    }, []);
 
-    const fetchVenues = async () => {
+    const fetchVenues = useCallback(async () => {
         try {
             const token = localStorage.getItem('token');
             if (!token) {
@@ -65,12 +60,18 @@ export default function OwnerVenuesPage() {
 
             const data = await response.json();
             setVenues(data.data || []);
-        } catch (err: any) {
-            setError(err.message);
+        } catch (err: unknown) {
+            const errorMessage = err instanceof Error ? err.message : 'Failed to fetch venues';
+            setError(errorMessage);
         } finally {
             setLoading(false);
         }
-    };
+    }, [router]);
+
+    useEffect(() => {
+        fetchVenues();
+        fetchSubscription();
+    }, [fetchVenues, fetchSubscription]);
 
     const handleAddVenue = () => {
         router.push('/owner/venues/add');
@@ -95,7 +96,7 @@ export default function OwnerVenuesPage() {
             if (response.ok) {
                 fetchVenues();
             }
-        } catch (err) {
+        } catch (err: unknown) {
             console.error('Error toggling venue status:', err);
         }
     };

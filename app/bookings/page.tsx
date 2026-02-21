@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { useRouter } from 'next/navigation';
 import Navbar from '@/components/shared/Navbar';
 import Footer from '@/components/shared/Footer';
@@ -44,6 +44,28 @@ export default function MyBookingsPage() {
     const [loading, setLoading] = useState(true);
     const [userRole, setUserRole] = useState<string>('user');
 
+    const fetchBookings = useCallback(async () => {
+        try {
+            const token = localStorage.getItem('token');
+            const response = await fetch(getApiUrl('user/bookings'), {
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            });
+
+            if (response.ok) {
+                const data = await response.json();
+                setBookings(data.data || []);
+            } else {
+                console.error('Failed to fetch bookings');
+            }
+        } catch (err: unknown) {
+            console.error('Error fetching bookings:', err);
+        } finally {
+            setLoading(false);
+        }
+    }, []);
+
     useEffect(() => {
         const token = localStorage.getItem('token');
         if (!token) {
@@ -62,29 +84,7 @@ export default function MyBookingsPage() {
         // Auto-refresh every 30 seconds
         const interval = setInterval(fetchBookings, 30000);
         return () => clearInterval(interval);
-    }, []);
-
-    const fetchBookings = async () => {
-        try {
-            const token = localStorage.getItem('token');
-            const response = await fetch(getApiUrl('user/bookings'), {
-                headers: {
-                    'Authorization': `Bearer ${token}`
-                }
-            });
-
-            if (response.ok) {
-                const data = await response.json();
-                setBookings(data.data || []);
-            } else {
-                console.error('Failed to fetch bookings');
-            }
-        } catch (error) {
-            console.error('Error fetching bookings:', error);
-        } finally {
-            setLoading(false);
-        }
-    };
+    }, [fetchBookings, router]);
 
     const filteredBookings = filter === 'all'
         ? bookings
@@ -195,7 +195,7 @@ export default function MyBookingsPage() {
                             </h3>
                             <p className="text-gray-500 mb-6">
                                 {filter === 'all'
-                                    ? "You haven't made any bookings yet. Start by browsing available venues!"
+                                    ? "You haven&apos;t made any bookings yet. Start by browsing available venues!"
                                     : `No ${filter} bookings found.`}
                             </p>
                             {filter === 'all' && (

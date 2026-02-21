@@ -1,10 +1,11 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { useRouter } from 'next/navigation';
 import Navbar from '@/components/shared/Navbar';
 import Footer from '@/components/shared/Footer';
 import Button from '@/components/ui/Button';
+import { getApiUrl } from '@/lib/api-config';
 
 interface Court {
     _id: string;
@@ -28,27 +29,22 @@ export default function OwnerCourtsPage() {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState('');
 
-    useEffect(() => {
-        fetchCourts();
-        fetchSubscription();
-    }, []);
-
-    const fetchSubscription = async () => {
+    const fetchSubscription = useCallback(async () => {
         try {
             const token = localStorage.getItem('token');
-            const response = await fetch('http://localhost:5000/api/owner/subscription', {
+            const response = await fetch(getApiUrl('owner/subscription'), {
                 headers: { 'Authorization': `Bearer ${token}` }
             });
             if (response.ok) {
                 const data = await response.json();
                 setSubscription(data.data);
             }
-        } catch (err) {
+        } catch (err: unknown) {
             console.error('Error fetching subscription:', err);
         }
-    };
+    }, []);
 
-    const fetchCourts = async () => {
+    const fetchCourts = useCallback(async () => {
         try {
             const token = localStorage.getItem('token');
             if (!token) {
@@ -56,7 +52,7 @@ export default function OwnerCourtsPage() {
                 return;
             }
 
-            const response = await fetch('http://localhost:5000/api/owner/courts', {
+            const response = await fetch(getApiUrl('owner/courts'), {
                 headers: {
                     'Authorization': `Bearer ${token}`
                 }
@@ -68,12 +64,18 @@ export default function OwnerCourtsPage() {
 
             const data = await response.json();
             setCourts(data.data || []);
-        } catch (err: any) {
-            setError(err.message);
+        } catch (err: unknown) {
+            const errorMessage = err instanceof Error ? err.message : 'Failed to fetch courts';
+            setError(errorMessage);
         } finally {
             setLoading(false);
         }
-    };
+    }, [router]);
+
+    useEffect(() => {
+        fetchCourts();
+        fetchSubscription();
+    }, [fetchCourts, fetchSubscription]);
 
     const handleAddCourt = () => {
         router.push('/owner/courts/add');
@@ -82,7 +84,7 @@ export default function OwnerCourtsPage() {
     const handleToggleStatus = async (courtId: string, currentStatus: boolean) => {
         try {
             const token = localStorage.getItem('token');
-            const response = await fetch(`http://localhost:5000/api/owner/courts/${courtId}`, {
+            const response = await fetch(getApiUrl(`owner/courts/${courtId}`), {
                 method: 'PATCH',
                 headers: {
                     'Authorization': `Bearer ${token}`,
@@ -94,7 +96,7 @@ export default function OwnerCourtsPage() {
             if (response.ok) {
                 fetchCourts();
             }
-        } catch (err) {
+        } catch (err: unknown) {
             console.error('Error toggling court status:', err);
         }
     };

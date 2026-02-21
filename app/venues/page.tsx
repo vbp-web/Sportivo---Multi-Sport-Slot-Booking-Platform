@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect, Suspense } from 'react';
+import { useState, useEffect, Suspense, useCallback } from 'react';
 import { useSearchParams } from 'next/navigation';
 import Navbar from '@/components/shared/Navbar';
 import Footer from '@/components/shared/Footer';
@@ -28,11 +28,7 @@ function VenuesContent() {
     const [selectedSport, setSelectedSport] = useState('All Sports');
     const [city, setCity] = useState(cityParam || 'All Cities');
 
-    useEffect(() => {
-        fetchVenues();
-    }, [city]);
-
-    const fetchVenues = async () => {
+    const fetchVenues = useCallback(async () => {
         try {
             let url = getApiUrl('venues');
             if (city && city !== 'All Cities') {
@@ -49,7 +45,11 @@ function VenuesContent() {
         } finally {
             setLoading(false);
         }
-    };
+    }, [city]);
+
+    useEffect(() => {
+        fetchVenues();
+    }, [fetchVenues]);
 
     const filteredVenues = venues.filter(venue => {
         const matchesSearch = venue.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -159,4 +159,3 @@ export default function VenuesPage() {
         </Suspense>
     );
 }
-

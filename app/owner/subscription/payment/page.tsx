@@ -1,11 +1,12 @@
 'use client';
 
-import { useState, useEffect, Suspense } from 'react';
+import { useState, useEffect, Suspense, useCallback } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import Navbar from '@/components/shared/Navbar';
 import Footer from '@/components/shared/Footer';
 import Button from '@/components/ui/Button';
 import Image from 'next/image';
+import { getApiUrl } from '@/lib/api-config';
 
 interface AdminSettings {
     _id: string;
@@ -35,15 +36,7 @@ function SubscriptionPaymentContent() {
     const [utr, setUtr] = useState('');
     const [submitting, setSubmitting] = useState(false);
 
-    useEffect(() => {
-        if (!planId) {
-            router.push('/owner/subscription');
-            return;
-        }
-        fetchPaymentData();
-    }, [planId]);
-
-    const fetchPaymentData = async () => {
+    const fetchPaymentData = useCallback(async () => {
         try {
             const token = localStorage.getItem('token');
             if (!token) {
@@ -52,7 +45,7 @@ function SubscriptionPaymentContent() {
             }
 
             // Fetch admin payment settings (public endpoint - temporary location)
-            const settingsResponse = await fetch('http://localhost:5000/api/plans/settings/payment');
+            const settingsResponse = await fetch(getApiUrl('plans/settings/payment'));
 
             if (settingsResponse.ok) {
                 const settingsData = await settingsResponse.json();
@@ -62,7 +55,7 @@ function SubscriptionPaymentContent() {
             }
 
             // Fetch plan details
-            const plansResponse = await fetch('http://localhost:5000/api/plans', {
+            const plansResponse = await fetch(getApiUrl('plans'), {
                 headers: {
                     'Authorization': `Bearer ${token}`
                 }
@@ -77,12 +70,21 @@ function SubscriptionPaymentContent() {
                     setError('Plan not found');
                 }
             }
-        } catch (err: any) {
-            setError(err.message);
+        } catch (err: unknown) {
+            const errorMessage = err instanceof Error ? err.message : 'An error occurred';
+            setError(errorMessage);
         } finally {
             setLoading(false);
         }
-    };
+    }, [planId, router]);
+
+    useEffect(() => {
+        if (!planId) {
+            router.push('/owner/subscription');
+            return;
+        }
+        fetchPaymentData();
+    }, [planId, fetchPaymentData, router]);
 
     const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         if (e.target.files && e.target.files[0]) {
@@ -107,7 +109,7 @@ function SubscriptionPaymentContent() {
             if (paymentProof) formData.append('paymentProof', paymentProof);
             if (utr) formData.append('utr', utr);
 
-            const response = await fetch('http://localhost:5000/api/owner/subscription', {
+            const response = await fetch(getApiUrl('owner/subscription'), {
                 method: 'POST',
                 headers: {
                     'Authorization': `Bearer ${token}`
@@ -122,7 +124,7 @@ function SubscriptionPaymentContent() {
                 const data = await response.json();
                 alert(data.message || 'Failed to submit payment');
             }
-        } catch (err) {
+        } catch (err: unknown) {
             console.error('Error submitting payment:', err);
             alert('Failed to submit payment. Please try again.');
         } finally {

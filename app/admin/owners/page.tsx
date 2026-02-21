@@ -1,11 +1,12 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { useRouter } from 'next/navigation';
 import Navbar from '@/components/shared/Navbar';
 import Footer from '@/components/shared/Footer';
 import Button from '@/components/ui/Button';
 import Badge from '@/components/ui/Badge';
+import { getApiUrl } from '@/lib/api-config';
 
 interface Owner {
     _id: string;
@@ -34,30 +35,12 @@ export default function AdminOwnersPage() {
     const [selectedOwner, setSelectedOwner] = useState<Owner | null>(null);
     const [rejectionReason, setRejectionReason] = useState('');
 
-    useEffect(() => {
-        const token = localStorage.getItem('token');
-        const user = localStorage.getItem('user');
-
-        if (!token || !user) {
-            router.push('/login');
-            return;
-        }
-
-        const userData = JSON.parse(user);
-        if (userData.role !== 'admin') {
-            router.push('/');
-            return;
-        }
-
-        fetchOwners();
-    }, [filter]);
-
-    const fetchOwners = async () => {
+    const fetchOwners = useCallback(async () => {
         try {
             const token = localStorage.getItem('token');
             const endpoint = filter === 'pending'
-                ? 'http://localhost:5000/api/admin/owners/pending'
-                : 'http://localhost:5000/api/admin/owners';
+                ? getApiUrl('admin/owners/pending')
+                : getApiUrl('admin/owners');
 
             const response = await fetch(endpoint, {
                 headers: {
@@ -76,19 +59,37 @@ export default function AdminOwnersPage() {
 
                 setOwners(ownersData);
             }
-        } catch (error) {
-            console.error('Error fetching owners:', error);
+        } catch (err: unknown) {
+            console.error('Error fetching owners:', err);
         } finally {
             setLoading(false);
         }
-    };
+    }, [filter]);
+
+    useEffect(() => {
+        const token = localStorage.getItem('token');
+        const user = localStorage.getItem('user');
+
+        if (!token || !user) {
+            router.push('/login');
+            return;
+        }
+
+        const userData = JSON.parse(user);
+        if (userData.role !== 'admin') {
+            router.push('/');
+            return;
+        }
+
+        fetchOwners();
+    }, [fetchOwners, router]);
 
     const handleApprove = async (ownerId: string) => {
         if (!confirm('Are you sure you want to approve this owner?')) return;
 
         try {
             const token = localStorage.getItem('token');
-            const response = await fetch(`http://localhost:5000/api/admin/owners/${ownerId}/approve`, {
+            const response = await fetch(getApiUrl(`admin/owners/${ownerId}/approve`), {
                 method: 'PUT',
                 headers: {
                     'Authorization': `Bearer ${token}`
@@ -103,8 +104,8 @@ export default function AdminOwnersPage() {
             } else {
                 alert(data.message || 'Failed to approve owner');
             }
-        } catch (error) {
-            console.error('Error:', error);
+        } catch (err: unknown) {
+            console.error('Error:', err);
             alert('Failed to approve owner');
         }
     };
@@ -114,7 +115,7 @@ export default function AdminOwnersPage() {
 
         try {
             const token = localStorage.getItem('token');
-            const response = await fetch(`http://localhost:5000/api/admin/owners/${selectedOwner._id}/reject`, {
+            const response = await fetch(getApiUrl(`admin/owners/${selectedOwner._id}/reject`), {
                 method: 'PUT',
                 headers: {
                     'Authorization': `Bearer ${token}`,
@@ -134,8 +135,8 @@ export default function AdminOwnersPage() {
             } else {
                 alert(data.message || 'Failed to reject owner');
             }
-        } catch (error) {
-            console.error('Error:', error);
+        } catch (err: unknown) {
+            console.error('Error:', err);
             alert('Failed to reject owner');
         }
     };
@@ -145,7 +146,7 @@ export default function AdminOwnersPage() {
 
         try {
             const token = localStorage.getItem('token');
-            const response = await fetch(`http://localhost:5000/api/admin/owners/${ownerId}/suspend`, {
+            const response = await fetch(getApiUrl(`admin/owners/${ownerId}/suspend`), {
                 method: 'PATCH',
                 headers: {
                     'Authorization': `Bearer ${token}`
@@ -160,8 +161,8 @@ export default function AdminOwnersPage() {
             } else {
                 alert(data.message || 'Failed to suspend owner');
             }
-        } catch (error) {
-            console.error('Error:', error);
+        } catch (err: unknown) {
+            console.error('Error:', err);
             alert('Failed to suspend owner');
         }
     };
@@ -171,7 +172,7 @@ export default function AdminOwnersPage() {
 
         try {
             const token = localStorage.getItem('token');
-            const response = await fetch(`http://localhost:5000/api/admin/owners/${ownerId}/activate`, {
+            const response = await fetch(getApiUrl(`admin/owners/${ownerId}/activate`), {
                 method: 'PATCH',
                 headers: {
                     'Authorization': `Bearer ${token}`
@@ -186,8 +187,8 @@ export default function AdminOwnersPage() {
             } else {
                 alert(data.message || 'Failed to activate owner');
             }
-        } catch (error) {
-            console.error('Error:', error);
+        } catch (err: unknown) {
+            console.error('Error:', err);
             alert('Failed to activate owner');
         }
     };
@@ -236,8 +237,8 @@ export default function AdminOwnersPage() {
                                 key={tab}
                                 onClick={() => setFilter(tab as any)}
                                 className={`px-4 py-2 font-medium border-b-2 transition-colors capitalize ${filter === tab
-                                        ? 'border-blue-600 text-blue-600'
-                                        : 'border-transparent text-gray-600 hover:text-gray-900'
+                                    ? 'border-blue-600 text-blue-600'
+                                    : 'border-transparent text-gray-600 hover:text-gray-900'
                                     }`}
                             >
                                 {tab}
@@ -250,7 +251,7 @@ export default function AdminOwnersPage() {
                 {owners.length === 0 ? (
                     <div className="text-center py-12 bg-white rounded-lg shadow">
                         <svg className="mx-auto h-12 w-12 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
                         </svg>
                         <h3 className="mt-2 text-sm font-medium text-gray-900">No {filter} owners</h3>
                         <p className="mt-1 text-sm text-gray-500">

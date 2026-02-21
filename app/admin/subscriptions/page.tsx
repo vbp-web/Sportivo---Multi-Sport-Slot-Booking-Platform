@@ -1,11 +1,12 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { useRouter } from 'next/navigation';
 import Navbar from '@/components/shared/Navbar';
 import Footer from '@/components/shared/Footer';
 import Button from '@/components/ui/Button';
 import Image from 'next/image';
+import { getApiUrl } from '@/lib/api-config';
 
 interface Owner {
     _id: string;
@@ -43,11 +44,7 @@ export default function AdminSubscriptionsPage() {
     const [selectedSubscription, setSelectedSubscription] = useState<Subscription | null>(null);
     const [showModal, setShowModal] = useState(false);
 
-    useEffect(() => {
-        fetchSubscriptions();
-    }, [filter]);
-
-    const fetchSubscriptions = async () => {
+    const fetchSubscriptions = useCallback(async () => {
         try {
             const token = localStorage.getItem('token');
             if (!token) {
@@ -55,14 +52,14 @@ export default function AdminSubscriptionsPage() {
                 return;
             }
 
-            let url = 'http://localhost:5000/api/admin/subscriptions';
+            let path = 'admin/subscriptions';
             if (filter === 'pending') {
-                url = 'http://localhost:5000/api/admin/subscriptions/pending';
+                path = 'admin/subscriptions/pending';
             } else if (filter !== 'all') {
-                url = `http://localhost:5000/api/admin/subscriptions?status=${filter}`;
+                path = `admin/subscriptions?status=${filter}`;
             }
 
-            const response = await fetch(url, {
+            const response = await fetch(getApiUrl(path), {
                 headers: {
                     'Authorization': `Bearer ${token}`
                 }
@@ -74,19 +71,23 @@ export default function AdminSubscriptionsPage() {
             } else {
                 setError('Failed to fetch subscriptions');
             }
-        } catch (err: any) {
-            setError(err.message);
+        } catch (err: unknown) {
+            setError(err instanceof Error ? err.message : 'An unknown error occurred');
         } finally {
             setLoading(false);
         }
-    };
+    }, [filter, router]);
+
+    useEffect(() => {
+        fetchSubscriptions();
+    }, [fetchSubscriptions]);
 
     const handleApprove = async (id: string) => {
         if (!confirm('Are you sure you want to approve this subscription?')) return;
 
         try {
             const token = localStorage.getItem('token');
-            const response = await fetch(`http://localhost:5000/api/admin/subscriptions/${id}/approve`, {
+            const response = await fetch(getApiUrl(`admin/subscriptions/${id}/approve`), {
                 method: 'PUT',
                 headers: {
                     'Authorization': `Bearer ${token}`
@@ -112,7 +113,7 @@ export default function AdminSubscriptionsPage() {
 
         try {
             const token = localStorage.getItem('token');
-            const response = await fetch(`http://localhost:5000/api/admin/subscriptions/${id}/reject`, {
+            const response = await fetch(getApiUrl(`admin/subscriptions/${id}/reject`), {
                 method: 'PUT',
                 headers: {
                     'Authorization': `Bearer ${token}`,
@@ -177,8 +178,8 @@ export default function AdminSubscriptionsPage() {
                     <button
                         onClick={() => setFilter('pending')}
                         className={`px-4 py-2 rounded-lg font-medium transition-colors ${filter === 'pending'
-                                ? 'bg-blue-600 text-white'
-                                : 'bg-white text-gray-700 border border-gray-300 hover:bg-gray-50'
+                            ? 'bg-blue-600 text-white'
+                            : 'bg-white text-gray-700 border border-gray-300 hover:bg-gray-50'
                             }`}
                     >
                         Pending
@@ -186,8 +187,8 @@ export default function AdminSubscriptionsPage() {
                     <button
                         onClick={() => setFilter('active')}
                         className={`px-4 py-2 rounded-lg font-medium transition-colors ${filter === 'active'
-                                ? 'bg-blue-600 text-white'
-                                : 'bg-white text-gray-700 border border-gray-300 hover:bg-gray-50'
+                            ? 'bg-blue-600 text-white'
+                            : 'bg-white text-gray-700 border border-gray-300 hover:bg-gray-50'
                             }`}
                     >
                         Active
@@ -195,8 +196,8 @@ export default function AdminSubscriptionsPage() {
                     <button
                         onClick={() => setFilter('expired')}
                         className={`px-4 py-2 rounded-lg font-medium transition-colors ${filter === 'expired'
-                                ? 'bg-blue-600 text-white'
-                                : 'bg-white text-gray-700 border border-gray-300 hover:bg-gray-50'
+                            ? 'bg-blue-600 text-white'
+                            : 'bg-white text-gray-700 border border-gray-300 hover:bg-gray-50'
                             }`}
                     >
                         Expired
@@ -204,8 +205,8 @@ export default function AdminSubscriptionsPage() {
                     <button
                         onClick={() => setFilter('all')}
                         className={`px-4 py-2 rounded-lg font-medium transition-colors ${filter === 'all'
-                                ? 'bg-blue-600 text-white'
-                                : 'bg-white text-gray-700 border border-gray-300 hover:bg-gray-50'
+                            ? 'bg-blue-600 text-white'
+                            : 'bg-white text-gray-700 border border-gray-300 hover:bg-gray-50'
                             }`}
                     >
                         All
@@ -278,10 +279,10 @@ export default function AdminSubscriptionsPage() {
                                         </td>
                                         <td className="px-6 py-4 whitespace-nowrap">
                                             <span className={`px-2 py-1 inline-flex text-xs leading-5 font-semibold rounded-full ${subscription.status === 'active'
-                                                    ? 'bg-green-100 text-green-800'
-                                                    : subscription.status === 'pending'
-                                                        ? 'bg-yellow-100 text-yellow-800'
-                                                        : 'bg-red-100 text-red-800'
+                                                ? 'bg-green-100 text-green-800'
+                                                : subscription.status === 'pending'
+                                                    ? 'bg-yellow-100 text-yellow-800'
+                                                    : 'bg-red-100 text-red-800'
                                                 }`}>
                                                 {subscription.status.toUpperCase()}
                                             </span>
@@ -371,7 +372,7 @@ export default function AdminSubscriptionsPage() {
                                         <h3 className="font-semibold text-gray-900 mb-2">Payment Proof</h3>
                                         <div className="mt-2">
                                             <Image
-                                                src={selectedSubscription.paymentProof}
+                                                src={selectedSubscription.paymentProof.startsWith('http') ? selectedSubscription.paymentProof : getApiUrl(selectedSubscription.paymentProof)}
                                                 alt="Payment Proof"
                                                 width={400}
                                                 height={400}

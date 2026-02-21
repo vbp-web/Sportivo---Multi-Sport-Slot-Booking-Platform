@@ -1,11 +1,12 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { useRouter } from 'next/navigation';
 import Navbar from '@/components/shared/Navbar';
 import Footer from '@/components/shared/Footer';
 import Button from '@/components/ui/Button';
 import Image from 'next/image';
+import { getApiUrl } from '@/lib/api-config';
 
 export default function AdminPaymentSettingsPage() {
     const router = useRouter();
@@ -18,11 +19,7 @@ export default function AdminPaymentSettingsPage() {
     const [error, setError] = useState('');
     const [success, setSuccess] = useState('');
 
-    useEffect(() => {
-        fetchPaymentSettings();
-    }, []);
-
-    const fetchPaymentSettings = async () => {
+    const fetchPaymentSettings = useCallback(async () => {
         try {
             const token = localStorage.getItem('token');
             if (!token) {
@@ -30,7 +27,7 @@ export default function AdminPaymentSettingsPage() {
                 return;
             }
 
-            const response = await fetch('http://localhost:5000/api/admin/settings/payment', {
+            const response = await fetch(getApiUrl('admin/settings/payment'), {
                 headers: {
                     'Authorization': `Bearer ${token}`
                 }
@@ -42,12 +39,16 @@ export default function AdminPaymentSettingsPage() {
                 setQrCodeUrl(data.data.qrCodeUrl || '');
                 setBusinessName(data.data.businessName || 'Box Cricket Platform');
             }
-        } catch (err: any) {
+        } catch (err: unknown) {
             console.error('Error fetching payment settings:', err);
         } finally {
             setLoading(false);
         }
-    };
+    }, [router]);
+
+    useEffect(() => {
+        fetchPaymentSettings();
+    }, [fetchPaymentSettings]);
 
     const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         if (e.target.files && e.target.files[0]) {
@@ -85,7 +86,7 @@ export default function AdminPaymentSettingsPage() {
 
             // For now, we'll send the base64 image directly
             // In production, you should upload to a cloud storage service
-            const response = await fetch('http://localhost:5000/api/admin/settings/payment', {
+            const response = await fetch(getApiUrl('admin/settings/payment'), {
                 method: 'PUT',
                 headers: {
                     'Authorization': `Bearer ${token}`,
@@ -105,7 +106,7 @@ export default function AdminPaymentSettingsPage() {
                 const data = await response.json();
                 setError(data.message || 'Failed to save settings');
             }
-        } catch (err: any) {
+        } catch (err: unknown) {
             setError('Failed to save settings. Please try again.');
         } finally {
             setSaving(false);
@@ -122,6 +123,8 @@ export default function AdminPaymentSettingsPage() {
             </div>
         );
     }
+
+    const displayQrCodeUrl = qrCodeUrl && !qrCodeUrl.startsWith('data:') && !qrCodeUrl.startsWith('http') ? getApiUrl(qrCodeUrl) : qrCodeUrl;
 
     return (
         <div className="min-h-screen bg-gray-50">
@@ -196,11 +199,11 @@ export default function AdminPaymentSettingsPage() {
                             </label>
 
                             {/* Current QR Code Preview */}
-                            {qrCodeUrl && (
+                            {displayQrCodeUrl && (
                                 <div className="mb-4 text-center">
                                     <div className="inline-block p-4 bg-white border-2 border-gray-200 rounded-lg">
                                         <Image
-                                            src={qrCodeUrl}
+                                            src={displayQrCodeUrl}
                                             alt="Platform UPI QR Code"
                                             width={200}
                                             height={200}

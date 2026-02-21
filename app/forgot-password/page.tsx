@@ -15,7 +15,7 @@ export default function ForgotPasswordPage() {
         newPassword: '',
         confirmPassword: '',
     });
-    const [errors, setErrors] = useState<any>({});
+    const [errors, setErrors] = useState<Record<string, string>>({});
     const [isLoading, setIsLoading] = useState(false);
     const [successMessage, setSuccessMessage] = useState('');
 
@@ -26,7 +26,7 @@ export default function ForgotPasswordPage() {
         setIsLoading(true);
 
         // Validation
-        const newErrors: any = {};
+        const newErrors: Record<string, string> = {};
         if (!formData.email) newErrors.email = 'Email is required';
         else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) newErrors.email = 'Enter a valid email address';
 
@@ -64,8 +64,9 @@ export default function ForgotPasswordPage() {
                 router.push('/login');
             }, 3000);
 
-        } catch (error: any) {
-            setErrors({ general: error.message || 'Something went wrong' });
+        } catch (error: unknown) {
+            const errorMessage = error instanceof Error ? error.message : 'Something went wrong';
+            setErrors({ general: errorMessage });
         } finally {
             setIsLoading(false);
         }

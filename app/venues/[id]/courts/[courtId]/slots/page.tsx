@@ -50,13 +50,7 @@ export default function CourtSlotsPage({ params }: { params: Promise<{ id: strin
     const [error, setError] = useState('');
     const [selectedDate, setSelectedDate] = useState<string>('');
 
-    useEffect(() => {
-        if (venueId && courtId) {
-            fetchData();
-        }
-    }, [venueId, courtId, selectedDate]);
-
-    const fetchData = async () => {
+    const fetchData = useCallback(async () => {
         try {
             setLoading(true);
 
@@ -84,12 +78,19 @@ export default function CourtSlotsPage({ params }: { params: Promise<{ id: strin
                 const slotsData = await slotsRes.json();
                 setSlots(slotsData.data || []);
             }
-        } catch (err: any) {
-            setError(err.message || 'Failed to load data');
+        } catch (err: unknown) {
+            const errorMessage = err instanceof Error ? err.message : 'Failed to load data';
+            setError(errorMessage);
         } finally {
             setLoading(false);
         }
-    };
+    }, [venueId, courtId, selectedDate]);
+
+    useEffect(() => {
+        if (venueId && courtId) {
+            fetchData();
+        }
+    }, [venueId, courtId, fetchData]);
 
     const handleSelectSlot = (slotId: string) => {
         setSelectedSlots(prev =>

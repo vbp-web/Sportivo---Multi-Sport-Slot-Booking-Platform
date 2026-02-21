@@ -1,9 +1,10 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { useRouter } from 'next/navigation';
 import Navbar from '@/components/shared/Navbar';
 import Footer from '@/components/shared/Footer';
+import { getApiUrl } from '@/lib/api-config';
 
 interface Analytics {
     totalUsers: number;
@@ -24,6 +25,30 @@ export default function AdminAnalyticsPage() {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState('');
 
+    const fetchAnalytics = useCallback(async () => {
+        try {
+            setError('');
+            const token = localStorage.getItem('token');
+            const response = await fetch(getApiUrl('admin/analytics'), {
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            });
+
+            const data = await response.json();
+            if (response.ok) {
+                setAnalytics(data.data);
+            } else {
+                setError(data.message || 'Failed to fetch analytics data');
+            }
+        } catch (err: unknown) {
+            console.error('Error fetching analytics:', err);
+            setError('An error occurred while fetching analytics');
+        } finally {
+            setLoading(false);
+        }
+    }, []);
+
     useEffect(() => {
         const token = localStorage.getItem('token');
         const user = localStorage.getItem('user');
@@ -40,31 +65,7 @@ export default function AdminAnalyticsPage() {
         }
 
         fetchAnalytics();
-    }, []);
-
-    const fetchAnalytics = async () => {
-        try {
-            setError('');
-            const token = localStorage.getItem('token');
-            const response = await fetch('http://localhost:5000/api/admin/analytics', {
-                headers: {
-                    'Authorization': `Bearer ${token}`
-                }
-            });
-
-            const data = await response.json();
-            if (response.ok) {
-                setAnalytics(data.data);
-            } else {
-                setError(data.message || 'Failed to fetch analytics data');
-            }
-        } catch (error) {
-            console.error('Error fetching analytics:', error);
-            setError('An error occurred while fetching analytics');
-        } finally {
-            setLoading(false);
-        }
-    };
+    }, [fetchAnalytics, router]);
 
     if (loading) {
         return (

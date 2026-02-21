@@ -15,7 +15,7 @@ export default function LoginPage() {
         email: '',
         password: '',
     });
-    const [errors, setErrors] = useState<any>({});
+    const [errors, setErrors] = useState<Record<string, string>>({});
     const [isLoading, setIsLoading] = useState(false);
 
     const handleSubmit = async (e: React.FormEvent) => {
@@ -24,7 +24,7 @@ export default function LoginPage() {
         setIsLoading(true);
 
         // Validation
-        const newErrors: any = {};
+        const newErrors: Record<string, string> = {};
         if (!formData.email) newErrors.email = 'Email is required';
         else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) newErrors.email = 'Enter a valid email address';
         if (!formData.password) newErrors.password = 'Password is required';
@@ -63,8 +63,9 @@ export default function LoginPage() {
             else if (role === 'owner') router.push('/owner/dashboard');
             else router.push('/admin/dashboard');
 
-        } catch (error: any) {
-            setErrors({ general: error.message || 'Login failed' });
+        } catch (error: unknown) {
+            const errorMessage = error instanceof Error ? error.message : 'Login failed';
+            setErrors({ general: errorMessage });
         } finally {
             setIsLoading(false);
         }
@@ -112,7 +113,7 @@ export default function LoginPage() {
                                     <button
                                         key={item.value}
                                         type="button"
-                                        onClick={() => setRole(item.value as any)}
+                                        onClick={() => setRole(item.value as 'user' | 'owner' | 'admin')}
                                         className={`
                       p-4 rounded-lg border-2 transition-all duration-200
                       ${role === item.value
@@ -183,7 +184,7 @@ export default function LoginPage() {
                                 <div className="w-full border-t border-gray-200"></div>
                             </div>
                             <div className="relative flex justify-center text-sm">
-                                <span className="px-2 bg-white text-gray-500">Don't have an account?</span>
+                                <span className="px-2 bg-white text-gray-500">Don&apos;t have an account?</span>
                             </div>
                         </div>
 

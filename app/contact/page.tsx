@@ -5,6 +5,7 @@ import Navbar from '@/components/shared/Navbar';
 import Footer from '@/components/shared/Footer';
 import Button from '@/components/ui/Button';
 import Card, { CardBody } from '@/components/ui/Card';
+import { getApiUrl } from '@/lib/api-config';
 
 export default function Contact() {
     const [formData, setFormData] = useState({
@@ -18,7 +19,7 @@ export default function Contact() {
         e.preventDefault();
 
         try {
-            const response = await fetch('http://localhost:5000/api/contact', {
+            const response = await fetch(getApiUrl('contact'), {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -34,8 +35,8 @@ export default function Contact() {
             } else {
                 alert(data.message || 'Error sending message. Please try again.');
             }
-        } catch (error) {
-            console.error('Error:', error);
+        } catch (err: unknown) {
+            console.error('Error:', err);
             alert('Failed to send message. Please check if the server is running.');
         }
     };

@@ -1,10 +1,11 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { useRouter } from 'next/navigation';
 import Navbar from '@/components/shared/Navbar';
 import Footer from '@/components/shared/Footer';
 import Button from '@/components/ui/Button';
+import { getApiUrl } from '@/lib/api-config';
 
 interface City {
     _id: string;
@@ -24,6 +25,26 @@ export default function AdminCitiesPage() {
         state: ''
     });
 
+    const fetchCities = useCallback(async () => {
+        try {
+            const token = localStorage.getItem('token');
+            const response = await fetch(getApiUrl('admin/cities'), {
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            });
+
+            if (response.ok) {
+                const data = await response.json();
+                setCities(data.data || []);
+            }
+        } catch (error) {
+            console.error('Error fetching cities:', error);
+        } finally {
+            setLoading(false);
+        }
+    }, []);
+
     useEffect(() => {
         const token = localStorage.getItem('token');
         const user = localStorage.getItem('user');
@@ -40,27 +61,7 @@ export default function AdminCitiesPage() {
         }
 
         fetchCities();
-    }, []);
-
-    const fetchCities = async () => {
-        try {
-            const token = localStorage.getItem('token');
-            const response = await fetch('http://localhost:5000/api/admin/cities', {
-                headers: {
-                    'Authorization': `Bearer ${token}`
-                }
-            });
-
-            if (response.ok) {
-                const data = await response.json();
-                setCities(data.data || []);
-            }
-        } catch (error) {
-            console.error('Error fetching cities:', error);
-        } finally {
-            setLoading(false);
-        }
-    };
+    }, [fetchCities, router]);
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -68,8 +69,8 @@ export default function AdminCitiesPage() {
         try {
             const token = localStorage.getItem('token');
             const url = editingCity
-                ? `http://localhost:5000/api/admin/cities/${editingCity._id}`
-                : 'http://localhost:5000/api/admin/cities';
+                ? getApiUrl(`admin/cities/${editingCity._id}`)
+                : getApiUrl('admin/cities');
 
             const method = editingCity ? 'PUT' : 'POST';
 
@@ -113,7 +114,7 @@ export default function AdminCitiesPage() {
 
         try {
             const token = localStorage.getItem('token');
-            const response = await fetch(`http://localhost:5000/api/admin/cities/${cityId}`, {
+            const response = await fetch(getApiUrl(`admin/cities/${cityId}`), {
                 method: 'DELETE',
                 headers: {
                     'Authorization': `Bearer ${token}`
@@ -137,7 +138,7 @@ export default function AdminCitiesPage() {
     const handleToggleStatus = async (cityId: string) => {
         try {
             const token = localStorage.getItem('token');
-            const response = await fetch(`http://localhost:5000/api/admin/cities/${cityId}/toggle`, {
+            const response = await fetch(getApiUrl(`admin/cities/${cityId}/toggle`), {
                 method: 'PATCH',
                 headers: {
                     'Authorization': `Bearer ${token}`

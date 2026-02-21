@@ -44,11 +44,7 @@ function BookingConfirmContent() {
     const slotsParam = searchParams.get('slots');
     const amount = parseFloat(searchParams.get('amount') || '0');
 
-    useEffect(() => {
-        fetchBookingDetails();
-    }, []);
-
-    const fetchBookingDetails = async () => {
+    const fetchBookingDetails = useCallback(async () => {
         try {
             setLoading(true);
 
@@ -101,12 +97,16 @@ function BookingConfirmContent() {
             } else {
                 console.error('No ownerId found in venue data');
             }
-        } catch (error) {
-            console.error('Error fetching booking details:', error);
+        } catch (err: unknown) {
+            console.error('Error fetching booking details:', err);
         } finally {
             setLoading(false);
         }
-    };
+    }, [venueId, courtId, sportId, slotId, slotsParam, amount]);
+
+    useEffect(() => {
+        fetchBookingDetails();
+    }, [fetchBookingDetails]);
 
     const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         if (e.target.files && e.target.files[0]) {
@@ -161,8 +161,8 @@ function BookingConfirmContent() {
             } else {
                 alert(data.message || 'Failed to create booking');
             }
-        } catch (error: any) {
-            console.error('Error creating booking:', error);
+        } catch (err: unknown) {
+            console.error('Error creating booking:', err);
             alert('Failed to create booking. Please try again.');
         } finally {
             setSubmitting(false);

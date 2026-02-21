@@ -1,11 +1,12 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { useRouter } from 'next/navigation';
 import Navbar from '@/components/shared/Navbar';
 import Footer from '@/components/shared/Footer';
 import Button from '@/components/ui/Button';
 import Input from '@/components/ui/Input';
+import { getApiUrl } from '@/lib/api-config';
 
 interface Venue {
     _id: string;
@@ -31,24 +32,14 @@ export default function AddCourtPage() {
         pricePerHour: '',
         description: ''
     });
-    const [errors, setErrors] = useState<any>({});
+    const [errors, setErrors] = useState<Record<string, string>>({});
 
-    useEffect(() => {
-        const token = localStorage.getItem('token');
-        if (!token) {
-            router.push('/login');
-            return;
-        }
-
-        fetchData();
-    }, []);
-
-    const fetchData = async () => {
+    const fetchData = useCallback(async () => {
         try {
             const token = localStorage.getItem('token');
 
             // Fetch owner's venues
-            const venuesRes = await fetch('http://localhost:5000/api/owner/venues', {
+            const venuesRes = await fetch(getApiUrl('owner/venues'), {
                 headers: {
                     'Authorization': `Bearer ${token}`
                 }
@@ -59,17 +50,27 @@ export default function AddCourtPage() {
             }
 
             // Fetch sports
-            const sportsRes = await fetch('http://localhost:5000/api/sports');
+            const sportsRes = await fetch(getApiUrl('sports'));
             if (sportsRes.ok) {
                 const sportsData = await sportsRes.json();
                 setSports(sportsData.data || []);
             }
-        } catch (error) {
-            console.error('Error fetching data:', error);
+        } catch (err: unknown) {
+            console.error('Error fetching data:', err);
         } finally {
             setLoading(false);
         }
-    };
+    }, []);
+
+    useEffect(() => {
+        const token = localStorage.getItem('token');
+        if (!token) {
+            router.push('/login');
+            return;
+        }
+
+        fetchData();
+    }, [fetchData, router]);
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -77,7 +78,7 @@ export default function AddCourtPage() {
         setSubmitting(true);
 
         // Validation
-        const newErrors: any = {};
+        const newErrors: Record<string, string> = {};
         if (!formData.name) newErrors.name = 'Court name is required';
         if (!formData.venueId) newErrors.venueId = 'Please select a venue';
         if (!formData.sportId) newErrors.sportId = 'Please select a sport';
@@ -94,7 +95,7 @@ export default function AddCourtPage() {
 
         try {
             const token = localStorage.getItem('token');
-            const response = await fetch('http://localhost:5000/api/owner/courts', {
+            const response = await fetch(getApiUrl('owner/courts'), {
                 method: 'POST',
                 headers: {
                     'Authorization': `Bearer ${token}`,
@@ -117,8 +118,8 @@ export default function AddCourtPage() {
             } else {
                 alert(data.message || 'Failed to add court');
             }
-        } catch (error) {
-            console.error('Error:', error);
+        } catch (err: unknown) {
+            console.error('Error:', err);
             alert('Failed to add court');
         } finally {
             setSubmitting(false);

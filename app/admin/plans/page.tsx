@@ -1,12 +1,13 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { useRouter } from 'next/navigation';
 import Navbar from '@/components/shared/Navbar';
 import Footer from '@/components/shared/Footer';
 import Button from '@/components/ui/Button';
 import Badge from '@/components/ui/Badge';
 import PlanForm from '@/components/admin/PlanForm';
+import { getApiUrl } from '@/lib/api-config';
 
 interface Feature {
     _id: string;
@@ -41,6 +42,27 @@ export default function AdminPlansPage() {
     const [loading, setLoading] = useState(true);
     const [showModal, setShowModal] = useState(false);
     const [editingPlan, setEditingPlan] = useState<Plan | null>(null);
+
+    const fetchPlans = useCallback(async () => {
+        try {
+            const token = localStorage.getItem('token');
+            const response = await fetch(getApiUrl('admin/plans'), {
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            });
+
+            if (response.ok) {
+                const data = await response.json();
+                setPlans(data.data || []);
+            }
+        } catch (error) {
+            console.error('Error fetching plans:', error);
+        } finally {
+            setLoading(false);
+        }
+    }, []);
+
     useEffect(() => {
         const token = localStorage.getItem('token');
         const user = localStorage.getItem('user');
@@ -57,27 +79,7 @@ export default function AdminPlansPage() {
         }
 
         fetchPlans();
-    }, []);
-
-    const fetchPlans = async () => {
-        try {
-            const token = localStorage.getItem('token');
-            const response = await fetch('http://localhost:5000/api/admin/plans', {
-                headers: {
-                    'Authorization': `Bearer ${token}`
-                }
-            });
-
-            if (response.ok) {
-                const data = await response.json();
-                setPlans(data.data || []);
-            }
-        } catch (error) {
-            console.error('Error fetching plans:', error);
-        } finally {
-            setLoading(false);
-        }
-    };
+    }, [fetchPlans, router]);
 
     const handleEdit = (plan: Plan) => {
         setEditingPlan(plan);
@@ -89,7 +91,7 @@ export default function AdminPlansPage() {
 
         try {
             const token = localStorage.getItem('token');
-            const response = await fetch(`http://localhost:5000/api/admin/plans/${planId}`, {
+            const response = await fetch(getApiUrl(`admin/plans/${planId}`), {
                 method: 'DELETE',
                 headers: {
                     'Authorization': `Bearer ${token}`
@@ -113,7 +115,7 @@ export default function AdminPlansPage() {
     const handleToggleStatus = async (planId: string) => {
         try {
             const token = localStorage.getItem('token');
-            const response = await fetch(`http://localhost:5000/api/admin/plans/${planId}/toggle`, {
+            const response = await fetch(getApiUrl(`admin/plans/${planId}/toggle`), {
                 method: 'PATCH',
                 headers: {
                     'Authorization': `Bearer ${token}`
@@ -281,8 +283,8 @@ export default function AdminPlansPage() {
                                 try {
                                     const token = localStorage.getItem('token');
                                     const url = editingPlan
-                                        ? `http://localhost:5000/api/admin/plans/${editingPlan._id}`
-                                        : 'http://localhost:5000/api/admin/plans';
+                                        ? getApiUrl(`admin/plans/${editingPlan._id}`)
+                                        : getApiUrl('admin/plans');
 
                                     const method = editingPlan ? 'PUT' : 'POST';
 

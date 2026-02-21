@@ -7,7 +7,8 @@ import { useRouter } from 'next/navigation';
 import Navbar from '@/components/shared/Navbar';
 import Footer from '@/components/shared/Footer';
 import Sidebar from '@/components/shared/Sidebar';
-import { API_BASE_URL } from '@/lib/api-config';
+import { getApiUrl } from '@/lib/api-config';
+import { useCallback } from 'react';
 
 interface AnalyticsData {
     totalBookings: number;
@@ -21,7 +22,7 @@ interface AnalyticsData {
     totalVenues: number;
     totalCourts: number;
     activeSlots: number;
-    recentBookings: any[];
+    recentBookings: unknown[];
 }
 
 export default function OwnerAnalyticsPage() {
@@ -43,13 +44,13 @@ export default function OwnerAnalyticsPage() {
         // Auto-refresh every 60 seconds
         const interval = setInterval(fetchAnalytics, 60000);
         return () => clearInterval(interval);
-    }, [dateRange]);
+    }, [dateRange, fetchAnalytics, router]);
 
-    const fetchAnalytics = async () => {
+    const fetchAnalytics = useCallback(async () => {
         try {
             setError('');
             const token = localStorage.getItem('token');
-            const response = await fetch(`${API_BASE_URL}/owner/dashboard`, {
+            const response = await fetch(getApiUrl('owner/dashboard'), {
                 headers: {
                     'Authorization': `Bearer ${token}`
                 }
@@ -61,13 +62,13 @@ export default function OwnerAnalyticsPage() {
             } else {
                 setError(data.message || 'Failed to fetch analytics data');
             }
-        } catch (error) {
-            console.error('Error fetching analytics:', error);
+        } catch (err: unknown) {
+            console.error('Error fetching analytics:', err);
             setError('An error occurred while fetching analytics');
         } finally {
             setLoading(false);
         }
-    };
+    }, []);
 
     const downloadCSV = () => {
         if (!analytics) return;
@@ -200,13 +201,13 @@ export default function OwnerAnalyticsPage() {
 
                         <div className="bg-gradient-to-br from-yellow-500 to-yellow-600 rounded-lg shadow-lg p-6 text-white">
                             <div className="flex items-center justify-between mb-2">
-                                <div className="text-sm opacity-90">Today's Revenue</div>
+                                <div className="text-sm opacity-90">Today&apos;s Revenue</div>
                                 <svg className="w-8 h-8 opacity-80" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
                                 </svg>
                             </div>
                             <div className="text-3xl font-bold">₹{analytics?.todayRevenue || 0}</div>
-                            <div className="text-xs opacity-80 mt-1">Today's earnings</div>
+                            <div className="text-xs opacity-80 mt-1">Today&apos;s earnings</div>
                         </div>
 
                         <div className="bg-gradient-to-br from-purple-500 to-purple-600 rounded-lg shadow-lg p-6 text-white">

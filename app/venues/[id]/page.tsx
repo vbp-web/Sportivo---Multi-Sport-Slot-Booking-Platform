@@ -1,10 +1,11 @@
 'use client';
 
 import { useState, useEffect, use } from 'react';
-import { useParams, useRouter } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 import Navbar from '@/components/shared/Navbar';
 import Footer from '@/components/shared/Footer';
 import { getApiUrl } from '@/lib/api-config';
+import { useCallback } from 'react';
 
 interface Sport {
     _id: string;
@@ -46,13 +47,7 @@ export default function VenueDetailsPage({ params }: { params: Promise<{ id: str
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState('');
 
-    useEffect(() => {
-        if (venueId) {
-            fetchData();
-        }
-    }, [venueId]);
-
-    const fetchData = async () => {
+    const fetchData = useCallback(async () => {
         try {
             // Fetch venue details
             const venueRes = await fetch(getApiUrl(`venues/${venueId}`));
@@ -70,12 +65,19 @@ export default function VenueDetailsPage({ params }: { params: Promise<{ id: str
                 const sportsData = await sportsRes.json();
                 setSports(sportsData.data || []);
             }
-        } catch (err: any) {
-            setError(err.message || 'Failed to load venue details');
+        } catch (err: unknown) {
+            const errorMessage = err instanceof Error ? err.message : 'Failed to load venue details';
+            setError(errorMessage);
         } finally {
             setLoading(false);
         }
-    };
+    }, [venueId]);
+
+    useEffect(() => {
+        if (venueId) {
+            fetchData();
+        }
+    }, [venueId, fetchData]);
 
     const filteredCourts = selectedSport === 'all'
         ? courts

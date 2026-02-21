@@ -23,7 +23,7 @@ export default function RegisterPage() {
         city: '',
         sportsOffered: '',
     });
-    const [errors, setErrors] = useState<any>({});
+    const [errors, setErrors] = useState<Record<string, string>>({});
     const [isLoading, setIsLoading] = useState(false);
 
     const handleSubmit = async (e: React.FormEvent) => {
@@ -32,7 +32,7 @@ export default function RegisterPage() {
         setIsLoading(true);
 
         // Validation
-        const newErrors: any = {};
+        const newErrors: Record<string, string> = {};
         if (!formData.name) newErrors.name = 'Name is required';
         if (!formData.phone) newErrors.phone = 'Phone number is required';
         else if (!/^[0-9]{10}$/.test(formData.phone)) newErrors.phone = 'Enter valid 10-digit phone number';
@@ -90,8 +90,9 @@ export default function RegisterPage() {
             // Redirect to login
             router.push('/login');
 
-        } catch (error: any) {
-            setErrors({ general: error.message || 'Registration failed' });
+        } catch (error: unknown) {
+            const errorMessage = error instanceof Error ? error.message : 'Registration failed';
+            setErrors({ general: errorMessage });
         } finally {
             setIsLoading(false);
         }
@@ -132,7 +133,7 @@ export default function RegisterPage() {
                                     <button
                                         key={item.value}
                                         type="button"
-                                        onClick={() => setRole(item.value as any)}
+                                        onClick={() => setRole(item.value as 'user' | 'owner')}
                                         className={`
                       p-4 rounded-lg border-2 transition-all duration-200 text-left
                       ${role === item.value
@@ -250,7 +251,7 @@ export default function RegisterPage() {
                                     <div className="p-4 bg-yellow-50 border border-yellow-200 rounded-lg">
                                         <p className="text-sm text-yellow-800">
                                             <strong>Note:</strong> Your account will be pending admin approval.
-                                            You'll receive a notification once approved.
+                                            You&apos;ll receive a notification once approved.
                                         </p>
                                     </div>
                                 </>

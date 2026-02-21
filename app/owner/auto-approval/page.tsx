@@ -1,10 +1,11 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { useRouter } from 'next/navigation';
 import Sidebar from '@/components/shared/Sidebar';
 import Navbar from '@/components/shared/Navbar';
 import Footer from '@/components/shared/Footer';
+import { getApiUrl } from '@/lib/api-config';
 
 interface AutoApprovalSettings {
     enabled: boolean;
@@ -41,11 +42,7 @@ export default function AutoApprovalPage() {
     const [error, setError] = useState('');
     const [success, setSuccess] = useState('');
 
-    useEffect(() => {
-        fetchData();
-    }, []);
-
-    const fetchData = async () => {
+    const fetchData = useCallback(async () => {
         try {
             const token = localStorage.getItem('token');
             if (!token) {
@@ -54,7 +51,7 @@ export default function AutoApprovalPage() {
             }
 
             // Fetch settings
-            const settingsRes = await fetch('http://localhost:5000/api/owner/auto-approval', {
+            const settingsRes = await fetch(getApiUrl('owner/auto-approval'), {
                 headers: { 'Authorization': `Bearer ${token}` }
             });
 
@@ -66,7 +63,7 @@ export default function AutoApprovalPage() {
             }
 
             // Fetch stats
-            const statsRes = await fetch('http://localhost:5000/api/owner/auto-approval/stats', {
+            const statsRes = await fetch(getApiUrl('owner/auto-approval/stats'), {
                 headers: { 'Authorization': `Bearer ${token}` }
             });
 
@@ -74,13 +71,17 @@ export default function AutoApprovalPage() {
                 const statsData = await statsRes.json();
                 setStats(statsData.data);
             }
-        } catch (err) {
+        } catch (err: unknown) {
             console.error('Error fetching auto-approval data:', err);
             setError('Failed to load auto-approval settings');
         } finally {
             setLoading(false);
         }
-    };
+    }, [router]);
+
+    useEffect(() => {
+        fetchData();
+    }, [fetchData]);
 
     const handleSave = async () => {
         if (!settings) return;
@@ -90,7 +91,7 @@ export default function AutoApprovalPage() {
 
         try {
             const token = localStorage.getItem('token');
-            const response = await fetch('http://localhost:5000/api/owner/auto-approval', {
+            const response = await fetch(getApiUrl('owner/auto-approval'), {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',
@@ -106,7 +107,7 @@ export default function AutoApprovalPage() {
                 const data = await response.json();
                 setError(data.message || 'Failed to update settings');
             }
-        } catch (err) {
+        } catch (err: unknown) {
             setError('Error saving settings');
         } finally {
             setSaving(false);
@@ -365,7 +366,7 @@ export default function AutoApprovalPage() {
                                                     <span className="bg-green-100 text-green-700 px-2 py-0.5 rounded text-xs font-bold">Excellent</span>
                                                 </div>
                                                 <p className="text-xs text-gray-400 leading-relaxed italic">
-                                                    "This system has saved you roughly <b>{Math.round((stats?.autoApproved || 0) * 3 / 60)} hours</b> of manual effort this month."
+                                                    &quot;This system has saved you roughly <b>{Math.round((stats?.autoApproved || 0) * 3 / 60)} hours</b> of manual effort this month.&quot;
                                                 </p>
                                             </div>
                                         </div>

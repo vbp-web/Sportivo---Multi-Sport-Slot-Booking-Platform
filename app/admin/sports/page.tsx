@@ -1,11 +1,12 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { useRouter } from 'next/navigation';
 import Navbar from '@/components/shared/Navbar';
 import Footer from '@/components/shared/Footer';
 import Button from '@/components/ui/Button';
 import Badge from '@/components/ui/Badge';
+import { getApiUrl } from '@/lib/api-config';
 
 interface Sport {
     _id: string;
@@ -26,6 +27,26 @@ export default function AdminSportsPage() {
         description: ''
     });
 
+    const fetchSports = useCallback(async () => {
+        try {
+            const token = localStorage.getItem('token');
+            const response = await fetch(getApiUrl('admin/sports'), {
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            });
+
+            if (response.ok) {
+                const data = await response.json();
+                setSports(data.data || []);
+            }
+        } catch (error) {
+            console.error('Error fetching sports:', error);
+        } finally {
+            setLoading(false);
+        }
+    }, []);
+
     useEffect(() => {
         const token = localStorage.getItem('token');
         const user = localStorage.getItem('user');
@@ -42,27 +63,7 @@ export default function AdminSportsPage() {
         }
 
         fetchSports();
-    }, []);
-
-    const fetchSports = async () => {
-        try {
-            const token = localStorage.getItem('token');
-            const response = await fetch('http://localhost:5000/api/admin/sports', {
-                headers: {
-                    'Authorization': `Bearer ${token}`
-                }
-            });
-
-            if (response.ok) {
-                const data = await response.json();
-                setSports(data.data || []);
-            }
-        } catch (error) {
-            console.error('Error fetching sports:', error);
-        } finally {
-            setLoading(false);
-        }
-    };
+    }, [fetchSports, router]);
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -70,8 +71,8 @@ export default function AdminSportsPage() {
         try {
             const token = localStorage.getItem('token');
             const url = editingSport
-                ? `http://localhost:5000/api/admin/sports/${editingSport._id}`
-                : 'http://localhost:5000/api/admin/sports';
+                ? getApiUrl(`admin/sports/${editingSport._id}`)
+                : getApiUrl('admin/sports');
 
             const method = editingSport ? 'PUT' : 'POST';
 
@@ -115,7 +116,7 @@ export default function AdminSportsPage() {
 
         try {
             const token = localStorage.getItem('token');
-            const response = await fetch(`http://localhost:5000/api/admin/sports/${sportId}`, {
+            const response = await fetch(getApiUrl(`admin/sports/${sportId}`), {
                 method: 'DELETE',
                 headers: {
                     'Authorization': `Bearer ${token}`
@@ -139,7 +140,7 @@ export default function AdminSportsPage() {
     const handleToggleStatus = async (sportId: string) => {
         try {
             const token = localStorage.getItem('token');
-            const response = await fetch(`http://localhost:5000/api/admin/sports/${sportId}/toggle`, {
+            const response = await fetch(getApiUrl(`admin/sports/${sportId}/toggle`), {
                 method: 'PATCH',
                 headers: {
                     'Authorization': `Bearer ${token}`

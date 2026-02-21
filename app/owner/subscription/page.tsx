@@ -1,10 +1,11 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { useRouter } from 'next/navigation';
 import Navbar from '@/components/shared/Navbar';
 import Footer from '@/components/shared/Footer';
 import Button from '@/components/ui/Button';
+import { getApiUrl } from '@/lib/api-config';
 
 interface Plan {
     _id: string;
@@ -41,11 +42,7 @@ export default function OwnerSubscriptionPage() {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState('');
 
-    useEffect(() => {
-        fetchSubscriptionData();
-    }, []);
-
-    const fetchSubscriptionData = async () => {
+    const fetchSubscriptionData = useCallback(async () => {
         try {
             const token = localStorage.getItem('token');
             if (!token) {
@@ -54,7 +51,7 @@ export default function OwnerSubscriptionPage() {
             }
 
             // Fetch current subscription
-            const subResponse = await fetch('http://localhost:5000/api/owner/subscription', {
+            const subResponse = await fetch(getApiUrl('owner/subscription'), {
                 headers: {
                     'Authorization': `Bearer ${token}`
                 }
@@ -66,7 +63,7 @@ export default function OwnerSubscriptionPage() {
             }
 
             // Fetch available plans
-            const plansResponse = await fetch('http://localhost:5000/api/plans', {
+            const plansResponse = await fetch(getApiUrl('plans'), {
                 headers: {
                     'Authorization': `Bearer ${token}`
                 }
@@ -76,12 +73,17 @@ export default function OwnerSubscriptionPage() {
                 const plansData = await plansResponse.json();
                 setPlans(plansData.data || []);
             }
-        } catch (err: any) {
-            setError(err.message);
+        } catch (err: unknown) {
+            const errorMessage = err instanceof Error ? err.message : 'An error occurred';
+            setError(errorMessage);
         } finally {
             setLoading(false);
         }
-    };
+    }, [router]);
+
+    useEffect(() => {
+        fetchSubscriptionData();
+    }, [fetchSubscriptionData]);
 
     const handleSubscribe = async (planId: string) => {
         // Navigate to payment page
@@ -174,7 +176,7 @@ export default function OwnerSubscriptionPage() {
                                             <p className="text-xl font-bold">
                                                 {currentSubscription.bookingsCount || 0}
                                                 <span className="text-sm font-normal opacity-70 ml-1">
-                                                    / {currentSubscription.planId?.isUnlimitedBookings ? '∞' : currentSubscription.planId?.maxBookings || 0}
+                                                    / {currentSubscription.planId?.isUnlimitedBookings ? '∞' : (typeof currentSubscription.planId?.maxBookings === 'number' ? currentSubscription.planId.maxBookings : 0)}
                                                 </span>
                                             </p>
                                         </div>
@@ -183,7 +185,7 @@ export default function OwnerSubscriptionPage() {
                                             <p className="text-xl font-bold">
                                                 {currentSubscription.messagesCount || 0}
                                                 <span className="text-sm font-normal opacity-70 ml-1">
-                                                    / {currentSubscription.planId?.isUnlimitedMessages ? '∞' : currentSubscription.planId?.maxMessages || 0}
+                                                    / {currentSubscription.planId?.isUnlimitedMessages ? '∞' : (typeof currentSubscription.planId?.maxMessages === 'number' ? currentSubscription.planId.maxMessages : 0)}
                                                 </span>
                                             </p>
                                         </div>

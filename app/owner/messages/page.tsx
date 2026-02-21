@@ -1,10 +1,11 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { useRouter } from 'next/navigation';
 import Navbar from '@/components/shared/Navbar';
 import Footer from '@/components/shared/Footer';
 import Sidebar from '@/components/shared/Sidebar';
+import { getApiUrl } from '@/lib/api-config';
 
 interface Customer {
     _id: string;
@@ -23,20 +24,10 @@ export default function OwnerMessagesPage() {
     const [loading, setLoading] = useState(true);
     const [showComingSoonModal, setShowComingSoonModal] = useState(false);
 
-    useEffect(() => {
-        const token = localStorage.getItem('token');
-        if (!token) {
-            router.push('/login');
-            return;
-        }
-
-        fetchCustomers();
-    }, []);
-
-    const fetchCustomers = async () => {
+    const fetchCustomers = useCallback(async () => {
         try {
             const token = localStorage.getItem('token');
-            const response = await fetch('http://localhost:5000/api/owner/bookings', {
+            const response = await fetch(getApiUrl('owner/bookings'), {
                 headers: {
                     'Authorization': `Bearer ${token}`
                 }
@@ -46,7 +37,7 @@ export default function OwnerMessagesPage() {
                 const data = await response.json();
                 // Extract unique customers from bookings
                 const uniqueCustomers = new Map();
-                data.data?.forEach((booking: any) => {
+                data.data?.forEach((booking: Record<string, any>) => {
                     if (booking.userId && typeof booking.userId === 'object') {
                         uniqueCustomers.set(booking.userId._id || booking.userId.id, {
                             _id: booking.userId._id || booking.userId.id,
@@ -58,12 +49,22 @@ export default function OwnerMessagesPage() {
                 });
                 setCustomers(Array.from(uniqueCustomers.values()));
             }
-        } catch (error) {
-            console.error('Error fetching customers:', error);
+        } catch (err: unknown) {
+            console.error('Error fetching customers:', err);
         } finally {
             setLoading(false);
         }
-    };
+    }, [router]);
+
+    useEffect(() => {
+        const token = localStorage.getItem('token');
+        if (!token) {
+            router.push('/login');
+            return;
+        }
+
+        fetchCustomers();
+    }, [fetchCustomers, router]);
 
     const toggleCustomer = (customerId: string) => {
         setSelectedCustomers(prev =>
@@ -95,7 +96,7 @@ export default function OwnerMessagesPage() {
         setSending(true);
 
         try {
-            // This is a placeholder - you'll need to implement the actual API endpoint
+            // This is a placeholder - you&apos;ll need to implement the actual API endpoint
             const selectedCustomerData = customers.filter(c => selectedCustomers.includes(c._id));
 
             console.log('Sending message:', {
@@ -110,8 +111,8 @@ export default function OwnerMessagesPage() {
             alert(`${messageType.toUpperCase()} messages sent successfully to ${selectedCustomers.length} customer(s)!`);
             setMessage('');
             setSelectedCustomers([]);
-        } catch (error) {
-            console.error('Error sending messages:', error);
+        } catch (err: unknown) {
+            console.error('Error sending messages:', err);
             alert('Failed to send messages. Please try again.');
         } finally {
             setSending(false);
@@ -378,7 +379,7 @@ export default function OwnerMessagesPage() {
                                 Coming Soon! 🚀
                             </div>
                             <p className="text-gray-600 mb-6 leading-relaxed">
-                                We're working hard to bring you WhatsApp messaging capabilities.
+                                We&apos;re working hard to bring you WhatsApp messaging capabilities.
                                 This feature will allow you to send messages directly to your customers via WhatsApp.
                             </p>
                             <p className="text-gray-600 mb-6">

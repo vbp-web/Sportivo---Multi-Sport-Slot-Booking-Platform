@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { useRouter } from 'next/navigation';
 import Navbar from '@/components/shared/Navbar';
 import Footer from '@/components/shared/Footer';
@@ -45,6 +45,26 @@ export default function ProfilePage() {
     const [loading, setLoading] = useState(true);
     const [updating, setUpdating] = useState(false);
 
+    const fetchBookings = useCallback(async () => {
+        try {
+            const token = localStorage.getItem('token');
+            const response = await fetch(getApiUrl('user/bookings'), {
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            });
+
+            if (response.ok) {
+                const data = await response.json();
+                setBookings(data.data || []);
+            }
+        } catch (err: unknown) {
+            console.error('Error fetching bookings:', err);
+        } finally {
+            setLoading(false);
+        }
+    }, []);
+
     useEffect(() => {
         const token = localStorage.getItem('token');
         if (!token) {
@@ -58,27 +78,7 @@ export default function ProfilePage() {
         }
 
         fetchBookings();
-    }, []);
-
-    const fetchBookings = async () => {
-        try {
-            const token = localStorage.getItem('token');
-            const response = await fetch(getApiUrl('user/bookings'), {
-                headers: {
-                    'Authorization': `Bearer ${token}`
-                }
-            });
-
-            if (response.ok) {
-                const data = await response.json();
-                setBookings(data.data || []);
-            }
-        } catch (error) {
-            console.error('Error fetching bookings:', error);
-        } finally {
-            setLoading(false);
-        }
-    };
+    }, [fetchBookings, router]);
 
     const handleUpdateProfile = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
@@ -107,8 +107,8 @@ export default function ProfilePage() {
             } else {
                 alert('Failed to update profile');
             }
-        } catch (error) {
-            console.error('Error updating profile:', error);
+        } catch (err: unknown) {
+            console.error('Error updating profile:', err);
             alert('Failed to update profile');
         } finally {
             setUpdating(false);
@@ -220,7 +220,7 @@ export default function ProfilePage() {
                                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01" />
                                     </svg>
                                     <h3 className="text-lg font-medium text-gray-900 mb-2">No bookings yet</h3>
-                                    <p className="text-gray-500 mb-6">You haven't made any bookings yet. Start by browsing available venues!</p>
+                                    <p className="text-gray-500 mb-6">You haven&apos;t made any bookings yet. Start by browsing available venues!</p>
                                     <button
                                         onClick={() => router.push('/cities')}
                                         className="px-6 py-2 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-lg font-medium hover:from-blue-700 hover:to-purple-700"
@@ -259,4 +259,3 @@ export default function ProfilePage() {
         </div>
     );
 }
-

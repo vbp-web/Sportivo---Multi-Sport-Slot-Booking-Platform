@@ -1,22 +1,19 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { useRouter } from 'next/navigation';
 import Sidebar from '@/components/shared/Sidebar';
 import DashboardStats from '@/components/owner/DashboardStats';
+import { getApiUrl } from '@/lib/api-config';
 
 export default function OwnerDashboardPage() {
     const router = useRouter();
-    const [stats, setStats] = useState<any>(null);
-    const [recentActivity, setRecentActivity] = useState<any[]>([]);
+    const [stats, setStats] = useState<Record<string, unknown> | null>(null);
+    const [recentActivity, setRecentActivity] = useState<Array<Record<string, any>>>([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState('');
 
-    useEffect(() => {
-        fetchDashboardData();
-    }, []);
-
-    const fetchDashboardData = async () => {
+    const fetchDashboardData = useCallback(async () => {
         try {
             const token = localStorage.getItem('token');
             if (!token) {
@@ -24,7 +21,7 @@ export default function OwnerDashboardPage() {
                 return;
             }
 
-            const response = await fetch('http://localhost:5000/api/owner/dashboard', {
+            const response = await fetch(getApiUrl('owner/dashboard'), {
                 headers: {
                     'Authorization': `Bearer ${token}`
                 }
@@ -38,13 +35,17 @@ export default function OwnerDashboardPage() {
                 const errorData = await response.json();
                 setError(errorData.message || 'Failed to fetch dashboard data');
             }
-        } catch (err: any) {
+        } catch (err: unknown) {
             console.error('Error fetching dashboard:', err);
             setError('Failed to load dashboard');
         } finally {
             setLoading(false);
         }
-    };
+    }, [router]);
+
+    useEffect(() => {
+        fetchDashboardData();
+    }, [fetchDashboardData]);
 
     const formatTimeAgo = (timestamp: string) => {
         const now = new Date();
@@ -91,10 +92,10 @@ export default function OwnerDashboardPage() {
             <main className="flex-1 p-8">
                 <div className="mb-8">
                     <h1 className="text-3xl font-bold text-gray-900">Dashboard</h1>
-                    <p className="text-gray-600 mt-2">Welcome back! Here's your venue overview</p>
+                    <p className="text-gray-600 mt-2">Welcome back! Here&apos;s your venue overview</p>
                 </div>
 
-                <DashboardStats stats={stats} />
+                <DashboardStats stats={stats as any} />
 
                 {/* Recent Activity */}
                 <div className="mt-8 bg-white rounded-lg shadow-sm p-6">

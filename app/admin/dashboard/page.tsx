@@ -1,21 +1,47 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { useRouter } from 'next/navigation';
 import Sidebar from '@/components/shared/Sidebar';
 import AnalyticsDashboard from '@/components/admin/AnalyticsDashboard';
+import { getApiUrl } from '@/lib/api-config';
+
+interface AnalyticsData {
+    overview: {
+        totalRevenue: number;
+        totalBookings: number;
+        totalVenues: number;
+        totalOwners: number;
+        activeUsers: number;
+        pendingApprovals: number;
+    };
+    recentActivity: Array<{
+        id: string;
+        type: 'booking' | 'owner' | 'payment' | 'venue';
+        message: string;
+        timestamp: string;
+    }>;
+    topVenues: Array<{
+        id: string;
+        name: string;
+        city: string;
+        bookings: number;
+        revenue: number;
+    }>;
+    monthlyStats: Array<{
+        month: string;
+        revenue: number;
+        bookings: number;
+    }>;
+}
 
 export default function AdminDashboardPage() {
     const router = useRouter();
-    const [analyticsData, setAnalyticsData] = useState<any>(null);
+    const [analyticsData, setAnalyticsData] = useState<AnalyticsData | null>(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState('');
 
-    useEffect(() => {
-        fetchAnalytics();
-    }, []);
-
-    const fetchAnalytics = async () => {
+    const fetchAnalytics = useCallback(async () => {
         try {
             const token = localStorage.getItem('token');
             if (!token) {
@@ -23,7 +49,7 @@ export default function AdminDashboardPage() {
                 return;
             }
 
-            const response = await fetch('http://localhost:5000/api/admin/analytics', {
+            const response = await fetch(getApiUrl('admin/analytics'), {
                 headers: {
                     'Authorization': `Bearer ${token}`
                 }
@@ -35,13 +61,17 @@ export default function AdminDashboardPage() {
             } else {
                 setError('Failed to fetch analytics data');
             }
-        } catch (err: any) {
+        } catch (err: unknown) {
             console.error('Error fetching analytics:', err);
             setError('Failed to load analytics');
         } finally {
             setLoading(false);
         }
-    };
+    }, [router]);
+
+    useEffect(() => {
+        fetchAnalytics();
+    }, [fetchAnalytics]);
 
     if (loading) {
         return (

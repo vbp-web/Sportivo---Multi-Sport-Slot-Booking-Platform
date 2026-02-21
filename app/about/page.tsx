@@ -22,7 +22,7 @@ export default function About() {
                         </span>
                     </h1>
                     <p className="text-xl text-gray-600 max-w-3xl mx-auto mb-10">
-                        Sportivo is India's premier platform for sports enthusiasts to find, book, and enjoy their favorite sports venues instantly. Our mission is to make sports accessible to everyone.
+                        Sportivo is India&apos;s premier platform for sports enthusiasts to find, book, and enjoy their favorite sports venues instantly. Our mission is to make sports accessible to everyone.
                     </p>
                     <div className="flex justify-center gap-4">
                         <Link href="/cities">
@@ -65,7 +65,7 @@ export default function About() {
                             {
                                 step: '03',
                                 title: 'Play & Enjoy',
-                                description: 'Once approved by the owner, you\'ll receive a confirmation. Show up at the venue and start playing!',
+                                description: 'Once approved by the owner, you&apos;ll receive a confirmation. Show up at the venue and start playing!',
                                 icon: (
                                     <svg className="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z" />
@@ -99,7 +99,7 @@ export default function About() {
                                 <span className="text-blue-600">Empower Athletes</span>
                             </h2>
                             <p className="text-lg text-gray-600 leading-relaxed">
-                                At Sportivo, we believe that staying active shouldn't be a logistical challenge. We've built a platform that bridges the gap between passionate players and top-tier venue owners.
+                                At Sportivo, we believe that staying active shouldn&apos;t be a logistical challenge. We&apos;ve built a platform that bridges the gap between passionate players and top-tier venue owners.
                             </p>
                             <div className="grid sm:grid-cols-2 gap-6">
                                 {[
@@ -126,7 +126,7 @@ export default function About() {
                             <div className="absolute -inset-4 bg-gradient-to-r from-blue-600 to-purple-600 rounded-3xl blur-2xl opacity-20 animate-pulse"></div>
                             <div className="relative bg-white rounded-3xl shadow-2xl overflow-hidden border border-gray-100">
                                 <div className="p-8 md:p-12 text-center space-y-6">
-                                    <div className="text-6xl text-blue-600 font-bold italic tracking-tighter">"Play More, Wait Less."</div>
+                                    <div className="text-6xl text-blue-600 font-bold italic tracking-tighter">&quot;Play More, Wait Less.&quot;</div>
                                     <p className="text-gray-500 font-medium">— Our Founding Philosophy</p>
                                 </div>
                             </div>
@@ -143,7 +143,7 @@ export default function About() {
                         <div className="absolute bottom-0 left-0 -ml-20 -mb-20 w-64 h-64 bg-purple-600/20 rounded-full blur-3xl"></div>
                         <CardBody className="text-center space-y-8 p-12 relative z-10">
                             <h2 className="text-4xl font-bold text-white">Join the Community</h2>
-                            <p className="text-xl text-gray-400">Whether you're a player or a venue owner, Sportivo is the place for you.</p>
+                            <p className="text-xl text-gray-400">Whether you&apos;re a player or a venue owner, Sportivo is the place for you.</p>
                             <div className="flex flex-col sm:flex-row gap-4 justify-center">
                                 <Link href="/register">
                                     <Button size="lg" className="px-12 bg-white text-gray-900 hover:bg-gray-100">Sign Up</Button>

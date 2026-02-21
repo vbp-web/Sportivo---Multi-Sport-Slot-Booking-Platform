@@ -37,7 +37,7 @@ export default function AddVenuePage() {
         closingTime: '23:00',
         selectedSports: [] as string[]
     });
-    const [errors, setErrors] = useState<any>({});
+    const [errors, setErrors] = useState<Record<string, string>>({});
 
     useEffect(() => {
         const token = localStorage.getItem('token');
@@ -47,12 +47,10 @@ export default function AddVenuePage() {
         }
 
         fetchData();
-    }, []);
+    }, [router]);
 
     const fetchData = async () => {
         try {
-            const token = localStorage.getItem('token');
-
             // Fetch cities
             const citiesRes = await fetch(getApiUrl('cities'));
             if (citiesRes.ok) {
@@ -88,7 +86,7 @@ export default function AddVenuePage() {
         setSubmitting(true);
 
         // Validation
-        const newErrors: any = {};
+        const newErrors: Record<string, string> = {};
         if (!formData.name) newErrors.name = 'Venue name is required';
         if (!formData.address) newErrors.address = 'Address is required';
         if (!formData.city) newErrors.city = 'City is required';

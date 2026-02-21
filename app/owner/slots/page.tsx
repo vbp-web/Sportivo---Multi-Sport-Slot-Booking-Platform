@@ -60,17 +60,7 @@ export default function OwnerSlotsPage() {
     const [customerName, setCustomerName] = useState('');
     const [customerPhone, setCustomerPhone] = useState('');
 
-    useEffect(() => {
-        const token = localStorage.getItem('token');
-        if (!token) {
-            router.push('/login');
-            return;
-        }
-
-        fetchData();
-    }, []);
-
-    const fetchData = async () => {
+    const fetchData = useCallback(async () => {
         try {
             const token = localStorage.getItem('token');
 
@@ -95,12 +85,22 @@ export default function OwnerSlotsPage() {
                 const slotsData = await slotsRes.json();
                 setSlots(slotsData.data || []);
             }
-        } catch (error) {
-            console.error('Error fetching data:', error);
+        } catch (err: unknown) {
+            console.error('Error fetching data:', err);
         } finally {
             setLoading(false);
         }
-    };
+    }, [router]);
+
+    useEffect(() => {
+        const token = localStorage.getItem('token');
+        if (!token) {
+            router.push('/login');
+            return;
+        }
+
+        fetchData();
+    }, [router, fetchData]);
 
     const handleCreateSlots = async () => {
         if (!selectedCourt || !selectedDate) {
@@ -133,8 +133,8 @@ export default function OwnerSlotsPage() {
             } else {
                 alert(data.message || 'Failed to create slots');
             }
-        } catch (error) {
-            console.error('Error:', error);
+        } catch (err: unknown) {
+            console.error('Error:', err);
             alert('Failed to create slots');
         }
     };
@@ -160,8 +160,8 @@ export default function OwnerSlotsPage() {
             } else {
                 alert(data.message || 'Failed to update slot');
             }
-        } catch (error) {
-            console.error('Error:', error);
+        } catch (err: unknown) {
+            console.error('Error:', err);
             alert('Failed to update slot');
         }
     };
@@ -228,8 +228,8 @@ export default function OwnerSlotsPage() {
             } else {
                 alert(data.message || 'Failed to create offline booking');
             }
-        } catch (error) {
-            console.error('Error:', error);
+        } catch (err: unknown) {
+            console.error('Error:', err);
             alert('Failed to create offline booking');
         }
     };
@@ -319,7 +319,7 @@ export default function OwnerSlotsPage() {
                                     {selectedSlots.length} slot(s) selected for offline booking
                                 </p>
                                 <p className="text-xs text-green-600 mt-1">
-                                    Click "Book Offline" to enter customer details and create the booking
+                                    Click &quot;Book Offline&quot; to enter customer details and create the booking
                                 </p>
                             </div>
                         </div>
@@ -363,7 +363,7 @@ export default function OwnerSlotsPage() {
                             </label>
                             <select
                                 value={filterStatus}
-                                onChange={(e) => setFilterStatus(e.target.value as any)}
+                                onChange={(e) => setFilterStatus(e.target.value as 'all' | 'available' | 'booked' | 'blocked')}
                                 className="w-full px-4 py-2 rounded-lg border-2 border-gray-200 focus:border-blue-500 focus:outline-none"
                             >
                                 <option value="all">All Status</option>
@@ -542,7 +542,7 @@ export default function OwnerSlotsPage() {
                                 />
                             </div>
                             <p className="text-sm text-gray-500">
-                                This will create hourly slots based on the venue's operating hours.
+                                This will create hourly slots based on the venue&apos;s operating hours.
                             </p>
                         </div>
                         <div className="flex gap-3 mt-6">

@@ -1,11 +1,12 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { useRouter } from 'next/navigation';
 import Navbar from '@/components/shared/Navbar';
 import Footer from '@/components/shared/Footer';
 import Button from '@/components/ui/Button';
 import Badge from '@/components/ui/Badge';
+import { getApiUrl } from '@/lib/api-config';
 
 interface Feature {
     _id: string;
@@ -37,6 +38,26 @@ export default function AdminFeaturesPage() {
         category: 'other' as Feature['category']
     });
 
+    const fetchFeatures = useCallback(async () => {
+        try {
+            const token = localStorage.getItem('token');
+            const response = await fetch(getApiUrl('features'), {
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            });
+
+            if (response.ok) {
+                const data = await response.json();
+                setFeatures(data.data || []);
+            }
+        } catch (error) {
+            console.error('Error fetching features:', error);
+        } finally {
+            setLoading(false);
+        }
+    }, []);
+
     useEffect(() => {
         const token = localStorage.getItem('token');
         const user = localStorage.getItem('user');
@@ -53,27 +74,7 @@ export default function AdminFeaturesPage() {
         }
 
         fetchFeatures();
-    }, []);
-
-    const fetchFeatures = async () => {
-        try {
-            const token = localStorage.getItem('token');
-            const response = await fetch('http://localhost:5000/api/features', {
-                headers: {
-                    'Authorization': `Bearer ${token}`
-                }
-            });
-
-            if (response.ok) {
-                const data = await response.json();
-                setFeatures(data.data || []);
-            }
-        } catch (error) {
-            console.error('Error fetching features:', error);
-        } finally {
-            setLoading(false);
-        }
-    };
+    }, [fetchFeatures, router]);
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -81,8 +82,8 @@ export default function AdminFeaturesPage() {
         try {
             const token = localStorage.getItem('token');
             const url = editingFeature
-                ? `http://localhost:5000/api/features/${editingFeature._id}`
-                : 'http://localhost:5000/api/features';
+                ? getApiUrl(`features/${editingFeature._id}`)
+                : getApiUrl('features');
 
             const method = editingFeature ? 'PUT' : 'POST';
 
@@ -127,7 +128,7 @@ export default function AdminFeaturesPage() {
 
         try {
             const token = localStorage.getItem('token');
-            const response = await fetch(`http://localhost:5000/api/features/${featureId}`, {
+            const response = await fetch(getApiUrl(`features/${featureId}`), {
                 method: 'DELETE',
                 headers: {
                     'Authorization': `Bearer ${token}`
@@ -151,7 +152,7 @@ export default function AdminFeaturesPage() {
     const handleToggleStatus = async (featureId: string) => {
         try {
             const token = localStorage.getItem('token');
-            const response = await fetch(`http://localhost:5000/api/features/${featureId}/toggle`, {
+            const response = await fetch(getApiUrl(`features/${featureId}/toggle`), {
                 method: 'PATCH',
                 headers: {
                     'Authorization': `Bearer ${token}`

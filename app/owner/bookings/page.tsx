@@ -1,10 +1,11 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { useRouter } from 'next/navigation';
 import Navbar from '@/components/shared/Navbar';
 import Footer from '@/components/shared/Footer';
 import Badge from '@/components/ui/Badge';
+import { getApiUrl } from '@/lib/api-config';
 
 interface Booking {
     _id: string;
@@ -53,24 +54,10 @@ export default function OwnerBookingsPage() {
     const [showPaymentProof, setShowPaymentProof] = useState(false);
     const [selectedProof, setSelectedProof] = useState('');
 
-    useEffect(() => {
-        const token = localStorage.getItem('token');
-        if (!token) {
-            router.push('/login');
-            return;
-        }
-
-        fetchBookings();
-
-        // Auto-refresh every 30 seconds for real-time updates
-        const interval = setInterval(fetchBookings, 30000);
-        return () => clearInterval(interval);
-    }, [filter]);
-
-    const fetchBookings = async () => {
+    const fetchBookings = useCallback(async () => {
         try {
             const token = localStorage.getItem('token');
-            const response = await fetch('http://localhost:5000/api/owner/bookings', {
+            const response = await fetch(getApiUrl('owner/bookings'), {
                 headers: {
                     'Authorization': `Bearer ${token}`
                 }
@@ -87,19 +74,33 @@ export default function OwnerBookingsPage() {
 
                 setBookings(bookingsData);
             }
-        } catch (error) {
-            console.error('Error fetching bookings:', error);
+        } catch (err: unknown) {
+            console.error('Error fetching bookings:', err);
         } finally {
             setLoading(false);
         }
-    };
+    }, [filter]);
+
+    useEffect(() => {
+        const token = localStorage.getItem('token');
+        if (!token) {
+            router.push('/login');
+            return;
+        }
+
+        fetchBookings();
+
+        // Auto-refresh every 30 seconds for real-time updates
+        const interval = setInterval(fetchBookings, 30000);
+        return () => clearInterval(interval);
+    }, [fetchBookings, router]);
 
     const handleApprove = async (bookingId: string) => {
         if (!confirm('Are you sure you want to approve this booking?')) return;
 
         try {
             const token = localStorage.getItem('token');
-            const response = await fetch(`http://localhost:5000/api/owner/bookings/${bookingId}/approve`, {
+            const response = await fetch(getApiUrl(`owner/bookings/${bookingId}/approve`), {
                 method: 'PUT',
                 headers: {
                     'Authorization': `Bearer ${token}`
@@ -114,8 +115,8 @@ export default function OwnerBookingsPage() {
             } else {
                 alert(data.message || 'Failed to approve booking');
             }
-        } catch (error) {
-            console.error('Error:', error);
+        } catch (err: unknown) {
+            console.error('Error:', err);
             alert('Failed to approve booking');
         }
     };
@@ -129,7 +130,7 @@ export default function OwnerBookingsPage() {
 
         try {
             const token = localStorage.getItem('token');
-            const response = await fetch(`http://localhost:5000/api/owner/bookings/${selectedBooking._id}/reject`, {
+            const response = await fetch(getApiUrl(`owner/bookings/${selectedBooking._id}/reject`), {
                 method: 'PUT',
                 headers: {
                     'Authorization': `Bearer ${token}`,
@@ -149,8 +150,8 @@ export default function OwnerBookingsPage() {
             } else {
                 alert(data.message || 'Failed to reject booking');
             }
-        } catch (error) {
-            console.error('Error:', error);
+        } catch (err: unknown) {
+            console.error('Error:', err);
             alert('Failed to reject booking');
         }
     };
@@ -223,8 +224,8 @@ export default function OwnerBookingsPage() {
                                 key={tab}
                                 onClick={() => setFilter(tab as any)}
                                 className={`px-4 py-2 font-medium border-b-2 transition-colors capitalize ${filter === tab
-                                        ? 'border-blue-600 text-blue-600'
-                                        : 'border-transparent text-gray-600 hover:text-gray-900'
+                                    ? 'border-blue-600 text-blue-600'
+                                    : 'border-transparent text-gray-600 hover:text-gray-900'
                                     }`}
                             >
                                 {tab}

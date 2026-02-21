@@ -1,9 +1,10 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { useRouter } from 'next/navigation';
 import Sidebar from '@/components/shared/Sidebar';
 import Badge from '@/components/ui/Badge';
+import { getApiUrl } from '@/lib/api-config';
 
 interface Booking {
     _id: string;
@@ -51,6 +52,27 @@ export default function AdminBookingsPage() {
     const [showPaymentProof, setShowPaymentProof] = useState(false);
     const [selectedProof, setSelectedProof] = useState('');
 
+    const fetchBookings = useCallback(async () => {
+        try {
+            setLoading(true);
+            const token = localStorage.getItem('token');
+            const response = await fetch(getApiUrl('admin/bookings'), {
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            });
+
+            if (response.ok) {
+                const data = await response.json();
+                setBookings(data.data || []);
+            }
+        } catch (error) {
+            console.error('Error fetching bookings:', error);
+        } finally {
+            setLoading(false);
+        }
+    }, []);
+
     useEffect(() => {
         const token = localStorage.getItem('token');
         const user = localStorage.getItem('user');
@@ -67,28 +89,7 @@ export default function AdminBookingsPage() {
         }
 
         fetchBookings();
-    }, []);
-
-    const fetchBookings = async () => {
-        try {
-            setLoading(true);
-            const token = localStorage.getItem('token');
-            const response = await fetch('http://localhost:5000/api/admin/bookings', {
-                headers: {
-                    'Authorization': `Bearer ${token}`
-                }
-            });
-
-            if (response.ok) {
-                const data = await response.json();
-                setBookings(data.data || []);
-            }
-        } catch (error) {
-            console.error('Error fetching bookings:', error);
-        } finally {
-            setLoading(false);
-        }
-    };
+    }, [fetchBookings, router]);
 
     const getStatusBadge = (status: string) => {
         const config = {
@@ -255,7 +256,7 @@ export default function AdminBookingsPage() {
                                                 {booking.paymentProof && (
                                                     <button
                                                         onClick={() => {
-                                                            setSelectedProof(`http://localhost:5000${booking.paymentProof}`);
+                                                            setSelectedProof(booking.paymentProof!.startsWith('http') ? booking.paymentProof! : getApiUrl(booking.paymentProof!));
                                                             setShowPaymentProof(true);
                                                         }}
                                                         className="text-[10px] text-blue-600 hover:underline mt-0.5 block"
@@ -299,13 +300,6 @@ export default function AdminBookingsPage() {
                                 alt="Payment Proof"
                                 className="w-full h-auto max-h-[85vh] object-contain rounded-lg"
                                 onClick={(e) => e.stopPropagation()}
-                                onError={(e) => {
-                                    const target = e.target as HTMLImageElement;
-                                    if (target.src.includes('http://localhost:5000/uploads/')) {
-                                        // Attempt to fix double slash or path issue
-                                        // target.src = target.src.replace('/uploads/', '/uploads/');
-                                    }
-                                }}
                             />
                         </div>
                         <div className="bg-gray-50 px-6 py-4 border-t border-gray-100 flex justify-between items-center">
