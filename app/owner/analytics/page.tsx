@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation';
 import Navbar from '@/components/shared/Navbar';
 import Footer from '@/components/shared/Footer';
 import Sidebar from '@/components/shared/Sidebar';
+import { API_BASE_URL } from '@/lib/api-config';
 
 interface AnalyticsData {
     totalBookings: number;
@@ -46,7 +47,7 @@ export default function OwnerAnalyticsPage() {
         try {
             setError('');
             const token = localStorage.getItem('token');
-            const response = await fetch('http://localhost:5000/api/owner/dashboard', {
+            const response = await fetch(`${API_BASE_URL}/owner/dashboard`, {
                 headers: {
                     'Authorization': `Bearer ${token}`
                 }

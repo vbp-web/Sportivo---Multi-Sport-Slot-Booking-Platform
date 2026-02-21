@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
+import { API_BASE_URL } from '@/lib/api-config';
 
 interface SidebarProps {
     role: 'user' | 'owner' | 'admin';
@@ -31,7 +32,7 @@ export default function Sidebar({ role }: SidebarProps) {
             const token = localStorage.getItem('token');
             if (!token) return;
 
-            const response = await fetch('http://localhost:5000/api/owner/subscription', {
+            const response = await fetch(`${API_BASE_URL}/owner/subscription`, {
                 headers: {
                     'Authorization': `Bearer ${token}`
                 }
