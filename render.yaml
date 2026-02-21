@@ -1,0 +1,32 @@
+services:
+  # Backend API
+  - type: web
+    name: sportivo-backend
+    env: node
+    rootDir: backend
+    buildCommand: npm install && npm run build
+    startCommand: npm start
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 5000
+      - key: MONGODB_URI
+        sync: false # User needs to fill this on Render
+      - key: JWT_SECRET
+        sync: false # User needs to fill this on Render
+      - key: MSG91_AUTH_KEY
+        sync: false
+      - key: FRONTEND_URL
+        sync: false # Point this to the Frontend URL after it's deployed
+
+  # Frontend (Next.js)
+  - type: web
+    name: sportivo-frontend
+    env: node
+    rootDir: .
+    buildCommand: npm install && npm run build
+    startCommand: npm start
+    envVars:
+      - key: NEXT_PUBLIC_API_URL
+        sync: false # Point this to the Backend URL after it's deployed
