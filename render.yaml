@@ -5,8 +5,6 @@ services:
     buildCommand: npm install && npm run build:all
     startCommand: npm run start:all
     envVars:
-      - key: NODE_ENV
-        value: production
       - key: PORT
         value: 10000 # Next.js will use this
       - key: BACKEND_PORT
