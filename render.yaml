@@ -1,32 +1,19 @@
 services:
-  # Backend API
   - type: web
-    name: sportivo-backend
+    name: sportivo-fullstack
     env: node
-    rootDir: backend
-    buildCommand: npm install && npm run build
-    startCommand: npm start
+    buildCommand: npm install && npm run build:all
+    startCommand: npm run start:all
     envVars:
       - key: NODE_ENV
         value: production
       - key: PORT
-        value: 5000
+        value: 10000 # Next.js will use this
+      - key: BACKEND_PORT
+        value: 5000  # Backend will run on this internally
       - key: MONGODB_URI
-        sync: false # User needs to fill this on Render
-      - key: JWT_SECRET
-        sync: false # User needs to fill this on Render
-      - key: MSG91_AUTH_KEY
         sync: false
-      - key: FRONTEND_URL
-        sync: false # Point this to the Frontend URL after it's deployed
-
-  # Frontend (Next.js)
-  - type: web
-    name: sportivo-frontend
-    env: node
-    rootDir: .
-    buildCommand: npm install && npm run build
-    startCommand: npm start
-    envVars:
+      - key: JWT_SECRET
+        sync: false
       - key: NEXT_PUBLIC_API_URL
-        sync: false # Point this to the Backend URL after it's deployed
+        value: http://localhost:5000/api # Frontend talks to Backend locally
