@@ -48,7 +48,7 @@ export default function AdminPaymentSettingsPage() {
 
     useEffect(() => {
         fetchPaymentSettings();
-    }, [fetchPaymentSettings]);
+    }, [fetchPaymentSettings, router]);
 
     const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         if (e.target.files && e.target.files[0]) {
@@ -106,7 +106,7 @@ export default function AdminPaymentSettingsPage() {
                 const data = await response.json();
                 setError(data.message || 'Failed to save settings');
             }
-        } catch (err: unknown) {
+        } catch {
             setError('Failed to save settings. Please try again.');
         } finally {
             setSaving(false);
@@ -243,7 +243,7 @@ export default function AdminPaymentSettingsPage() {
                             <h4 className="font-semibold text-blue-900 mb-2">Setup Instructions:</h4>
                             <ol className="text-sm text-blue-800 space-y-1 list-decimal list-inside">
                                 <li>Use your business UPI account for receiving subscription payments</li>
-                                <li>Open your UPI app and go to "Receive Money" or "My QR Code"</li>
+                                <li>Open your UPI app and go to &quot;Receive Money&quot; or &quot;My QR Code&quot;</li>
                                 <li>Take a screenshot of your business QR code</li>
                                 <li>Upload the screenshot here</li>
                                 <li>All venue owners will use this QR code for subscription payments</li>

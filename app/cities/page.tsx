@@ -1,7 +1,6 @@
 'use client';
 
 import { useState, useEffect, useCallback } from 'react';
-import { useRouter } from 'next/navigation';
 import Navbar from '@/components/shared/Navbar';
 import Footer from '@/components/shared/Footer';
 import CityCard from '@/components/user/CityCard';
@@ -16,7 +15,6 @@ interface City {
 }
 
 export default function CitiesPage() {
-    const router = useRouter();
     const [cities, setCities] = useState<City[]>([]);
     const [loading, setLoading] = useState(true);
     const [searchTerm, setSearchTerm] = useState('');

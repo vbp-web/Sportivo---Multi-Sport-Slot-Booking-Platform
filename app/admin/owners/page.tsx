@@ -82,7 +82,7 @@ export default function AdminOwnersPage() {
         }
 
         fetchOwners();
-    }, [fetchOwners]);
+    }, [fetchOwners, router]);
 
     const handleApprove = async (ownerId: string) => {
         if (!confirm('Are you sure you want to approve this owner?')) return;

@@ -22,10 +22,18 @@ interface Court {
     isActive: boolean;
 }
 
+interface Subscription {
+    planId?: {
+        _id?: string;
+        name: string;
+        maxCourts: number;
+    };
+}
+
 export default function OwnerCourtsPage() {
     const router = useRouter();
     const [courts, setCourts] = useState<Court[]>([]);
-    const [subscription, setSubscription] = useState<any>(null);
+    const [subscription, setSubscription] = useState<Subscription | null>(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState('');
 
@@ -75,7 +83,7 @@ export default function OwnerCourtsPage() {
     useEffect(() => {
         fetchCourts();
         fetchSubscription();
-    }, [fetchCourts, fetchSubscription]);
+    }, [fetchCourts, fetchSubscription, router]);
 
     const handleAddCourt = () => {
         router.push('/owner/courts/add');

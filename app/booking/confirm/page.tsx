@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect, Suspense } from 'react';
+import { useState, useEffect, Suspense, useCallback } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import Image from 'next/image';
 import Navbar from '@/components/shared/Navbar';
@@ -252,7 +252,7 @@ function BookingConfirmContent() {
                             </h2>
 
                             <div className="space-y-4">
-                                {bookingDetails.slots?.map((slot, index) => (
+                                {bookingDetails.slots?.map((slot) => (
                                     <div key={slot._id} className="border-l-4 border-blue-500 pl-4 py-2">
                                         <p className="font-semibold text-gray-900">
                                             {formatDate(slot.date)}

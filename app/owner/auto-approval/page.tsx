@@ -107,7 +107,7 @@ export default function AutoApprovalPage() {
                 const data = await response.json();
                 setError(data.message || 'Failed to update settings');
             }
-        } catch (err: unknown) {
+        } catch {
             setError('Error saving settings');
         } finally {
             setSaving(false);

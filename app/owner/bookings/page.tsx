@@ -94,7 +94,7 @@ export default function OwnerBookingsPage() {
         // Auto-refresh every 30 seconds for real-time updates
         const interval = setInterval(fetchBookings, 30000);
         return () => clearInterval(interval);
-    }, [fetchBookings]);
+    }, [fetchBookings, router]);
 
     const handleApprove = async (bookingId: string) => {
         if (!confirm('Are you sure you want to approve this booking?')) return;

@@ -77,7 +77,7 @@ export default function OwnerDashboardPage() {
         } finally {
             setLoading(false);
         }
-    }, []);
+    }, [router]);
 
     useEffect(() => {
         fetchDashboardData();

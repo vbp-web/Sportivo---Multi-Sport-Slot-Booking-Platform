@@ -71,7 +71,7 @@ export default function OwnerMessagesPage() {
         }
 
         fetchCustomers();
-    }, [fetchCustomers]);
+    }, [fetchCustomers, router]);
 
     const toggleCustomer = (customerId: string) => {
         setSelectedCustomers(prev =>

@@ -167,7 +167,7 @@ export default function MyBookingsPage() {
                             {['all', 'pending', 'confirmed', 'rejected', 'cancelled'].map((tab) => (
                                 <button
                                     key={tab}
-                                    onClick={() => setFilter(tab as any)}
+                                    onClick={() => setFilter(tab as typeof filter)}
                                     className={`px-4 py-2 font-medium border-b-2 transition-colors capitalize ${filter === tab
                                         ? 'border-blue-600 text-blue-600'
                                         : 'border-transparent text-gray-600 hover:text-gray-900'

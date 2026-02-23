@@ -30,21 +30,6 @@ export default function OwnerAnalyticsPage() {
     const [analytics, setAnalytics] = useState<AnalyticsData | null>(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState('');
-    const [dateRange, setDateRange] = useState<'today' | 'week' | 'month' | 'all'>('month');
-
-    useEffect(() => {
-        const token = localStorage.getItem('token');
-        if (!token) {
-            router.push('/login');
-            return;
-        }
-
-        fetchAnalytics();
-
-        // Auto-refresh every 60 seconds
-        const interval = setInterval(fetchAnalytics, 60000);
-        return () => clearInterval(interval);
-    }, [dateRange, fetchAnalytics, router]);
 
     const fetchAnalytics = useCallback(async () => {
         try {
@@ -62,13 +47,27 @@ export default function OwnerAnalyticsPage() {
             } else {
                 setError(data.message || 'Failed to fetch analytics data');
             }
-        } catch (err: unknown) {
-            console.error('Error fetching analytics:', err);
+        } catch (error) {
+            console.error('Error fetching analytics:', error);
             setError('An error occurred while fetching analytics');
         } finally {
             setLoading(false);
         }
     }, []);
+
+    useEffect(() => {
+        const token = localStorage.getItem('token');
+        if (!token) {
+            router.push('/login');
+            return;
+        }
+
+        fetchAnalytics();
+
+        // Auto-refresh every 60 seconds
+        const interval = setInterval(fetchAnalytics, 60000);
+        return () => clearInterval(interval);
+    }, [fetchAnalytics, router]);
 
     const downloadCSV = () => {
         if (!analytics) return;

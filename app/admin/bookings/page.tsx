@@ -103,7 +103,7 @@ export default function AdminBookingsPage() {
         return config[status as keyof typeof config] || config.pending;
     };
 
-    const formatSlotTime = (slot: any) => {
+    const formatSlotTime = (slot: { date: string; startTime: string; endTime: string }) => {
         if (!slot) return 'N/A';
         const date = new Date(slot.date).toLocaleDateString('en-IN', {
             day: 'numeric',
@@ -165,7 +165,7 @@ export default function AdminBookingsPage() {
                         {['all', 'pending', 'confirmed', 'rejected', 'cancelled', 'completed'].map((tab) => (
                             <button
                                 key={tab}
-                                onClick={() => setFilter(tab as any)}
+                                onClick={() => setFilter(tab as typeof filter)}
                                 className={`px-4 py-1.5 rounded-md text-sm font-medium transition-all capitalize whitespace-nowrap ${filter === tab
                                     ? 'bg-white text-blue-600 shadow-sm'
                                     : 'text-gray-600 hover:text-gray-900'

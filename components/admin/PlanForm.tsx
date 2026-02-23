@@ -159,7 +159,7 @@ export default function PlanForm({ plan, onSubmit, onCancel }: PlanFormProps) {
         });
     };
 
-    const presetPlans = [
+    const presetPlans: Array<{ name: string; price: number; duration: number; durationType: 'monthly' | 'yearly'; maxVenues: number; maxCourts: number }> = [
         { name: 'Basic', price: 999, duration: 30, durationType: 'monthly', maxVenues: 1, maxCourts: 3 },
         { name: 'Standard', price: 2499, duration: 30, durationType: 'monthly', maxVenues: 2, maxCourts: 10 },
         { name: 'Premium', price: 4999, duration: 30, durationType: 'monthly', maxVenues: 5, maxCourts: 25 },

@@ -9,13 +9,7 @@ import Badge from '@/components/ui/Badge';
 import PlanForm from '@/components/admin/PlanForm';
 import { getApiUrl } from '@/lib/api-config';
 
-interface Feature {
-    _id: string;
-    name: string;
-    description?: string;
-    category: string;
-    isActive: boolean;
-}
+
 
 interface Plan {
     _id: string;
@@ -79,7 +73,7 @@ export default function AdminPlansPage() {
         }
 
         fetchPlans();
-    }, [fetchPlans]);
+    }, [fetchPlans, router]);
     // Added router to dependencies as it's used inside the effect
 
     const handleEdit = (plan: Plan) => {

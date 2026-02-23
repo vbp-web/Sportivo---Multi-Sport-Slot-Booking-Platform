@@ -74,7 +74,7 @@ export default function OwnerVenuesPage() {
         } finally {
             setLoading(false);
         }
-    }, []);
+    }, [router]);
 
     useEffect(() => {
         fetchVenues();
@@ -104,8 +104,8 @@ export default function OwnerVenuesPage() {
             if (response.ok) {
                 fetchVenues();
             }
-        } catch (err: unknown) {
-            console.error('Error toggling venue status:', err);
+        } catch (error) {
+            console.error('Error toggling venue status:', error);
         }
     };
 

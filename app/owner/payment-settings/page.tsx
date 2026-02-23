@@ -42,7 +42,7 @@ export default function OwnerPaymentSettingsPage() {
         } finally {
             setLoading(false);
         }
-    }, []);
+    }, [router]);
 
     useEffect(() => {
         fetchPaymentSettings();
@@ -103,7 +103,7 @@ export default function OwnerPaymentSettingsPage() {
                 const data = await response.json();
                 setError(data.message || 'Failed to save settings');
             }
-        } catch (err: unknown) {
+        } catch {
             setError('Failed to save settings. Please try again.');
         } finally {
             setSaving(false);
