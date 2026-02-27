@@ -2,8 +2,11 @@ import mongoose from 'mongoose';
 
 const connectDatabase = async (): Promise<void> => {
     try {
-        const mongoUri = process.env.MONGODB_URI || 'mongodb://localhost:27017/multi-sport-booking';
-
+        const mongoUri = process.env.MONGODB_URI;
+        if (!mongoUri) {
+            console.error('❌ MONGODB_URI environment variable is missing!');
+            return process.exit(1);
+        }
         const options = {
             autoIndex: true,
             maxPoolSize: 10,
