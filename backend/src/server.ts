@@ -111,7 +111,7 @@ app.use((err: any, _req: Request, res: Response, _next: any) => {
 });
 
 // Start server
-const PORT = process.env.BACKEND_PORT || process.env.PORT || 5000;
+const PORT = process.env.BACKEND_PORT || 5001;
 
 app.listen(PORT as number, '0.0.0.0', () => {
     console.log('='.repeat(50));
