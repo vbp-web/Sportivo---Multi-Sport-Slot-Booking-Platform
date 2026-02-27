@@ -1,5 +1,6 @@
-export const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api';
-
+// Use an absolute URL if explicitly provided, else default to relative '/api'
+// This ensures cross-device compatibility when frontend & backend share the same origin.
+export const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || '/api';
 export const getApiUrl = (endpoint: string) => {
     // Ensure endpoint doesn't start with / to avoid double slash if needed
     const cleanEndpoint = endpoint.startsWith('/') ? endpoint.slice(1) : endpoint;
