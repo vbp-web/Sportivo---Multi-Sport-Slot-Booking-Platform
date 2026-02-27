@@ -113,7 +113,7 @@ app.use((err: any, _req: Request, res: Response, _next: any) => {
 // Start server
 const PORT = process.env.BACKEND_PORT || process.env.PORT || 5000;
 
-app.listen(PORT, () => {
+app.listen(PORT as number, '0.0.0.0', () => {
     console.log('='.repeat(50));
     console.log(`🚀 Server running in ${process.env.NODE_ENV || 'development'} mode`);
     console.log(`📡 Port: ${PORT}`);
