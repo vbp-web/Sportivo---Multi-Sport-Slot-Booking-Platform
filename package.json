@@ -5,11 +5,12 @@
   "scripts": {
     "dev": "next dev",
     "build": "cross-env NODE_ENV=production next build",
-    "start": "next start",
+    "start": "npx concurrently \"npm run start:backend\" \"npm run start:frontend\"",
+    "start:frontend": "next start",
     "build:backend": "cd backend && npm install && npm run build",
     "build:all": "npm run build:backend && cross-env NODE_ENV=production next build",
     "start:backend": "cd backend && npm start",
-    "start:all": "npx concurrently \"npm run start:backend\" \"next start\"",
+    "start:all": "npm run start",
     "lint": "eslint"
   },
   "dependencies": {
