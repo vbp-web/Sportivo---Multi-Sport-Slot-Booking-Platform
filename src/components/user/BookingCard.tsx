@@ -48,8 +48,8 @@ export default function BookingCard({ booking }: BookingCardProps) {
         <Card>
             <CardHeader className="flex items-center justify-between">
                 <div>
-                    <div className="text-sm text-gray-600">Booking ID</div>
-                    <div className="font-mono font-bold text-gray-900">
+                    <div className="text-sm text-gray-400">Booking ID</div>
+                    <div className="font-mono font-bold text-white">
                         {booking.bookingCode}
                     </div>
                 </div>
@@ -61,10 +61,10 @@ export default function BookingCard({ booking }: BookingCardProps) {
             <CardBody className="space-y-4">
                 {/* Venue Info */}
                 <div>
-                    <h3 className="text-xl font-bold text-gray-900 mb-1">
+                    <h3 className="text-xl font-bold text-white mb-1">
                         {booking.venueName}
                     </h3>
-                    <div className="flex items-center gap-2 text-sm text-gray-600">
+                    <div className="flex items-center gap-2 text-sm text-gray-400">
                         <span>{booking.sportName}</span>
                         {booking.courtName && (
                             <>
@@ -76,10 +76,10 @@ export default function BookingCard({ booking }: BookingCardProps) {
                 </div>
 
                 {/* Date & Time */}
-                <div className="grid grid-cols-2 gap-4 p-4 bg-gray-50 rounded-lg">
+                <div className="grid grid-cols-2 gap-4 p-4 bg-gray-900 rounded-lg">
                     <div>
-                        <div className="text-sm text-gray-600 mb-1">Date</div>
-                        <div className="font-semibold text-gray-900 flex items-center gap-2">
+                        <div className="text-sm text-gray-400 mb-1">Date</div>
+                        <div className="font-semibold text-white flex items-center gap-2">
                             <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
                             </svg>
@@ -87,8 +87,8 @@ export default function BookingCard({ booking }: BookingCardProps) {
                         </div>
                     </div>
                     <div>
-                        <div className="text-sm text-gray-600 mb-1">Time</div>
-                        <div className="font-semibold text-gray-900 flex items-center gap-2">
+                        <div className="text-sm text-gray-400 mb-1">Time</div>
+                        <div className="font-semibold text-white flex items-center gap-2">
                             <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
                             </svg>
@@ -98,8 +98,8 @@ export default function BookingCard({ booking }: BookingCardProps) {
                 </div>
 
                 {/* Amount */}
-                <div className="flex items-center justify-between pt-4 border-t border-gray-200">
-                    <div className="text-gray-600">Total Amount</div>
+                <div className="flex items-center justify-between pt-4 border-t border-white/[0.08]">
+                    <div className="text-gray-400">Total Amount</div>
                     <div className="text-2xl font-bold text-blue-600">
                         ₹{booking.amount}
                     </div>

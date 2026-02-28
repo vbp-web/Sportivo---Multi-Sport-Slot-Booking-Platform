@@ -128,10 +128,10 @@ export default function AddCourtPage() {
 
     if (loading) {
         return (
-            <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+            <div className="min-h-screen bg-gray-950 flex items-center justify-center">
                 <div className="text-center">
                     <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto"></div>
-                    <p className="mt-4 text-gray-600">Loading...</p>
+                    <p className="mt-4 text-gray-400">Loading...</p>
                 </div>
             </div>
         );
@@ -139,14 +139,14 @@ export default function AddCourtPage() {
 
     if (venues.length === 0) {
         return (
-            <div className="min-h-screen bg-gray-50">
+            <div className="min-h-screen bg-gray-950">
                 <Navbar />
                 <main className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-                    <div className="bg-white rounded-lg shadow-sm p-12 text-center">
+                    <div className="bg-gray-900/60 rounded-lg shadow-sm p-12 text-center">
                         <svg className="mx-auto h-12 w-12 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
                         </svg>
-                        <h3 className="mt-2 text-lg font-medium text-gray-900">No venues found</h3>
+                        <h3 className="mt-2 text-lg font-medium text-white">No venues found</h3>
                         <p className="mt-1 text-sm text-gray-500">You need to add a venue first before adding courts.</p>
                         <div className="mt-6">
                             <Button onClick={() => router.push('/owner/venues/add')}>
@@ -161,7 +161,7 @@ export default function AddCourtPage() {
     }
 
     return (
-        <div className="min-h-screen bg-gray-50">
+        <div className="min-h-screen bg-gray-950">
             <Navbar />
 
             <main className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
@@ -175,11 +175,11 @@ export default function AddCourtPage() {
                         </svg>
                         Back to Courts
                     </button>
-                    <h1 className="text-4xl font-bold text-gray-900">Add New Court</h1>
-                    <p className="text-lg text-gray-600 mt-2">Add a court to your venue</p>
+                    <h1 className="text-4xl font-bold text-white">Add New Court</h1>
+                    <p className="text-lg text-gray-400 mt-2">Add a court to your venue</p>
                 </div>
 
-                <div className="bg-white rounded-lg shadow-sm p-8">
+                <div className="bg-gray-900/60 rounded-lg shadow-sm p-8">
                     <form onSubmit={handleSubmit} className="space-y-6">
                         <Input
                             label="Court Name *"
@@ -191,13 +191,13 @@ export default function AddCourtPage() {
                         />
 
                         <div>
-                            <label className="block text-sm font-medium text-gray-700 mb-1">
+                            <label className="block text-sm font-medium text-gray-300 mb-1">
                                 Select Venue *
                             </label>
                             <select
                                 value={formData.venueId}
                                 onChange={(e) => setFormData({ ...formData, venueId: e.target.value })}
-                                className="w-full px-4 py-2 rounded-lg border-2 border-gray-200 focus:border-blue-500 focus:outline-none"
+                                className="w-full px-4 py-2 rounded-lg border-2 border-white/[0.08] focus:border-blue-500 focus:outline-none"
                             >
                                 <option value="">Choose a venue</option>
                                 {venues.map(venue => (
@@ -210,13 +210,13 @@ export default function AddCourtPage() {
                         </div>
 
                         <div>
-                            <label className="block text-sm font-medium text-gray-700 mb-1">
+                            <label className="block text-sm font-medium text-gray-300 mb-1">
                                 Select Sport *
                             </label>
                             <select
                                 value={formData.sportId}
                                 onChange={(e) => setFormData({ ...formData, sportId: e.target.value })}
-                                className="w-full px-4 py-2 rounded-lg border-2 border-gray-200 focus:border-blue-500 focus:outline-none"
+                                className="w-full px-4 py-2 rounded-lg border-2 border-white/[0.08] focus:border-blue-500 focus:outline-none"
                             >
                                 <option value="">Choose a sport</option>
                                 {sports.map(sport => (
@@ -238,13 +238,13 @@ export default function AddCourtPage() {
                         />
 
                         <div>
-                            <label className="block text-sm font-medium text-gray-700 mb-1">
+                            <label className="block text-sm font-medium text-gray-300 mb-1">
                                 Description (Optional)
                             </label>
                             <textarea
                                 value={formData.description}
                                 onChange={(e) => setFormData({ ...formData, description: e.target.value })}
-                                className="w-full px-4 py-2 rounded-lg border-2 border-gray-200 focus:border-blue-500 focus:outline-none"
+                                className="w-full px-4 py-2 rounded-lg border-2 border-white/[0.08] focus:border-blue-500 focus:outline-none"
                                 rows={3}
                                 placeholder="Any additional details about this court..."
                             />
@@ -257,7 +257,7 @@ export default function AddCourtPage() {
                             <button
                                 type="button"
                                 onClick={() => router.back()}
-                                className="flex-1 px-4 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 transition-colors"
+                                className="flex-1 px-4 py-2 bg-gray-200 text-gray-300 rounded-lg hover:bg-gray-300 transition-colors"
                             >
                                 Cancel
                             </button>

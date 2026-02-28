@@ -16,6 +16,7 @@ export default function Navbar() {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const [isProfileOpen, setIsProfileOpen] = useState(false);
     const [user, setUser] = useState<User | null>(null);
+    const [scrolled, setScrolled] = useState(false);
 
     useEffect(() => {
         // Check if user is logged in
@@ -29,6 +30,15 @@ export default function Navbar() {
                 console.error('Error parsing user data:', error);
             }
         }
+    }, []);
+
+    // Navbar shrink + blur on scroll
+    useEffect(() => {
+        const handleScroll = () => {
+            setScrolled(window.scrollY > 20);
+        };
+        window.addEventListener('scroll', handleScroll);
+        return () => window.removeEventListener('scroll', handleScroll);
     }, []);
 
     const handleLogout = () => {
@@ -52,35 +62,44 @@ export default function Navbar() {
 
     return (
         <>
-            <nav className="fixed top-0 left-0 right-0 z-40 bg-white/80 backdrop-blur-lg border-b border-gray-200">
+            <nav
+                className={`fixed top-0 left-0 right-0 z-40 transition-all duration-300 ${scrolled
+                        ? 'bg-gray-950/80 backdrop-blur-xl border-b border-white/[0.06] shadow-lg shadow-black/20'
+                        : 'bg-transparent border-b border-transparent'
+                    }`}
+            >
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                    <div className="flex items-center justify-between h-16">
+                    <div className={`flex items-center justify-between transition-all duration-300 ${scrolled ? 'h-14' : 'h-16'}`}>
                         {/* Logo */}
-                        <Link href="/" className="flex items-center space-x-2">
-                            <div className="w-10 h-10 bg-gradient-to-br from-blue-600 to-purple-600 rounded-lg flex items-center justify-center">
+                        <Link href="/" className="flex items-center space-x-2 group">
+                            <div className="w-10 h-10 bg-gradient-to-br from-blue-500 to-purple-600 rounded-lg flex items-center justify-center group-hover:shadow-lg group-hover:shadow-indigo-500/30 transition-shadow duration-300">
                                 <svg className="w-6 h-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
                                 </svg>
                             </div>
-                            <span className="text-xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+                            <span className="text-xl font-bold bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
                                 Sportivo
                             </span>
                         </Link>
 
                         {/* Desktop Navigation */}
                         <div className="hidden md:flex items-center space-x-8">
-                            <Link href="/" className="text-gray-700 hover:text-blue-600 transition-colors font-medium">
-                                Home
-                            </Link>
-                            <Link href="/cities" className="text-gray-700 hover:text-blue-600 transition-colors font-medium">
-                                Browse Venues
-                            </Link>
-                            <Link href="/about" className="text-gray-700 hover:text-blue-600 transition-colors font-medium">
-                                How It Works
-                            </Link>
-                            <Link href="/contact" className="text-gray-700 hover:text-blue-600 transition-colors font-medium">
-                                Contact
-                            </Link>
+                            {[
+                                { href: '/', label: 'Home' },
+                                { href: '/cities', label: 'Browse Venues' },
+                                { href: '/about', label: 'How It Works' },
+                                { href: '/contact', label: 'Contact' },
+                            ].map((link) => (
+                                <Link
+                                    key={link.href}
+                                    href={link.href}
+                                    className="relative text-gray-400 hover:text-white transition-colors font-medium group py-1"
+                                >
+                                    {link.label}
+                                    {/* Sliding underline effect */}
+                                    <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-gradient-to-r from-blue-500 to-purple-500 group-hover:w-full transition-all duration-300 rounded-full" />
+                                </Link>
+                            ))}
                         </div>
 
                         {/* Desktop Auth/User Section */}
@@ -89,12 +108,12 @@ export default function Navbar() {
                                 <div className="relative">
                                     <button
                                         onClick={() => setIsProfileOpen(!isProfileOpen)}
-                                        className="flex items-center space-x-2 px-4 py-2 rounded-lg hover:bg-gray-100 transition-colors"
+                                        className="flex items-center space-x-2 px-4 py-2 rounded-lg hover:bg-white/5 transition-colors"
                                     >
-                                        <div className="w-8 h-8 bg-gradient-to-br from-blue-600 to-purple-600 rounded-full flex items-center justify-center text-white font-semibold">
+                                        <div className="w-8 h-8 bg-gradient-to-br from-blue-500 to-purple-600 rounded-full flex items-center justify-center text-white font-semibold text-sm">
                                             {user.name.charAt(0).toUpperCase()}
                                         </div>
-                                        <span className="font-medium text-gray-700">{user.name}</span>
+                                        <span className="font-medium text-gray-300">{user.name}</span>
                                         <svg className={`w-4 h-4 text-gray-500 transition-transform ${isProfileOpen ? 'rotate-180' : ''}`} fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
                                         </svg>
@@ -102,10 +121,10 @@ export default function Navbar() {
 
                                     {/* Dropdown Menu */}
                                     {isProfileOpen && (
-                                        <div className="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg border border-gray-200 py-2">
+                                        <div className="absolute right-0 mt-2 w-48 bg-gray-900 border border-white/10 rounded-xl shadow-2xl shadow-black/50 py-2 backdrop-blur-xl">
                                             <Link
                                                 href={getDashboardLink()}
-                                                className="block px-4 py-2 text-gray-700 hover:bg-gray-100 transition-colors"
+                                                className="block px-4 py-2 text-gray-300 hover:bg-white/5 hover:text-white transition-colors"
                                                 onClick={() => setIsProfileOpen(false)}
                                             >
                                                 <div className="flex items-center space-x-2">
@@ -119,7 +138,7 @@ export default function Navbar() {
                                                 <>
                                                     <Link
                                                         href="/owner/venues"
-                                                        className="block px-4 py-2 text-gray-700 hover:bg-gray-100 transition-colors"
+                                                        className="block px-4 py-2 text-gray-300 hover:bg-white/5 hover:text-white transition-colors"
                                                         onClick={() => setIsProfileOpen(false)}
                                                     >
                                                         <div className="flex items-center space-x-2">
@@ -131,7 +150,7 @@ export default function Navbar() {
                                                     </Link>
                                                     <Link
                                                         href="/owner/bookings"
-                                                        className="block px-4 py-2 text-gray-700 hover:bg-gray-100 transition-colors"
+                                                        className="block px-4 py-2 text-gray-300 hover:bg-white/5 hover:text-white transition-colors"
                                                         onClick={() => setIsProfileOpen(false)}
                                                     >
                                                         <div className="flex items-center space-x-2">
@@ -146,7 +165,7 @@ export default function Navbar() {
                                             {user.role === 'admin' && (
                                                 <Link
                                                     href="/admin/dashboard"
-                                                    className="block px-4 py-2 text-gray-700 hover:bg-gray-100 transition-colors"
+                                                    className="block px-4 py-2 text-gray-300 hover:bg-white/5 hover:text-white transition-colors"
                                                     onClick={() => setIsProfileOpen(false)}
                                                 >
                                                     <div className="flex items-center space-x-2">
@@ -158,10 +177,10 @@ export default function Navbar() {
                                                     </div>
                                                 </Link>
                                             )}
-                                            <hr className="my-2 border-gray-200" />
+                                            <hr className="my-2 border-white/10" />
                                             <button
                                                 onClick={handleLogout}
-                                                className="w-full text-left px-4 py-2 text-red-600 hover:bg-red-50 transition-colors"
+                                                className="w-full text-left px-4 py-2 text-red-400 hover:bg-red-500/10 transition-colors"
                                             >
                                                 <div className="flex items-center space-x-2">
                                                     <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -176,12 +195,12 @@ export default function Navbar() {
                             ) : (
                                 <>
                                     <Link href="/login">
-                                        <Button variant="ghost" size="sm">
+                                        <Button variant="ghost" size="sm" className="text-gray-400 hover:text-white hover:bg-white/5">
                                             Login
                                         </Button>
                                     </Link>
                                     <Link href="/register">
-                                        <Button variant="primary" size="sm">
+                                        <Button variant="primary" size="sm" className="btn-shine">
                                             Get Started
                                         </Button>
                                     </Link>
@@ -192,7 +211,7 @@ export default function Navbar() {
                         {/* Mobile Menu Button */}
                         <button
                             onClick={() => setIsMenuOpen(!isMenuOpen)}
-                            className="md:hidden p-2 rounded-lg hover:bg-gray-100 transition-colors"
+                            className="md:hidden p-2 rounded-lg hover:bg-white/5 transition-colors text-gray-400"
                         >
                             <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 {isMenuOpen ? (
@@ -207,72 +226,72 @@ export default function Navbar() {
 
                 {/* Mobile Menu */}
                 {isMenuOpen && (
-                    <div className="md:hidden border-t border-gray-200 bg-white">
+                    <div className="md:hidden border-t border-white/[0.06] bg-gray-950/95 backdrop-blur-xl">
                         <div className="px-4 py-4 space-y-3">
                             <Link
                                 href="/"
-                                className="block px-4 py-2 text-gray-700 hover:bg-gray-100 rounded-lg transition-colors"
+                                className="block px-4 py-2 text-gray-300 hover:bg-white/5 rounded-lg transition-colors"
                             >
                                 Home
                             </Link>
                             <Link
                                 href="/cities"
-                                className="block px-4 py-2 text-gray-700 hover:bg-gray-100 rounded-lg transition-colors"
+                                className="block px-4 py-2 text-gray-300 hover:bg-white/5 rounded-lg transition-colors"
                             >
                                 Browse Venues
                             </Link>
                             <Link
                                 href="/about"
-                                className="block px-4 py-2 text-gray-700 hover:bg-gray-100 rounded-lg transition-colors"
+                                className="block px-4 py-2 text-gray-300 hover:bg-white/5 rounded-lg transition-colors"
                             >
                                 How It Works
                             </Link>
                             <Link
                                 href="/contact"
-                                className="block px-4 py-2 text-gray-700 hover:bg-gray-100 rounded-lg transition-colors"
+                                className="block px-4 py-2 text-gray-300 hover:bg-white/5 rounded-lg transition-colors"
                             >
                                 Contact
                             </Link>
 
                             {user ? (
-                                <div className="pt-4 border-t border-gray-200 space-y-2">
-                                    <div className="px-4 py-2 text-sm font-medium text-gray-900">
+                                <div className="pt-4 border-t border-white/10 space-y-2">
+                                    <div className="px-4 py-2 text-sm font-medium text-gray-200">
                                         {user.name}
                                     </div>
-                                    <Link href={getDashboardLink()} className="block px-4 py-2 text-gray-700 hover:bg-gray-100 rounded-lg transition-colors">
+                                    <Link href={getDashboardLink()} className="block px-4 py-2 text-gray-300 hover:bg-white/5 rounded-lg transition-colors">
                                         My Profile
                                     </Link>
                                     {user.role === 'owner' && (
                                         <>
-                                            <Link href="/owner/venues" className="block px-4 py-2 text-gray-700 hover:bg-gray-100 rounded-lg transition-colors">
+                                            <Link href="/owner/venues" className="block px-4 py-2 text-gray-300 hover:bg-white/5 rounded-lg transition-colors">
                                                 My Venues
                                             </Link>
-                                            <Link href="/owner/bookings" className="block px-4 py-2 text-gray-700 hover:bg-gray-100 rounded-lg transition-colors">
+                                            <Link href="/owner/bookings" className="block px-4 py-2 text-gray-300 hover:bg-white/5 rounded-lg transition-colors">
                                                 Bookings
                                             </Link>
                                         </>
                                     )}
                                     {user.role === 'admin' && (
-                                        <Link href="/admin/dashboard" className="block px-4 py-2 text-gray-700 hover:bg-gray-100 rounded-lg transition-colors">
+                                        <Link href="/admin/dashboard" className="block px-4 py-2 text-gray-300 hover:bg-white/5 rounded-lg transition-colors">
                                             Admin Panel
                                         </Link>
                                     )}
                                     <button
                                         onClick={handleLogout}
-                                        className="w-full text-left px-4 py-2 text-red-600 hover:bg-red-50 rounded-lg transition-colors"
+                                        className="w-full text-left px-4 py-2 text-red-400 hover:bg-red-500/10 rounded-lg transition-colors"
                                     >
                                         Logout
                                     </button>
                                 </div>
                             ) : (
-                                <div className="pt-4 border-t border-gray-200 space-y-2">
+                                <div className="pt-4 border-t border-white/10 space-y-2">
                                     <Link href="/login" className="block">
-                                        <Button variant="outline" size="sm" className="w-full">
+                                        <Button variant="outline" size="sm" className="w-full border-gray-700 text-gray-300 hover:bg-white/5">
                                             Login
                                         </Button>
                                     </Link>
                                     <Link href="/register" className="block">
-                                        <Button variant="primary" size="sm" className="w-full">
+                                        <Button variant="primary" size="sm" className="w-full btn-shine">
                                             Get Started
                                         </Button>
                                     </Link>
@@ -288,4 +307,3 @@ export default function Navbar() {
         </>
     );
 }
-

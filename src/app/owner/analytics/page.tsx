@@ -102,17 +102,17 @@ export default function OwnerAnalyticsPage() {
 
     if (loading) {
         return (
-            <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+            <div className="min-h-screen bg-gray-950 flex items-center justify-center">
                 <div className="text-center">
                     <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto"></div>
-                    <p className="mt-4 text-gray-600">Loading analytics...</p>
+                    <p className="mt-4 text-gray-400">Loading analytics...</p>
                 </div>
             </div>
         );
     }
 
     return (
-        <div className="min-h-screen bg-gray-50">
+        <div className="min-h-screen bg-gray-950">
             <Navbar />
 
             <div className="flex">
@@ -132,10 +132,10 @@ export default function OwnerAnalyticsPage() {
                     <div className="mb-8">
                         <div className="flex justify-between items-center mb-4">
                             <div>
-                                <h1 className="text-4xl font-bold text-gray-900 mb-2">
+                                <h1 className="text-4xl font-bold text-white mb-2">
                                     📈 Analytics Dashboard
                                 </h1>
-                                <p className="text-lg text-gray-600">
+                                <p className="text-lg text-gray-400">
                                     Real-time insights into your business performance
                                 </p>
                                 <p className="text-sm text-gray-500 mt-1">
@@ -223,68 +223,68 @@ export default function OwnerAnalyticsPage() {
 
                     {/* Booking Stats */}
                     <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
-                        <div className="bg-white rounded-lg shadow-sm p-6">
-                            <div className="text-sm text-gray-600 mb-1">Pending Bookings</div>
+                        <div className="bg-gray-900/60 rounded-lg shadow-sm p-6">
+                            <div className="text-sm text-gray-400 mb-1">Pending Bookings</div>
                             <div className="text-2xl font-bold text-yellow-600">{analytics?.pendingBookings || 0}</div>
                         </div>
-                        <div className="bg-white rounded-lg shadow-sm p-6">
-                            <div className="text-sm text-gray-600 mb-1">Confirmed Bookings</div>
+                        <div className="bg-gray-900/60 rounded-lg shadow-sm p-6">
+                            <div className="text-sm text-gray-400 mb-1">Confirmed Bookings</div>
                             <div className="text-2xl font-bold text-green-600">{analytics?.confirmedBookings || 0}</div>
                         </div>
-                        <div className="bg-white rounded-lg shadow-sm p-6">
-                            <div className="text-sm text-gray-600 mb-1">Rejected Bookings</div>
+                        <div className="bg-gray-900/60 rounded-lg shadow-sm p-6">
+                            <div className="text-sm text-gray-400 mb-1">Rejected Bookings</div>
                             <div className="text-2xl font-bold text-red-600">{analytics?.rejectedBookings || 0}</div>
                         </div>
-                        <div className="bg-white rounded-lg shadow-sm p-6">
-                            <div className="text-sm text-gray-600 mb-1">Cancelled Bookings</div>
-                            <div className="text-2xl font-bold text-gray-600">{analytics?.cancelledBookings || 0}</div>
+                        <div className="bg-gray-900/60 rounded-lg shadow-sm p-6">
+                            <div className="text-sm text-gray-400 mb-1">Cancelled Bookings</div>
+                            <div className="text-2xl font-bold text-gray-400">{analytics?.cancelledBookings || 0}</div>
                         </div>
                     </div>
 
                     {/* Venue & Court Stats */}
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-                        <div className="bg-white rounded-lg shadow-sm p-6">
+                        <div className="bg-gray-900/60 rounded-lg shadow-sm p-6">
                             <div className="flex items-center gap-3 mb-3">
                                 <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center text-2xl">
                                     🏟️
                                 </div>
                                 <div>
-                                    <div className="text-sm text-gray-600">Total Venues</div>
-                                    <div className="text-2xl font-bold text-gray-900">{analytics?.totalVenues || 0}</div>
+                                    <div className="text-sm text-gray-400">Total Venues</div>
+                                    <div className="text-2xl font-bold text-white">{analytics?.totalVenues || 0}</div>
                                 </div>
                             </div>
                         </div>
-                        <div className="bg-white rounded-lg shadow-sm p-6">
+                        <div className="bg-gray-900/60 rounded-lg shadow-sm p-6">
                             <div className="flex items-center gap-3 mb-3">
                                 <div className="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center text-2xl">
                                     🎯
                                 </div>
                                 <div>
-                                    <div className="text-sm text-gray-600">Total Courts</div>
-                                    <div className="text-2xl font-bold text-gray-900">{analytics?.totalCourts || 0}</div>
+                                    <div className="text-sm text-gray-400">Total Courts</div>
+                                    <div className="text-2xl font-bold text-white">{analytics?.totalCourts || 0}</div>
                                 </div>
                             </div>
                         </div>
-                        <div className="bg-white rounded-lg shadow-sm p-6">
+                        <div className="bg-gray-900/60 rounded-lg shadow-sm p-6">
                             <div className="flex items-center gap-3 mb-3">
                                 <div className="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center text-2xl">
                                     ⏰
                                 </div>
                                 <div>
-                                    <div className="text-sm text-gray-600">Active Slots</div>
-                                    <div className="text-2xl font-bold text-gray-900">{analytics?.activeSlots || 0}</div>
+                                    <div className="text-sm text-gray-400">Active Slots</div>
+                                    <div className="text-2xl font-bold text-white">{analytics?.activeSlots || 0}</div>
                                 </div>
                             </div>
                         </div>
                     </div>
 
                     {/* Performance Summary */}
-                    <div className="bg-white rounded-lg shadow-sm p-6">
-                        <h2 className="text-xl font-bold text-gray-900 mb-4">Performance Summary</h2>
+                    <div className="bg-gray-900/60 rounded-lg shadow-sm p-6">
+                        <h2 className="text-xl font-bold text-white mb-4">Performance Summary</h2>
                         <div className="space-y-4">
                             <div>
                                 <div className="flex justify-between text-sm mb-1">
-                                    <span className="text-gray-600">Booking Confirmation Rate</span>
+                                    <span className="text-gray-400">Booking Confirmation Rate</span>
                                     <span className="font-medium">
                                         {analytics?.totalBookings ?
                                             Math.round((analytics.confirmedBookings / analytics.totalBookings) * 100) : 0}%
@@ -302,7 +302,7 @@ export default function OwnerAnalyticsPage() {
                             </div>
                             <div>
                                 <div className="flex justify-between text-sm mb-1">
-                                    <span className="text-gray-600">Booking Rejection Rate</span>
+                                    <span className="text-gray-400">Booking Rejection Rate</span>
                                     <span className="font-medium">
                                         {analytics?.totalBookings ?
                                             Math.round((analytics.rejectedBookings / analytics.totalBookings) * 100) : 0}%
@@ -320,7 +320,7 @@ export default function OwnerAnalyticsPage() {
                             </div>
                             <div>
                                 <div className="flex justify-between text-sm mb-1">
-                                    <span className="text-gray-600">Average Revenue per Booking</span>
+                                    <span className="text-gray-400">Average Revenue per Booking</span>
                                     <span className="font-medium">
                                         ₹{analytics?.totalBookings ?
                                             Math.round(analytics.totalRevenue / analytics.totalBookings) : 0}

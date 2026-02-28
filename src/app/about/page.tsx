@@ -9,19 +9,19 @@ import Link from 'next/link';
 
 export default function About() {
     return (
-        <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50">
+        <div className="min-h-screen bg-gray-950">
             <Navbar />
 
             {/* Hero Section */}
             <section className="pt-32 pb-20 px-4 sm:px-6 lg:px-8">
                 <div className="max-w-7xl mx-auto text-center">
-                    <h1 className="text-4xl md:text-6xl font-bold text-gray-900 mb-6">
+                    <h1 className="text-4xl md:text-6xl font-bold text-white mb-6">
                         Revolutionizing Sports <br />
                         <span className="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
                             Booking Experience
                         </span>
                     </h1>
-                    <p className="text-xl text-gray-600 max-w-3xl mx-auto mb-10">
+                    <p className="text-xl text-gray-400 max-w-3xl mx-auto mb-10">
                         Sportivo is India&apos;s premier platform for sports enthusiasts to find, book, and enjoy their favorite sports venues instantly. Our mission is to make sports accessible to everyone.
                     </p>
                     <div className="flex justify-center gap-4">
@@ -33,11 +33,11 @@ export default function About() {
             </section>
 
             {/* How It Works Section */}
-            <section className="py-20 px-4 sm:px-6 lg:px-8 bg-white/50 backdrop-blur-sm">
+            <section className="py-20 px-4 sm:px-6 lg:px-8 bg-white/[0.03] backdrop-blur-sm">
                 <div className="max-w-7xl mx-auto">
                     <div className="text-center mb-16">
-                        <h2 className="text-3xl md:text-5xl font-bold text-gray-900 mb-4">How It Works</h2>
-                        <p className="text-xl text-gray-600">Your journey from screen to field in three simple steps</p>
+                        <h2 className="text-3xl md:text-5xl font-bold text-white mb-4">How It Works</h2>
+                        <p className="text-xl text-gray-400">Your journey from screen to field in three simple steps</p>
                     </div>
 
                     <div className="grid md:grid-cols-3 gap-8">
@@ -74,14 +74,14 @@ export default function About() {
                                 )
                             }
                         ].map((item) => (
-                            <Card key={item.step} className="border-none bg-white/80 shadow-xl shadow-blue-500/5">
+                            <Card key={item.step} className="border-none bg-white/[0.05] shadow-xl shadow-blue-500/5">
                                 <CardBody className="p-8">
                                     <div className="w-16 h-16 bg-gradient-to-br from-blue-600 to-purple-600 rounded-2xl flex items-center justify-center text-white mb-6 shadow-lg rotate-3 group-hover:rotate-0 transition-transform">
                                         {item.icon}
                                     </div>
                                     <div className="text-sm font-bold text-blue-600 mb-2 uppercase tracking-wider">Step {item.step}</div>
-                                    <h3 className="text-2xl font-bold text-gray-900 mb-4">{item.title}</h3>
-                                    <p className="text-gray-600 leading-relaxed">{item.description}</p>
+                                    <h3 className="text-2xl font-bold text-white mb-4">{item.title}</h3>
+                                    <p className="text-gray-400 leading-relaxed">{item.description}</p>
                                 </CardBody>
                             </Card>
                         ))}
@@ -94,11 +94,11 @@ export default function About() {
                 <div className="max-w-7xl mx-auto">
                     <div className="grid lg:grid-cols-2 gap-16 items-center">
                         <div className="space-y-8">
-                            <h2 className="text-3xl md:text-5xl font-bold text-gray-900">
+                            <h2 className="text-3xl md:text-5xl font-bold text-white">
                                 Our Mission is to <br />
                                 <span className="text-blue-600">Empower Athletes</span>
                             </h2>
-                            <p className="text-lg text-gray-600 leading-relaxed">
+                            <p className="text-lg text-gray-400 leading-relaxed">
                                 At Sportivo, we believe that staying active shouldn&apos;t be a logistical challenge. We&apos;ve built a platform that bridges the gap between passionate players and top-tier venue owners.
                             </p>
                             <div className="grid sm:grid-cols-2 gap-6">
@@ -115,8 +115,8 @@ export default function About() {
                                             </svg>
                                         </div>
                                         <div>
-                                            <h4 className="font-bold text-gray-900">{feature.title}</h4>
-                                            <p className="text-sm text-gray-600">{feature.desc}</p>
+                                            <h4 className="font-bold text-white">{feature.title}</h4>
+                                            <p className="text-sm text-gray-400">{feature.desc}</p>
                                         </div>
                                     </div>
                                 ))}
@@ -124,7 +124,7 @@ export default function About() {
                         </div>
                         <div className="relative">
                             <div className="absolute -inset-4 bg-gradient-to-r from-blue-600 to-purple-600 rounded-3xl blur-2xl opacity-20 animate-pulse"></div>
-                            <div className="relative bg-white rounded-3xl shadow-2xl overflow-hidden border border-gray-100">
+                            <div className="relative bg-gray-900/60 rounded-3xl shadow-2xl overflow-hidden border border-white/[0.06]">
                                 <div className="p-8 md:p-12 text-center space-y-6">
                                     <div className="text-6xl text-blue-600 font-bold italic tracking-tighter">&quot;Play More, Wait Less.&quot;</div>
                                     <p className="text-gray-500 font-medium">— Our Founding Philosophy</p>
@@ -146,7 +146,7 @@ export default function About() {
                             <p className="text-xl text-gray-400">Whether you&apos;re a player or a venue owner, Sportivo is the place for you.</p>
                             <div className="flex flex-col sm:flex-row gap-4 justify-center">
                                 <Link href="/register">
-                                    <Button size="lg" className="px-12 bg-white text-gray-900 hover:bg-gray-100">Sign Up</Button>
+                                    <Button size="lg" className="px-12 bg-gray-900/60 text-white hover:bg-white/5">Sign Up</Button>
                                 </Link>
                                 <Link href="/contact">
                                     <Button variant="outline" size="lg" className="px-12 border-white text-white hover:bg-white/10">Contact Us</Button>

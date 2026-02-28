@@ -46,7 +46,7 @@ export default function Contact() {
     };
 
     return (
-        <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50">
+        <div className="min-h-screen bg-gray-950">
             <Navbar />
 
             <section className="pt-32 pb-20 px-4 sm:px-6 lg:px-8">
@@ -56,10 +56,10 @@ export default function Contact() {
                         {/* Contact Info */}
                         <div className="space-y-12">
                             <div className="space-y-6">
-                                <h1 className="text-4xl md:text-6xl font-bold text-gray-900">
+                                <h1 className="text-4xl md:text-6xl font-bold text-white">
                                     Get in <span className="text-blue-600">Touch</span>
                                 </h1>
-                                <p className="text-xl text-gray-600 leading-relaxed max-w-lg">
+                                <p className="text-xl text-gray-400 leading-relaxed max-w-lg">
                                     Have questions about booking a venue or listing your own? Our team is here to help you 24/7.
                                 </p>
                             </div>
@@ -96,12 +96,12 @@ export default function Contact() {
                                     }
                                 ].map((item) => (
                                     <div key={item.title} className="flex gap-6 group">
-                                        <div className="flex-shrink-0 w-12 h-12 bg-white rounded-2xl shadow-lg flex items-center justify-center text-blue-600 group-hover:bg-blue-600 group-hover:text-white transition-all">
+                                        <div className="flex-shrink-0 w-12 h-12 bg-gray-900/60 rounded-2xl shadow-lg flex items-center justify-center text-blue-600 group-hover:bg-blue-600 group-hover:text-white transition-all">
                                             {item.icon}
                                         </div>
                                         <div className="space-y-1">
-                                            <h4 className="font-bold text-gray-900 uppercase tracking-wider text-sm">{item.title}</h4>
-                                            <p className="text-gray-600 leading-relaxed font-medium">{item.content}</p>
+                                            <h4 className="font-bold text-white uppercase tracking-wider text-sm">{item.title}</h4>
+                                            <p className="text-gray-400 leading-relaxed font-medium">{item.content}</p>
                                         </div>
                                     </div>
                                 ))}
@@ -109,10 +109,10 @@ export default function Contact() {
 
                             {/* Social Links */}
                             <div className="pt-8 space-y-4">
-                                <h4 className="font-bold text-gray-900 uppercase tracking-wider text-sm">Follow Us</h4>
+                                <h4 className="font-bold text-white uppercase tracking-wider text-sm">Follow Us</h4>
                                 <div className="flex gap-4">
                                     {[1, 2, 3, 4].map((i) => (
-                                        <div key={i} className="w-10 h-10 bg-white border border-gray-100 rounded-full flex items-center justify-center cursor-pointer hover:border-blue-600 hover:text-blue-600 transition-colors shadow-sm">
+                                        <div key={i} className="w-10 h-10 bg-gray-900/60 border border-white/[0.06] rounded-full flex items-center justify-center cursor-pointer hover:border-blue-600 hover:text-blue-600 transition-colors shadow-sm">
                                             <div className="w-4 h-4 bg-gray-400 rounded-sm"></div>
                                         </div>
                                     ))}
@@ -121,42 +121,42 @@ export default function Contact() {
                         </div>
 
                         {/* Contact Form */}
-                        <Card className="border-none shadow-2xl shadow-blue-500/10 overflow-hidden backdrop-blur-md bg-white/90">
+                        <Card className="border-none shadow-2xl shadow-blue-500/10 overflow-hidden backdrop-blur-md bg-white/[0.05]">
                             <CardBody className="p-8 md:p-12">
                                 <form onSubmit={handleSubmit} className="space-y-6">
                                     <div className="grid md:grid-cols-2 gap-6">
                                         <div className="space-y-2">
-                                            <label className="text-sm font-bold text-gray-700">Your Name</label>
+                                            <label className="text-sm font-bold text-gray-300">Your Name</label>
                                             <input
                                                 required
                                                 type="text"
                                                 name="name"
                                                 value={formData.name}
                                                 onChange={handleChange}
-                                                className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10 transition-all outline-none"
+                                                className="w-full px-4 py-3 rounded-xl border border-white/[0.08] focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10 transition-all outline-none"
                                                 placeholder="John Doe"
                                             />
                                         </div>
                                         <div className="space-y-2">
-                                            <label className="text-sm font-bold text-gray-700">Email Address</label>
+                                            <label className="text-sm font-bold text-gray-300">Email Address</label>
                                             <input
                                                 required
                                                 type="email"
                                                 name="email"
                                                 value={formData.email}
                                                 onChange={handleChange}
-                                                className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10 transition-all outline-none"
+                                                className="w-full px-4 py-3 rounded-xl border border-white/[0.08] focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10 transition-all outline-none"
                                                 placeholder="john@example.com"
                                             />
                                         </div>
                                     </div>
                                     <div className="space-y-2">
-                                        <label className="text-sm font-bold text-gray-700">Subject</label>
+                                        <label className="text-sm font-bold text-gray-300">Subject</label>
                                         <select
                                             name="subject"
                                             value={formData.subject}
                                             onChange={handleChange}
-                                            className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10 transition-all outline-none bg-white font-medium"
+                                            className="w-full px-4 py-3 rounded-xl border border-white/[0.08] focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10 transition-all outline-none bg-gray-900/60 font-medium"
                                         >
                                             <option value="">Select a reason</option>
                                             <option value="booking">Booking Issue</option>
@@ -166,14 +166,14 @@ export default function Contact() {
                                         </select>
                                     </div>
                                     <div className="space-y-2">
-                                        <label className="text-sm font-bold text-gray-700">Your Message</label>
+                                        <label className="text-sm font-bold text-gray-300">Your Message</label>
                                         <textarea
                                             required
                                             name="message"
                                             value={formData.message}
                                             onChange={handleChange}
                                             rows={5}
-                                            className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10 transition-all outline-none resize-none"
+                                            className="w-full px-4 py-3 rounded-xl border border-white/[0.08] focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10 transition-all outline-none resize-none"
                                             placeholder="How can we help you today?"
                                         ></textarea>
                                     </div>

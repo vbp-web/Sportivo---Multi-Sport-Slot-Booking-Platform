@@ -58,15 +58,15 @@ export default function QRCodeDisplay({
         <Card>
             {title && (
                 <CardHeader>
-                    <h3 className="text-lg font-bold text-gray-900 text-center">{title}</h3>
+                    <h3 className="text-lg font-bold text-white text-center">{title}</h3>
                     {description && (
-                        <p className="text-sm text-gray-600 text-center mt-1">{description}</p>
+                        <p className="text-sm text-gray-400 text-center mt-1">{description}</p>
                     )}
                 </CardHeader>
             )}
 
             <CardBody className="flex flex-col items-center justify-center p-6">
-                <div className="p-4 bg-white rounded-xl shadow-inner">
+                <div className="p-4 bg-gray-900/60 rounded-xl shadow-inner">
                     <canvas
                         ref={canvasRef}
                         width={size}
@@ -76,8 +76,8 @@ export default function QRCodeDisplay({
                 </div>
 
                 {data && (
-                    <div className="mt-4 p-3 bg-gray-50 rounded-lg w-full">
-                        <p className="text-xs text-gray-600 text-center break-all font-mono">
+                    <div className="mt-4 p-3 bg-gray-900 rounded-lg w-full">
+                        <p className="text-xs text-gray-400 text-center break-all font-mono">
                             {data}
                         </p>
                     </div>

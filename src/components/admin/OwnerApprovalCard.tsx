@@ -57,8 +57,8 @@ export default function OwnerApprovalCard({ owner, onApprove, onReject }: OwnerA
             <CardHeader>
                 <div className="flex items-center justify-between">
                     <div>
-                        <h3 className="text-lg font-bold text-gray-900">{owner.venueName}</h3>
-                        <p className="text-sm text-gray-600">Owner: {owner.ownerName}</p>
+                        <h3 className="text-lg font-bold text-white">{owner.venueName}</h3>
+                        <p className="text-sm text-gray-400">Owner: {owner.ownerName}</p>
                     </div>
                     <Badge variant="warning">Pending Approval</Badge>
                 </div>
@@ -66,26 +66,26 @@ export default function OwnerApprovalCard({ owner, onApprove, onReject }: OwnerA
 
             <CardBody className="space-y-4">
                 {/* Owner Details */}
-                <div className="grid grid-cols-2 gap-4 p-4 bg-gray-50 rounded-lg">
+                <div className="grid grid-cols-2 gap-4 p-4 bg-gray-900 rounded-lg">
                     <div>
-                        <div className="text-sm text-gray-600 mb-1">City</div>
-                        <div className="font-semibold text-gray-900">{owner.city}</div>
+                        <div className="text-sm text-gray-400 mb-1">City</div>
+                        <div className="font-semibold text-white">{owner.city}</div>
                     </div>
                     <div>
-                        <div className="text-sm text-gray-600 mb-1">Phone</div>
-                        <div className="font-semibold text-gray-900">{owner.phone}</div>
+                        <div className="text-sm text-gray-400 mb-1">Phone</div>
+                        <div className="font-semibold text-white">{owner.phone}</div>
                     </div>
                     {owner.email && (
                         <div className="col-span-2">
-                            <div className="text-sm text-gray-600 mb-1">Email</div>
-                            <div className="font-semibold text-gray-900">{owner.email}</div>
+                            <div className="text-sm text-gray-400 mb-1">Email</div>
+                            <div className="font-semibold text-white">{owner.email}</div>
                         </div>
                     )}
                 </div>
 
                 {/* Sports Offered */}
                 <div>
-                    <div className="text-sm text-gray-600 mb-2">Sports Offered</div>
+                    <div className="text-sm text-gray-400 mb-2">Sports Offered</div>
                     <div className="flex flex-wrap gap-2">
                         {owner.sportsOffered.map((sport, index) => (
                             <Badge key={index} variant="info">
@@ -106,7 +106,7 @@ export default function OwnerApprovalCard({ owner, onApprove, onReject }: OwnerA
 
                 {/* Action Buttons */}
                 {!showRejectForm ? (
-                    <div className="flex gap-3 pt-4 border-t border-gray-200">
+                    <div className="flex gap-3 pt-4 border-t border-white/[0.08]">
                         <Button
                             variant="primary"
                             className="flex-1"
@@ -124,7 +124,7 @@ export default function OwnerApprovalCard({ owner, onApprove, onReject }: OwnerA
                         </Button>
                     </div>
                 ) : (
-                    <div className="space-y-3 pt-4 border-t border-gray-200">
+                    <div className="space-y-3 pt-4 border-t border-white/[0.08]">
                         <Input
                             label="Rejection Reason"
                             placeholder="Enter reason for rejection"

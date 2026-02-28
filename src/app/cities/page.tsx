@@ -44,26 +44,26 @@ export default function CitiesPage() {
 
     if (loading) {
         return (
-            <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+            <div className="min-h-screen bg-gray-950 flex items-center justify-center">
                 <div className="text-center">
                     <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto"></div>
-                    <p className="mt-4 text-gray-600">Loading cities...</p>
+                    <p className="mt-4 text-gray-400">Loading cities...</p>
                 </div>
             </div>
         );
     }
 
     return (
-        <div className="min-h-screen bg-gray-50">
+        <div className="min-h-screen bg-gray-950">
             <Navbar />
 
             <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
                 {/* Header */}
                 <div className="mb-8">
-                    <h1 className="text-4xl font-bold text-gray-900 mb-2">
+                    <h1 className="text-4xl font-bold text-white mb-2">
                         Select Your City
                     </h1>
-                    <p className="text-lg text-gray-600">
+                    <p className="text-lg text-gray-400">
                         Choose a city to browse available sports venues
                     </p>
                 </div>
@@ -75,13 +75,13 @@ export default function CitiesPage() {
                         placeholder="Search cities..."
                         value={searchTerm}
                         onChange={(e) => setSearchTerm(e.target.value)}
-                        className="w-full max-w-md px-4 py-3 rounded-lg border-2 border-gray-200 focus:border-blue-500 focus:ring-blue-500 focus:outline-none focus:ring-2"
+                        className="w-full max-w-md px-4 py-3 rounded-lg border-2 border-white/[0.08] focus:border-blue-500 focus:ring-blue-500 focus:outline-none focus:ring-2"
                     />
                 </div>
 
                 {/* Cities Grid */}
                 {filteredCities.length === 0 ? (
-                    <div className="text-center py-12 bg-white rounded-lg shadow">
+                    <div className="text-center py-12 bg-gray-900/60 rounded-lg shadow">
                         <p className="text-gray-500">
                             {searchTerm ? 'No cities found matching your search.' : 'No cities available at the moment.'}
                         </p>

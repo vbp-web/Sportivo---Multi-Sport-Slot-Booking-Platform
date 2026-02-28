@@ -205,32 +205,32 @@ export default function AdminOwnersPage() {
 
     if (loading) {
         return (
-            <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+            <div className="min-h-screen bg-gray-950 flex items-center justify-center">
                 <div className="text-center">
                     <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto"></div>
-                    <p className="mt-4 text-gray-600">Loading owners...</p>
+                    <p className="mt-4 text-gray-400">Loading owners...</p>
                 </div>
             </div>
         );
     }
 
     return (
-        <div className="min-h-screen bg-gray-50">
+        <div className="min-h-screen bg-gray-950">
             <Navbar />
 
             <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
                 {/* Header */}
                 <div className="mb-8">
-                    <h1 className="text-4xl font-bold text-gray-900 mb-2">
+                    <h1 className="text-4xl font-bold text-white mb-2">
                         Owner Management
                     </h1>
-                    <p className="text-lg text-gray-600">
+                    <p className="text-lg text-gray-400">
                         Review and approve owner registration requests
                     </p>
                 </div>
 
                 {/* Filter Tabs */}
-                <div className="mb-6 border-b border-gray-200">
+                <div className="mb-6 border-b border-white/[0.08]">
                     <div className="flex gap-4">
                         {(['all', 'pending', 'approved', 'rejected', 'suspended'] as const).map((tab) => (
                             <button
@@ -238,7 +238,7 @@ export default function AdminOwnersPage() {
                                 onClick={() => setFilter(tab)}
                                 className={`px-4 py-2 font-medium border-b-2 transition-colors capitalize ${filter === tab
                                     ? 'border-blue-600 text-blue-600'
-                                    : 'border-transparent text-gray-600 hover:text-gray-900'
+                                    : 'border-transparent text-gray-400 hover:text-white'
                                     }`}
                             >
                                 {tab}
@@ -249,20 +249,20 @@ export default function AdminOwnersPage() {
 
                 {/* Owners List */}
                 {owners.length === 0 ? (
-                    <div className="text-center py-12 bg-white rounded-lg shadow">
+                    <div className="text-center py-12 bg-gray-900/60 rounded-lg shadow">
                         <svg className="mx-auto h-12 w-12 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
                         </svg>
-                        <h3 className="mt-2 text-sm font-medium text-gray-900">No {filter} owners</h3>
+                        <h3 className="mt-2 text-sm font-medium text-white">No {filter} owners</h3>
                         <p className="mt-1 text-sm text-gray-500">
                             {filter === 'pending' ? 'No pending owner requests at the moment.' : `No ${filter} owners found.`}
                         </p>
                     </div>
                 ) : (
-                    <div className="bg-white rounded-lg shadow overflow-hidden">
+                    <div className="bg-gray-900/60 rounded-lg shadow overflow-hidden">
                         <div className="overflow-x-auto">
                             <table className="min-w-full divide-y divide-gray-200">
-                                <thead className="bg-gray-50">
+                                <thead className="bg-gray-900">
                                     <tr>
                                         <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                                             Owner Details
@@ -281,17 +281,17 @@ export default function AdminOwnersPage() {
                                         </th>
                                     </tr>
                                 </thead>
-                                <tbody className="bg-white divide-y divide-gray-200">
+                                <tbody className="bg-gray-900/60 divide-y divide-gray-200">
                                     {owners.map((owner) => (
-                                        <tr key={owner._id} className="hover:bg-gray-50">
+                                        <tr key={owner._id} className="hover:bg-white/5">
                                             <td className="px-6 py-4">
-                                                <div className="text-sm font-medium text-gray-900">{owner.ownerName}</div>
+                                                <div className="text-sm font-medium text-white">{owner.ownerName}</div>
                                                 <div className="text-sm text-gray-500">
                                                     Registered: {new Date(owner.createdAt).toLocaleDateString()}
                                                 </div>
                                             </td>
                                             <td className="px-6 py-4">
-                                                <div className="text-sm font-medium text-gray-900">{owner.venueName}</div>
+                                                <div className="text-sm font-medium text-white">{owner.venueName}</div>
                                                 <div className="text-sm text-gray-500">{owner.city}</div>
                                                 {owner.sportsOffered && owner.sportsOffered.length > 0 && (
                                                     <div className="text-xs text-gray-400 mt-1">
@@ -300,7 +300,7 @@ export default function AdminOwnersPage() {
                                                 )}
                                             </td>
                                             <td className="px-6 py-4">
-                                                <div className="text-sm text-gray-900">{owner.userId.phone}</div>
+                                                <div className="text-sm text-white">{owner.userId.phone}</div>
                                                 {owner.userId.email && (
                                                     <div className="text-sm text-gray-500">{owner.userId.email}</div>
                                                 )}
@@ -364,21 +364,21 @@ export default function AdminOwnersPage() {
             {/* Reject Modal */}
             {showRejectModal && selectedOwner && (
                 <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-                    <div className="bg-white rounded-lg p-8 max-w-md w-full mx-4">
-                        <h2 className="text-2xl font-bold text-gray-900 mb-4">
+                    <div className="bg-gray-900/60 rounded-lg p-8 max-w-md w-full mx-4">
+                        <h2 className="text-2xl font-bold text-white mb-4">
                             Reject Owner Request
                         </h2>
-                        <p className="text-gray-600 mb-4">
+                        <p className="text-gray-400 mb-4">
                             You are about to reject <strong>{selectedOwner.ownerName}</strong>&apos;s request.
                         </p>
                         <div className="mb-6">
-                            <label className="block text-sm font-medium text-gray-700 mb-2">
+                            <label className="block text-sm font-medium text-gray-300 mb-2">
                                 Rejection Reason *
                             </label>
                             <textarea
                                 value={rejectionReason}
                                 onChange={(e) => setRejectionReason(e.target.value)}
-                                className="w-full px-4 py-2 rounded-lg border-2 border-gray-200 focus:border-red-500 focus:outline-none"
+                                className="w-full px-4 py-2 rounded-lg border-2 border-white/[0.08] focus:border-red-500 focus:outline-none"
                                 rows={4}
                                 placeholder="Please provide a reason for rejection..."
                                 required
@@ -398,7 +398,7 @@ export default function AdminOwnersPage() {
                                     setRejectionReason('');
                                     setSelectedOwner(null);
                                 }}
-                                className="flex-1 px-4 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 transition-colors"
+                                className="flex-1 px-4 py-2 bg-gray-200 text-gray-300 rounded-lg hover:bg-gray-300 transition-colors"
                             >
                                 Cancel
                             </button>

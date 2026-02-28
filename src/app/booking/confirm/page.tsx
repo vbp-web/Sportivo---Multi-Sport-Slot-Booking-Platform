@@ -190,17 +190,17 @@ function BookingConfirmContent() {
 
     if (loading) {
         return (
-            <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+            <div className="min-h-screen bg-gray-950 flex items-center justify-center">
                 <div className="text-center">
                     <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto"></div>
-                    <p className="mt-4 text-gray-600">Loading booking details...</p>
+                    <p className="mt-4 text-gray-400">Loading booking details...</p>
                 </div>
             </div>
         );
     }
 
     return (
-        <div className="min-h-screen bg-gray-50">
+        <div className="min-h-screen bg-gray-950">
             <Navbar />
 
             <main className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
@@ -214,74 +214,74 @@ function BookingConfirmContent() {
                     Back
                 </button>
 
-                <h1 className="text-3xl font-bold text-gray-900 mb-8">Confirm Your Booking</h1>
+                <h1 className="text-3xl font-bold text-white mb-8">Confirm Your Booking</h1>
 
                 <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
                     {/* Booking Details */}
                     <div className="lg:col-span-2 space-y-6">
                         {/* Venue & Court Info */}
-                        <div className="bg-white rounded-lg shadow-md p-6">
-                            <h2 className="text-xl font-bold text-gray-900 mb-4">Booking Details</h2>
+                        <div className="bg-gray-900/60 rounded-lg shadow-md p-6">
+                            <h2 className="text-xl font-bold text-white mb-4">Booking Details</h2>
 
                             <div className="space-y-3">
                                 <div>
-                                    <p className="text-sm text-gray-600">Venue</p>
-                                    <p className="font-semibold text-gray-900">{bookingDetails.venue?.name}</p>
-                                    <p className="text-sm text-gray-600">
+                                    <p className="text-sm text-gray-400">Venue</p>
+                                    <p className="font-semibold text-white">{bookingDetails.venue?.name}</p>
+                                    <p className="text-sm text-gray-400">
                                         {bookingDetails.venue?.address}, {bookingDetails.venue?.city}
                                     </p>
                                 </div>
 
                                 <div className="grid grid-cols-2 gap-4">
                                     <div>
-                                        <p className="text-sm text-gray-600">Court</p>
-                                        <p className="font-semibold text-gray-900">{bookingDetails.court?.name}</p>
+                                        <p className="text-sm text-gray-400">Court</p>
+                                        <p className="font-semibold text-white">{bookingDetails.court?.name}</p>
                                     </div>
                                     <div>
-                                        <p className="text-sm text-gray-600">Sport</p>
-                                        <p className="font-semibold text-gray-900">{bookingDetails.sport?.name}</p>
+                                        <p className="text-sm text-gray-400">Sport</p>
+                                        <p className="font-semibold text-white">{bookingDetails.sport?.name}</p>
                                     </div>
                                 </div>
                             </div>
                         </div>
 
                         {/* Slots Info */}
-                        <div className="bg-white rounded-lg shadow-md p-6">
-                            <h2 className="text-xl font-bold text-gray-900 mb-4">
+                        <div className="bg-gray-900/60 rounded-lg shadow-md p-6">
+                            <h2 className="text-xl font-bold text-white mb-4">
                                 Selected Slot{bookingDetails.slots && bookingDetails.slots.length > 1 ? 's' : ''}
                             </h2>
 
                             <div className="space-y-4">
                                 {bookingDetails.slots?.map((slot) => (
                                     <div key={slot._id} className="border-l-4 border-blue-500 pl-4 py-2">
-                                        <p className="font-semibold text-gray-900">
+                                        <p className="font-semibold text-white">
                                             {formatDate(slot.date)}
                                         </p>
-                                        <p className="text-lg text-gray-700">
+                                        <p className="text-lg text-gray-300">
                                             {formatTime(slot.startTime)} - {formatTime(slot.endTime)}
                                         </p>
-                                        <p className="text-sm text-gray-600">₹{slot.price}</p>
+                                        <p className="text-sm text-gray-400">₹{slot.price}</p>
                                     </div>
                                 ))}
                             </div>
                         </div>
 
                         {/* Payment Details & Upload */}
-                        <div className="bg-white rounded-lg shadow-md p-6">
-                            <h2 className="text-xl font-bold text-gray-900 mb-4">Payment Details</h2>
+                        <div className="bg-gray-900/60 rounded-lg shadow-md p-6">
+                            <h2 className="text-xl font-bold text-white mb-4">Payment Details</h2>
 
                             <div className="space-y-4">
                                 {ownerPaymentSettings ? (
                                     <>
                                         {/* Owner Payment Info */}
                                         <div className="bg-gradient-to-r from-blue-50 to-purple-50 border-2 border-blue-200 rounded-lg p-6">
-                                            <h3 className="font-semibold text-gray-900 mb-4">Pay to Venue Owner</h3>
+                                            <h3 className="font-semibold text-white mb-4">Pay to Venue Owner</h3>
 
                                             {/* UPI ID */}
                                             <div className="mb-4">
-                                                <p className="text-sm text-gray-600 mb-1">UPI ID:</p>
-                                                <div className="flex items-center gap-2 bg-white px-4 py-3 rounded-lg border border-gray-200">
-                                                    <code className="flex-1 font-mono text-lg text-gray-900">{ownerPaymentSettings.upiId}</code>
+                                                <p className="text-sm text-gray-400 mb-1">UPI ID:</p>
+                                                <div className="flex items-center gap-2 bg-gray-900/60 px-4 py-3 rounded-lg border border-white/[0.08]">
+                                                    <code className="flex-1 font-mono text-lg text-white">{ownerPaymentSettings.upiId}</code>
                                                     <button
                                                         onClick={() => {
                                                             navigator.clipboard.writeText(ownerPaymentSettings.upiId);
@@ -296,8 +296,8 @@ function BookingConfirmContent() {
 
                                             {/* QR Code */}
                                             <div className="text-center">
-                                                <p className="text-sm text-gray-600 mb-3">Or scan QR code:</p>
-                                                <div className="inline-block p-4 bg-white rounded-lg border-2 border-gray-200 relative">
+                                                <p className="text-sm text-gray-400 mb-3">Or scan QR code:</p>
+                                                <div className="inline-block p-4 bg-gray-900/60 rounded-lg border-2 border-white/[0.08] relative">
                                                     <Image
                                                         src={ownerPaymentSettings.qrCodeUrl}
                                                         alt="Payment QR Code"
@@ -308,7 +308,7 @@ function BookingConfirmContent() {
                                                     />
                                                 </div>
                                                 {ownerPaymentSettings.businessName && (
-                                                    <p className="text-sm text-gray-600 mt-2">{ownerPaymentSettings.businessName}</p>
+                                                    <p className="text-sm text-gray-400 mt-2">{ownerPaymentSettings.businessName}</p>
                                                 )}
                                             </div>
                                         </div>
@@ -333,7 +333,7 @@ function BookingConfirmContent() {
                                 )}
 
                                 <div>
-                                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                                    <label className="block text-sm font-medium text-gray-300 mb-2">
                                         Payment Proof (Screenshot/Photo)
                                     </label>
                                     <input
@@ -355,25 +355,25 @@ function BookingConfirmContent() {
 
                     {/* Summary Sidebar */}
                     <div className="lg:col-span-1">
-                        <div className="bg-white rounded-lg shadow-md p-6 sticky top-6">
-                            <h2 className="text-xl font-bold text-gray-900 mb-4">Booking Summary</h2>
+                        <div className="bg-gray-900/60 rounded-lg shadow-md p-6 sticky top-6">
+                            <h2 className="text-xl font-bold text-white mb-4">Booking Summary</h2>
 
                             <div className="space-y-3 mb-6">
                                 <div className="flex justify-between text-sm">
-                                    <span className="text-gray-600">Number of Slots</span>
+                                    <span className="text-gray-400">Number of Slots</span>
                                     <span className="font-semibold">{bookingDetails.slots?.length || 0}</span>
                                 </div>
 
                                 {bookingDetails.slots?.map((slot, index) => (
                                     <div key={slot._id} className="flex justify-between text-sm">
-                                        <span className="text-gray-600">Slot {index + 1}</span>
+                                        <span className="text-gray-400">Slot {index + 1}</span>
                                         <span>₹{slot.price}</span>
                                     </div>
                                 ))}
 
                                 <div className="border-t pt-3 mt-3">
                                     <div className="flex justify-between">
-                                        <span className="font-bold text-gray-900">Total Amount</span>
+                                        <span className="font-bold text-white">Total Amount</span>
                                         <span className="font-bold text-2xl text-blue-600">
                                             ₹{bookingDetails.amount}
                                         </span>
@@ -405,10 +405,10 @@ function BookingConfirmContent() {
 export default function BookingConfirmPage() {
     return (
         <Suspense fallback={
-            <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+            <div className="min-h-screen bg-gray-950 flex items-center justify-center">
                 <div className="text-center">
                     <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto"></div>
-                    <p className="mt-4 text-gray-600">Loading...</p>
+                    <p className="mt-4 text-gray-400">Loading...</p>
                 </div>
             </div>
         }>

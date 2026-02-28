@@ -73,7 +73,7 @@ export default function ForgotPasswordPage() {
     };
 
     return (
-        <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50 flex items-center justify-center p-4">
+        <div className="min-h-screen bg-gray-950 flex items-center justify-center p-4">
             <div className="w-full max-w-md relative z-10">
                 {/* Logo */}
                 <Link href="/" className="flex items-center justify-center space-x-2 mb-8">
@@ -89,8 +89,8 @@ export default function ForgotPasswordPage() {
 
                 <Card>
                     <CardHeader>
-                        <h1 className="text-2xl font-bold text-gray-900 text-center">Reset Password</h1>
-                        <p className="text-gray-600 text-center mt-2">Enter your email and new password</p>
+                        <h1 className="text-2xl font-bold text-white text-center">Reset Password</h1>
+                        <p className="text-gray-400 text-center mt-2">Enter your email and new password</p>
                     </CardHeader>
 
                     <CardBody className="space-y-6">

@@ -61,26 +61,26 @@ function VenuesContent() {
 
     if (loading) {
         return (
-            <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+            <div className="min-h-screen bg-gray-950 flex items-center justify-center">
                 <div className="text-center">
                     <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto"></div>
-                    <p className="mt-4 text-gray-600">Loading venues...</p>
+                    <p className="mt-4 text-gray-400">Loading venues...</p>
                 </div>
             </div>
         );
     }
 
     return (
-        <div className="min-h-screen bg-gray-50">
+        <div className="min-h-screen bg-gray-950">
             <Navbar />
 
             <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
                 {/* Header */}
                 <div className="mb-8">
-                    <h1 className="text-4xl font-bold text-gray-900 mb-2">
+                    <h1 className="text-4xl font-bold text-white mb-2">
                         Venues {city && city !== 'All Cities' ? `in ${city}` : ''}
                     </h1>
-                    <p className="text-lg text-gray-600">
+                    <p className="text-lg text-gray-400">
                         Browse and book sports venues near you
                     </p>
                 </div>
@@ -90,7 +90,7 @@ function VenuesContent() {
                     <select
                         value={selectedSport}
                         onChange={(e) => setSelectedSport(e.target.value)}
-                        className="px-4 py-2 rounded-lg border-2 border-gray-200 focus:border-blue-500 focus:outline-none"
+                        className="px-4 py-2 rounded-lg border-2 border-white/[0.08] focus:border-blue-500 focus:outline-none"
                     >
                         <option>All Sports</option>
                         <option>Cricket</option>
@@ -106,13 +106,13 @@ function VenuesContent() {
                         placeholder="Search venues..."
                         value={searchTerm}
                         onChange={(e) => setSearchTerm(e.target.value)}
-                        className="flex-1 max-w-md px-4 py-2 rounded-lg border-2 border-gray-200 focus:border-blue-500 focus:outline-none"
+                        className="flex-1 max-w-md px-4 py-2 rounded-lg border-2 border-white/[0.08] focus:border-blue-500 focus:outline-none"
                     />
                 </div>
 
                 {/* Venues Grid */}
                 {filteredVenues.length === 0 ? (
-                    <div className="text-center py-12 bg-white rounded-lg shadow">
+                    <div className="text-center py-12 bg-gray-900/60 rounded-lg shadow">
                         <p className="text-gray-500">
                             {searchTerm || selectedSport !== 'All Sports'
                                 ? 'No venues found matching your filters.'
@@ -148,10 +148,10 @@ function VenuesContent() {
 export default function VenuesPage() {
     return (
         <Suspense fallback={
-            <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+            <div className="min-h-screen bg-gray-950 flex items-center justify-center">
                 <div className="text-center">
                     <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto"></div>
-                    <p className="mt-4 text-gray-600">Preparing venues...</p>
+                    <p className="mt-4 text-gray-400">Preparing venues...</p>
                 </div>
             </div>
         }>

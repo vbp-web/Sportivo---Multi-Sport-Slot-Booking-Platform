@@ -265,27 +265,27 @@ export default function OwnerSlotsPage() {
 
     if (loading) {
         return (
-            <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+            <div className="min-h-screen bg-gray-950 flex items-center justify-center">
                 <div className="text-center">
                     <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto"></div>
-                    <p className="mt-4 text-gray-600">Loading slots...</p>
+                    <p className="mt-4 text-gray-400">Loading slots...</p>
                 </div>
             </div>
         );
     }
 
     return (
-        <div className="min-h-screen bg-gray-50">
+        <div className="min-h-screen bg-gray-950">
             <Navbar />
 
             <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
                 {/* Header */}
                 <div className="mb-8 flex justify-between items-center">
                     <div>
-                        <h1 className="text-4xl font-bold text-gray-900 mb-2">
+                        <h1 className="text-4xl font-bold text-white mb-2">
                             Manage Slots
                         </h1>
-                        <p className="text-lg text-gray-600">
+                        <p className="text-lg text-gray-400">
                             Create and manage time slots for your courts
                         </p>
                     </div>
@@ -325,16 +325,16 @@ export default function OwnerSlotsPage() {
                 )}
 
                 {/* Filters */}
-                <div className="mb-6 bg-white rounded-lg shadow-sm p-4">
+                <div className="mb-6 bg-gray-900/60 rounded-lg shadow-sm p-4">
                     <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
                         <div>
-                            <label className="block text-sm font-medium text-gray-700 mb-1">
+                            <label className="block text-sm font-medium text-gray-300 mb-1">
                                 Filter by Court
                             </label>
                             <select
                                 value={filterCourt}
                                 onChange={(e) => setFilterCourt(e.target.value)}
-                                className="w-full px-4 py-2 rounded-lg border-2 border-gray-200 focus:border-blue-500 focus:outline-none"
+                                className="w-full px-4 py-2 rounded-lg border-2 border-white/[0.08] focus:border-blue-500 focus:outline-none"
                             >
                                 <option value="">All Courts</option>
                                 {courts.map(court => (
@@ -345,24 +345,24 @@ export default function OwnerSlotsPage() {
                             </select>
                         </div>
                         <div>
-                            <label className="block text-sm font-medium text-gray-700 mb-1">
+                            <label className="block text-sm font-medium text-gray-300 mb-1">
                                 Filter by Date
                             </label>
                             <input
                                 type="date"
                                 value={filterDate}
                                 onChange={(e) => setFilterDate(e.target.value)}
-                                className="w-full px-4 py-2 rounded-lg border-2 border-gray-200 focus:border-blue-500 focus:outline-none"
+                                className="w-full px-4 py-2 rounded-lg border-2 border-white/[0.08] focus:border-blue-500 focus:outline-none"
                             />
                         </div>
                         <div>
-                            <label className="block text-sm font-medium text-gray-700 mb-1">
+                            <label className="block text-sm font-medium text-gray-300 mb-1">
                                 Filter by Status
                             </label>
                             <select
                                 value={filterStatus}
                                 onChange={(e) => setFilterStatus(e.target.value as 'all' | 'available' | 'booked' | 'blocked')}
-                                className="w-full px-4 py-2 rounded-lg border-2 border-gray-200 focus:border-blue-500 focus:outline-none"
+                                className="w-full px-4 py-2 rounded-lg border-2 border-white/[0.08] focus:border-blue-500 focus:outline-none"
                             >
                                 <option value="all">All Status</option>
                                 <option value="available">Available</option>
@@ -377,7 +377,7 @@ export default function OwnerSlotsPage() {
                                     setFilterDate('');
                                     setFilterStatus('all');
                                 }}
-                                className="w-full px-4 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 transition-colors"
+                                className="w-full px-4 py-2 bg-gray-200 text-gray-300 rounded-lg hover:bg-gray-300 transition-colors"
                             >
                                 Clear Filters
                             </button>
@@ -387,11 +387,11 @@ export default function OwnerSlotsPage() {
 
                 {/* Slots Table */}
                 {filteredSlots.length === 0 ? (
-                    <div className="text-center py-12 bg-white rounded-lg shadow">
+                    <div className="text-center py-12 bg-gray-900/60 rounded-lg shadow">
                         <svg className="mx-auto h-12 w-12 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
                         </svg>
-                        <h3 className="mt-2 text-sm font-medium text-gray-900">No slots found</h3>
+                        <h3 className="mt-2 text-sm font-medium text-white">No slots found</h3>
                         <p className="mt-1 text-sm text-gray-500">
                             {courts.length === 0
                                 ? 'Add courts first, then create slots.'
@@ -406,10 +406,10 @@ export default function OwnerSlotsPage() {
                         )}
                     </div>
                 ) : (
-                    <div className="bg-white rounded-lg shadow overflow-hidden">
+                    <div className="bg-gray-900/60 rounded-lg shadow overflow-hidden">
                         <div className="overflow-x-auto">
                             <table className="min-w-full divide-y divide-gray-200">
-                                <thead className="bg-gray-50">
+                                <thead className="bg-gray-900">
                                     <tr>
                                         <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                                             Select
@@ -431,9 +431,9 @@ export default function OwnerSlotsPage() {
                                         </th>
                                     </tr>
                                 </thead>
-                                <tbody className="bg-white divide-y divide-gray-200">
+                                <tbody className="bg-gray-900/60 divide-y divide-gray-200">
                                     {filteredSlots.map((slot) => (
-                                        <tr key={slot._id} className="hover:bg-gray-50">
+                                        <tr key={slot._id} className="hover:bg-white/5">
                                             <td className="px-6 py-4">
                                                 <input
                                                     type="checkbox"
@@ -444,7 +444,7 @@ export default function OwnerSlotsPage() {
                                                 />
                                             </td>
                                             <td className="px-6 py-4">
-                                                <div className="text-sm font-medium text-gray-900">
+                                                <div className="text-sm font-medium text-white">
                                                     {typeof slot.courtId === 'object' ? slot.courtId.name : 'N/A'}
                                                 </div>
                                                 <div className="text-sm text-gray-500">
@@ -459,7 +459,7 @@ export default function OwnerSlotsPage() {
                                                 </div>
                                             </td>
                                             <td className="px-6 py-4">
-                                                <div className="text-sm text-gray-900">
+                                                <div className="text-sm text-white">
                                                     {new Date(slot.date).toLocaleDateString('en-IN', {
                                                         day: 'numeric',
                                                         month: 'short',
@@ -471,7 +471,7 @@ export default function OwnerSlotsPage() {
                                                 </div>
                                             </td>
                                             <td className="px-6 py-4 whitespace-nowrap">
-                                                <div className="text-sm font-medium text-gray-900">₹{slot.price}</div>
+                                                <div className="text-sm font-medium text-white">₹{slot.price}</div>
                                             </td>
                                             <td className="px-6 py-4 whitespace-nowrap">
                                                 <Badge variant={getStatusBadge(slot.status).variant}>
@@ -505,19 +505,19 @@ export default function OwnerSlotsPage() {
             {/* Create Slots Modal */}
             {showCreateModal && (
                 <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-                    <div className="bg-white rounded-lg p-8 max-w-md w-full mx-4">
-                        <h2 className="text-2xl font-bold text-gray-900 mb-6">
+                    <div className="bg-gray-900/60 rounded-lg p-8 max-w-md w-full mx-4">
+                        <h2 className="text-2xl font-bold text-white mb-6">
                             Create Slots
                         </h2>
                         <div className="space-y-4">
                             <div>
-                                <label className="block text-sm font-medium text-gray-700 mb-1">
+                                <label className="block text-sm font-medium text-gray-300 mb-1">
                                     Select Court *
                                 </label>
                                 <select
                                     value={selectedCourt}
                                     onChange={(e) => setSelectedCourt(e.target.value)}
-                                    className="w-full px-4 py-2 rounded-lg border-2 border-gray-200 focus:border-blue-500 focus:outline-none"
+                                    className="w-full px-4 py-2 rounded-lg border-2 border-white/[0.08] focus:border-blue-500 focus:outline-none"
                                 >
                                     <option value="">Choose a court</option>
                                     {courts.map(court => (
@@ -528,7 +528,7 @@ export default function OwnerSlotsPage() {
                                 </select>
                             </div>
                             <div>
-                                <label className="block text-sm font-medium text-gray-700 mb-1">
+                                <label className="block text-sm font-medium text-gray-300 mb-1">
                                     Select Date *
                                 </label>
                                 <input
@@ -536,7 +536,7 @@ export default function OwnerSlotsPage() {
                                     value={selectedDate}
                                     onChange={(e) => setSelectedDate(e.target.value)}
                                     min={new Date().toISOString().split('T')[0]}
-                                    className="w-full px-4 py-2 rounded-lg border-2 border-gray-200 focus:border-blue-500 focus:outline-none"
+                                    className="w-full px-4 py-2 rounded-lg border-2 border-white/[0.08] focus:border-blue-500 focus:outline-none"
                                 />
                             </div>
                             <p className="text-sm text-gray-500">
@@ -553,7 +553,7 @@ export default function OwnerSlotsPage() {
                                     setSelectedCourt('');
                                     setSelectedDate(new Date().toISOString().split('T')[0]);
                                 }}
-                                className="flex-1 px-4 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 transition-colors"
+                                className="flex-1 px-4 py-2 bg-gray-200 text-gray-300 rounded-lg hover:bg-gray-300 transition-colors"
                             >
                                 Cancel
                             </button>
@@ -565,8 +565,8 @@ export default function OwnerSlotsPage() {
             {/* Offline Booking Modal */}
             {showOfflineBookingModal && (
                 <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-                    <div className="bg-white rounded-lg p-8 max-w-md w-full mx-4">
-                        <h2 className="text-2xl font-bold text-gray-900 mb-6">
+                    <div className="bg-gray-900/60 rounded-lg p-8 max-w-md w-full mx-4">
+                        <h2 className="text-2xl font-bold text-white mb-6">
                             Create Offline Booking
                         </h2>
 
@@ -586,27 +586,27 @@ export default function OwnerSlotsPage() {
 
                         <div className="space-y-4">
                             <div>
-                                <label className="block text-sm font-medium text-gray-700 mb-1">
+                                <label className="block text-sm font-medium text-gray-300 mb-1">
                                     Customer Name *
                                 </label>
                                 <input
                                     type="text"
                                     value={customerName}
                                     onChange={(e) => setCustomerName(e.target.value)}
-                                    className="w-full px-4 py-2 rounded-lg border-2 border-gray-200 focus:border-green-500 focus:outline-none"
+                                    className="w-full px-4 py-2 rounded-lg border-2 border-white/[0.08] focus:border-green-500 focus:outline-none"
                                     placeholder="Enter customer name"
                                     required
                                 />
                             </div>
                             <div>
-                                <label className="block text-sm font-medium text-gray-700 mb-1">
+                                <label className="block text-sm font-medium text-gray-300 mb-1">
                                     Customer Phone *
                                 </label>
                                 <input
                                     type="tel"
                                     value={customerPhone}
                                     onChange={(e) => setCustomerPhone(e.target.value)}
-                                    className="w-full px-4 py-2 rounded-lg border-2 border-gray-200 focus:border-green-500 focus:outline-none"
+                                    className="w-full px-4 py-2 rounded-lg border-2 border-white/[0.08] focus:border-green-500 focus:outline-none"
                                     placeholder="Enter 10-digit phone number"
                                     maxLength={10}
                                     required
@@ -630,7 +630,7 @@ export default function OwnerSlotsPage() {
                                     setCustomerName('');
                                     setCustomerPhone('');
                                 }}
-                                className="flex-1 px-4 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 transition-colors"
+                                className="flex-1 px-4 py-2 bg-gray-200 text-gray-300 rounded-lg hover:bg-gray-300 transition-colors"
                             >
                                 Cancel
                             </button>

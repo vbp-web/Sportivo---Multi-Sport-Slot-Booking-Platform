@@ -144,17 +144,17 @@ export default function OwnerMessagesPage() {
 
     if (loading) {
         return (
-            <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+            <div className="min-h-screen bg-gray-950 flex items-center justify-center">
                 <div className="text-center">
                     <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto"></div>
-                    <p className="mt-4 text-gray-600">Loading customers...</p>
+                    <p className="mt-4 text-gray-400">Loading customers...</p>
                 </div>
             </div>
         );
     }
 
     return (
-        <div className="min-h-screen bg-gray-50">
+        <div className="min-h-screen bg-gray-950">
             <Navbar />
 
             <div className="flex">
@@ -163,10 +163,10 @@ export default function OwnerMessagesPage() {
                 <main className="flex-1 p-8">
                     {/* Header */}
                     <div className="mb-8">
-                        <h1 className="text-4xl font-bold text-gray-900 mb-2">
+                        <h1 className="text-4xl font-bold text-white mb-2">
                             💬 Send Messages
                         </h1>
-                        <p className="text-lg text-gray-600">
+                        <p className="text-lg text-gray-400">
                             Send SMS or WhatsApp messages to your customers
                         </p>
                     </div>
@@ -174,9 +174,9 @@ export default function OwnerMessagesPage() {
                     <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
                         {/* Customer List */}
                         <div className="lg:col-span-1">
-                            <div className="bg-white rounded-lg shadow-sm p-6">
+                            <div className="bg-gray-900/60 rounded-lg shadow-sm p-6">
                                 <div className="flex justify-between items-center mb-4">
-                                    <h2 className="text-xl font-bold text-gray-900">
+                                    <h2 className="text-xl font-bold text-white">
                                         Customers ({customers.length})
                                     </h2>
                                     <div className="flex gap-2">
@@ -188,14 +188,14 @@ export default function OwnerMessagesPage() {
                                         </button>
                                         <button
                                             onClick={deselectAll}
-                                            className="text-xs px-2 py-1 bg-gray-100 text-gray-700 rounded hover:bg-gray-200"
+                                            className="text-xs px-2 py-1 bg-white/[0.05] text-gray-300 rounded hover:bg-gray-200"
                                         >
                                             Clear
                                         </button>
                                     </div>
                                 </div>
 
-                                <div className="text-sm text-gray-600 mb-3">
+                                <div className="text-sm text-gray-400 mb-3">
                                     Selected: {selectedCustomers.length} / {customers.length}
                                 </div>
 
@@ -209,7 +209,7 @@ export default function OwnerMessagesPage() {
                                         customers.map((customer) => (
                                             <label
                                                 key={customer._id}
-                                                className="flex items-center gap-3 p-3 rounded-lg border-2 border-gray-200 hover:border-blue-300 cursor-pointer transition-colors"
+                                                className="flex items-center gap-3 p-3 rounded-lg border-2 border-white/[0.08] hover:border-blue-300 cursor-pointer transition-colors"
                                             >
                                                 <input
                                                     type="checkbox"
@@ -218,8 +218,8 @@ export default function OwnerMessagesPage() {
                                                     className="w-4 h-4 text-blue-600 rounded focus:ring-blue-500"
                                                 />
                                                 <div className="flex-1">
-                                                    <div className="font-medium text-gray-900">{customer.name}</div>
-                                                    <div className="text-sm text-gray-600">{customer.phone}</div>
+                                                    <div className="font-medium text-white">{customer.name}</div>
+                                                    <div className="text-sm text-gray-400">{customer.phone}</div>
                                                 </div>
                                             </label>
                                         ))
@@ -230,12 +230,12 @@ export default function OwnerMessagesPage() {
 
                         {/* Message Composer */}
                         <div className="lg:col-span-2">
-                            <div className="bg-white rounded-lg shadow-sm p-6">
-                                <h2 className="text-xl font-bold text-gray-900 mb-4">Compose Message</h2>
+                            <div className="bg-gray-900/60 rounded-lg shadow-sm p-6">
+                                <h2 className="text-xl font-bold text-white mb-4">Compose Message</h2>
 
                                 {/* Message Type Selection */}
                                 <div className="mb-6">
-                                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                                    <label className="block text-sm font-medium text-gray-300 mb-2">
                                         Message Type
                                     </label>
                                     <div className="flex gap-4">
@@ -275,7 +275,7 @@ export default function OwnerMessagesPage() {
 
                                 {/* Quick Messages */}
                                 <div className="mb-6">
-                                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                                    <label className="block text-sm font-medium text-gray-300 mb-2">
                                         Quick Messages
                                     </label>
                                     <div className="flex flex-wrap gap-2">
@@ -283,7 +283,7 @@ export default function OwnerMessagesPage() {
                                             <button
                                                 key={index}
                                                 onClick={() => setMessage(qm)}
-                                                className="text-xs px-3 py-1 bg-gray-100 text-gray-700 rounded-full hover:bg-gray-200 transition-colors"
+                                                className="text-xs px-3 py-1 bg-white/[0.05] text-gray-300 rounded-full hover:bg-gray-200 transition-colors"
                                             >
                                                 {qm.substring(0, 30)}...
                                             </button>
@@ -293,14 +293,14 @@ export default function OwnerMessagesPage() {
 
                                 {/* Message Input */}
                                 <div className="mb-6">
-                                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                                    <label className="block text-sm font-medium text-gray-300 mb-2">
                                         Message
                                     </label>
                                     <textarea
                                         value={message}
                                         onChange={(e) => setMessage(e.target.value)}
                                         rows={6}
-                                        className="w-full px-4 py-2 rounded-lg border-2 border-gray-200 focus:border-blue-500 focus:outline-none"
+                                        className="w-full px-4 py-2 rounded-lg border-2 border-white/[0.08] focus:border-blue-500 focus:outline-none"
                                         placeholder="Type your message here..."
                                     />
                                     <div className="text-sm text-gray-500 mt-1">
@@ -359,11 +359,11 @@ export default function OwnerMessagesPage() {
             {/* Coming Soon Modal */}
             {showComingSoonModal && (
                 <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
-                    <div className="bg-white rounded-2xl shadow-2xl max-w-md w-full p-8 relative animate-fade-in">
+                    <div className="bg-gray-900/60 rounded-2xl shadow-2xl max-w-md w-full p-8 relative animate-fade-in">
                         {/* Close Button */}
                         <button
                             onClick={() => setShowComingSoonModal(false)}
-                            className="absolute top-4 right-4 text-gray-400 hover:text-gray-600 transition-colors"
+                            className="absolute top-4 right-4 text-gray-400 hover:text-gray-400 transition-colors"
                         >
                             <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
@@ -379,17 +379,17 @@ export default function OwnerMessagesPage() {
 
                         {/* Content */}
                         <div className="text-center">
-                            <h3 className="text-2xl font-bold text-gray-900 mb-3">
+                            <h3 className="text-2xl font-bold text-white mb-3">
                                 WhatsApp Integration
                             </h3>
                             <div className="inline-block px-4 py-2 bg-yellow-100 text-yellow-800 rounded-full font-semibold text-sm mb-4">
                                 Coming Soon! 🚀
                             </div>
-                            <p className="text-gray-600 mb-6 leading-relaxed">
+                            <p className="text-gray-400 mb-6 leading-relaxed">
                                 We&apos;re working hard to bring you WhatsApp messaging capabilities.
                                 This feature will allow you to send messages directly to your customers via WhatsApp.
                             </p>
-                            <p className="text-gray-600 mb-6">
+                            <p className="text-gray-400 mb-6">
                                 In the meantime, you can use <strong className="text-blue-600">SMS</strong> to communicate with your customers.
                             </p>
 
@@ -406,7 +406,7 @@ export default function OwnerMessagesPage() {
                                 </button>
                                 <button
                                     onClick={() => setShowComingSoonModal(false)}
-                                    className="flex-1 px-6 py-3 bg-gray-100 text-gray-700 rounded-lg font-medium hover:bg-gray-200 transition-all"
+                                    className="flex-1 px-6 py-3 bg-white/[0.05] text-gray-300 rounded-lg font-medium hover:bg-gray-200 transition-all"
                                 >
                                     Got It
                                 </button>

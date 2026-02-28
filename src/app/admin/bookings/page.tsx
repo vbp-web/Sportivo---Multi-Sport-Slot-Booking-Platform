@@ -128,29 +128,29 @@ export default function AdminBookingsPage() {
 
     if (loading) {
         return (
-            <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+            <div className="min-h-screen bg-gray-950 flex items-center justify-center">
                 <div className="text-center">
                     <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto"></div>
-                    <p className="mt-4 text-gray-600">Loading all bookings...</p>
+                    <p className="mt-4 text-gray-400">Loading all bookings...</p>
                 </div>
             </div>
         );
     }
 
     return (
-        <div className="min-h-screen bg-gray-50 flex">
+        <div className="min-h-screen bg-gray-950 flex">
             <Sidebar role="admin" />
 
             <main className="flex-1 p-8">
                 {/* Header */}
                 <div className="mb-8 flex justify-between items-center">
                     <div>
-                        <h1 className="text-3xl font-bold text-gray-900">All Bookings</h1>
-                        <p className="text-gray-600 mt-2">Monitor all bookings across the platform</p>
+                        <h1 className="text-3xl font-bold text-white">All Bookings</h1>
+                        <p className="text-gray-400 mt-2">Monitor all bookings across the platform</p>
                     </div>
                     <button
                         onClick={fetchBookings}
-                        className="px-4 py-2 bg-white border border-gray-200 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors flex items-center gap-2 shadow-sm"
+                        className="px-4 py-2 bg-gray-900/60 border border-white/[0.08] text-gray-300 rounded-lg hover:bg-white/5 transition-colors flex items-center gap-2 shadow-sm"
                     >
                         <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
@@ -160,15 +160,15 @@ export default function AdminBookingsPage() {
                 </div>
 
                 {/* Filters and Search */}
-                <div className="bg-white p-4 rounded-xl shadow-sm border border-gray-100 mb-6 flex flex-col md:flex-row gap-4 items-center">
-                    <div className="flex gap-2 bg-gray-100 p-1 rounded-lg w-full md:w-auto overflow-x-auto">
+                <div className="bg-gray-900/60 p-4 rounded-xl shadow-sm border border-white/[0.06] mb-6 flex flex-col md:flex-row gap-4 items-center">
+                    <div className="flex gap-2 bg-white/[0.05] p-1 rounded-lg w-full md:w-auto overflow-x-auto">
                         {['all', 'pending', 'confirmed', 'rejected', 'cancelled', 'completed'].map((tab) => (
                             <button
                                 key={tab}
                                 onClick={() => setFilter(tab as typeof filter)}
                                 className={`px-4 py-1.5 rounded-md text-sm font-medium transition-all capitalize whitespace-nowrap ${filter === tab
                                     ? 'bg-white text-blue-600 shadow-sm'
-                                    : 'text-gray-600 hover:text-gray-900'
+                                    : 'text-gray-400 hover:text-white'
                                     }`}
                             >
                                 {tab}
@@ -184,16 +184,16 @@ export default function AdminBookingsPage() {
                             placeholder="Search by code, user, venue or UTR..."
                             value={searchTerm}
                             onChange={(e) => setSearchTerm(e.target.value)}
-                            className="w-full pl-10 pr-4 py-2 bg-gray-50 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all"
+                            className="w-full pl-10 pr-4 py-2 bg-gray-900 border border-white/[0.08] rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all"
                         />
                     </div>
                 </div>
 
                 {/* Bookings Table */}
-                <div className="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
+                <div className="bg-gray-900/60 rounded-xl shadow-sm border border-white/[0.06] overflow-hidden">
                     <div className="overflow-x-auto">
                         <table className="min-w-full divide-y divide-gray-200">
-                            <thead className="bg-gray-50">
+                            <thead className="bg-gray-900">
                                 <tr>
                                     <th className="px-6 py-4 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">Booking</th>
                                     <th className="px-6 py-4 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">Customer</th>
@@ -203,7 +203,7 @@ export default function AdminBookingsPage() {
                                     <th className="px-6 py-4 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">Status</th>
                                 </tr>
                             </thead>
-                            <tbody className="bg-white divide-y divide-gray-200">
+                            <tbody className="bg-gray-900/60 divide-y divide-gray-200">
                                 {filteredBookings.length === 0 ? (
                                     <tr>
                                         <td colSpan={6} className="px-6 py-12 text-center text-gray-500">
@@ -218,25 +218,25 @@ export default function AdminBookingsPage() {
                                     </tr>
                                 ) : (
                                     filteredBookings.map((booking) => (
-                                        <tr key={booking._id} className="hover:bg-gray-50 transition-colors">
+                                        <tr key={booking._id} className="hover:bg-white/5 transition-colors">
                                             <td className="px-6 py-4">
-                                                <div className="text-sm font-bold text-gray-900">{booking.bookingCode}</div>
+                                                <div className="text-sm font-bold text-white">{booking.bookingCode}</div>
                                                 <div className="text-xs text-gray-500 mt-0.5">
                                                     {new Date(booking.createdAt).toLocaleDateString()}
                                                 </div>
                                             </td>
                                             <td className="px-6 py-4">
-                                                <div className="text-sm font-medium text-gray-900">{booking.userId?.name || 'Unknown User'}</div>
+                                                <div className="text-sm font-medium text-white">{booking.userId?.name || 'Unknown User'}</div>
                                                 <div className="text-xs text-gray-500">{booking.userId?.phone || 'N/A'}</div>
                                             </td>
                                             <td className="px-6 py-4">
-                                                <div className="text-sm text-gray-900">{booking.venueId?.name || 'N/A'}</div>
+                                                <div className="text-sm text-white">{booking.venueId?.name || 'N/A'}</div>
                                                 <div className="text-xs text-gray-500">
                                                     {booking.sportId?.name || 'N/A'} | {booking.courtId?.name || 'N/A'}
                                                 </div>
                                             </td>
                                             <td className="px-6 py-4">
-                                                <div className="text-xs text-gray-900 space-y-0.5">
+                                                <div className="text-xs text-white space-y-0.5">
                                                     {booking.slots && booking.slots.length > 0 ? (
                                                         booking.slots.slice(0, 2).map((slot, idx) => (
                                                             <div key={idx}>{formatSlotTime(slot)}</div>
@@ -250,7 +250,7 @@ export default function AdminBookingsPage() {
                                                 </div>
                                             </td>
                                             <td className="px-6 py-4">
-                                                <div className="text-sm font-bold text-gray-900">₹{booking.amount}</div>
+                                                <div className="text-sm font-bold text-white">₹{booking.amount}</div>
                                                 {booking.utr && (
                                                     <div className="text-[10px] text-gray-500 mt-1 uppercase">UTR: {booking.utr}</div>
                                                 )}
@@ -286,7 +286,7 @@ export default function AdminBookingsPage() {
                     className="fixed inset-0 bg-black/80 flex items-center justify-center z-50 p-4"
                     onClick={() => setShowPaymentProof(false)}
                 >
-                    <div className="relative max-w-4xl w-full bg-white rounded-xl overflow-hidden shadow-2xl">
+                    <div className="relative max-w-4xl w-full bg-gray-900/60 rounded-xl overflow-hidden shadow-2xl">
                         <button
                             className="absolute top-4 right-4 bg-black/50 hover:bg-black/70 text-white p-2 rounded-full transition-colors z-10"
                             onClick={() => setShowPaymentProof(false)}
@@ -306,8 +306,8 @@ export default function AdminBookingsPage() {
                                 onClick={(e) => e.stopPropagation()}
                             />
                         </div>
-                        <div className="bg-gray-50 px-6 py-4 border-t border-gray-100 flex justify-between items-center">
-                            <span className="text-sm font-medium text-gray-700">Payment Verification Proof</span>
+                        <div className="bg-gray-900 px-6 py-4 border-t border-white/[0.06] flex justify-between items-center">
+                            <span className="text-sm font-medium text-gray-300">Payment Verification Proof</span>
                             <a
                                 href={selectedProof}
                                 download

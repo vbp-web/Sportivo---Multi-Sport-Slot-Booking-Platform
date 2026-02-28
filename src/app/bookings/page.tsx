@@ -92,17 +92,17 @@ export default function MyBookingsPage() {
 
     if (loading) {
         return (
-            <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+            <div className="min-h-screen bg-gray-950 flex items-center justify-center">
                 <div className="text-center">
                     <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto"></div>
-                    <p className="mt-4 text-gray-600">Loading bookings...</p>
+                    <p className="mt-4 text-gray-400">Loading bookings...</p>
                 </div>
             </div>
         );
     }
 
     return (
-        <div className="min-h-screen bg-gray-50">
+        <div className="min-h-screen bg-gray-950">
             <Navbar />
 
             <div className="flex">
@@ -113,10 +113,10 @@ export default function MyBookingsPage() {
                     <div className="mb-8">
                         <div className="flex justify-between items-center mb-4">
                             <div>
-                                <h1 className="text-4xl font-bold text-gray-900 mb-2">
+                                <h1 className="text-4xl font-bold text-white mb-2">
                                     My Bookings
                                 </h1>
-                                <p className="text-lg text-gray-600">
+                                <p className="text-lg text-gray-400">
                                     View and manage all your slot bookings
                                 </p>
                                 <p className="text-sm text-gray-500 mt-1">
@@ -136,9 +136,9 @@ export default function MyBookingsPage() {
 
                         {/* Stats */}
                         <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
-                            <div className="bg-white rounded-lg shadow-sm p-4">
-                                <div className="text-sm text-gray-600">Total Bookings</div>
-                                <div className="text-2xl font-bold text-gray-900">{bookings.length}</div>
+                            <div className="bg-gray-900/60 rounded-lg shadow-sm p-4">
+                                <div className="text-sm text-gray-400">Total Bookings</div>
+                                <div className="text-2xl font-bold text-white">{bookings.length}</div>
                             </div>
                             <div className="bg-yellow-50 rounded-lg shadow-sm p-4">
                                 <div className="text-sm text-yellow-700">Pending</div>
@@ -162,7 +162,7 @@ export default function MyBookingsPage() {
                     </div>
 
                     {/* Filter Tabs */}
-                    <div className="mb-6 border-b border-gray-200">
+                    <div className="mb-6 border-b border-white/[0.08]">
                         <div className="flex gap-4">
                             {['all', 'pending', 'confirmed', 'rejected', 'cancelled'].map((tab) => (
                                 <button
@@ -170,7 +170,7 @@ export default function MyBookingsPage() {
                                     onClick={() => setFilter(tab as typeof filter)}
                                     className={`px-4 py-2 font-medium border-b-2 transition-colors capitalize ${filter === tab
                                         ? 'border-blue-600 text-blue-600'
-                                        : 'border-transparent text-gray-600 hover:text-gray-900'
+                                        : 'border-transparent text-gray-400 hover:text-white'
                                         }`}
                                 >
                                     {tab}
@@ -186,11 +186,11 @@ export default function MyBookingsPage() {
 
                     {/* Bookings List */}
                     {filteredBookings.length === 0 ? (
-                        <div className="bg-white rounded-lg shadow-sm p-12 text-center">
+                        <div className="bg-gray-900/60 rounded-lg shadow-sm p-12 text-center">
                             <svg className="mx-auto h-16 w-16 text-gray-400 mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01" />
                             </svg>
-                            <h3 className="text-lg font-medium text-gray-900 mb-2">
+                            <h3 className="text-lg font-medium text-white mb-2">
                                 No {filter !== 'all' ? filter : ''} bookings
                             </h3>
                             <p className="text-gray-500 mb-6">

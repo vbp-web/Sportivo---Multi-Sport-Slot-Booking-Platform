@@ -148,17 +148,17 @@ export default function EditCourtPage({ params }: { params: Promise<{ id: string
 
     if (loading) {
         return (
-            <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+            <div className="min-h-screen bg-gray-900 flex items-center justify-center">
                 <div className="text-center">
                     <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto"></div>
-                    <p className="mt-4 text-gray-600">Loading...</p>
+                    <p className="mt-4 text-gray-400">Loading...</p>
                 </div>
             </div>
         );
     }
 
     return (
-        <div className="min-h-screen bg-gray-50">
+        <div className="min-h-screen bg-gray-900">
             <Navbar />
 
             <main className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
@@ -172,11 +172,11 @@ export default function EditCourtPage({ params }: { params: Promise<{ id: string
                         </svg>
                         Back to Courts
                     </button>
-                    <h1 className="text-4xl font-bold text-gray-900">Edit Court</h1>
-                    <p className="text-lg text-gray-600 mt-2">Update yours court details</p>
+                    <h1 className="text-4xl font-bold text-white">Edit Court</h1>
+                    <p className="text-lg text-gray-400 mt-2">Update yours court details</p>
                 </div>
 
-                <div className="bg-white rounded-lg shadow-sm p-8">
+                <div className="bg-gray-900/60 rounded-lg shadow-sm p-8">
                     <form onSubmit={handleSubmit} className="space-y-6">
                         <Input
                             label="Court Name *"
@@ -188,13 +188,13 @@ export default function EditCourtPage({ params }: { params: Promise<{ id: string
                         />
 
                         <div>
-                            <label className="block text-sm font-medium text-gray-700 mb-1">
+                            <label className="block text-sm font-medium text-gray-300 mb-1">
                                 Select Venue *
                             </label>
                             <select
                                 value={formData.venueId}
                                 onChange={(e) => setFormData({ ...formData, venueId: e.target.value })}
-                                className="w-full px-4 py-2 rounded-lg border-2 border-gray-200 focus:border-blue-500 focus:outline-none"
+                                className="w-full px-4 py-2 rounded-lg border-2 border-white/[0.08] focus:border-blue-500 focus:outline-none"
                             >
                                 <option value="">Choose a venue</option>
                                 {venues.map(venue => (
@@ -207,13 +207,13 @@ export default function EditCourtPage({ params }: { params: Promise<{ id: string
                         </div>
 
                         <div>
-                            <label className="block text-sm font-medium text-gray-700 mb-1">
+                            <label className="block text-sm font-medium text-gray-300 mb-1">
                                 Select Sport *
                             </label>
                             <select
                                 value={formData.sportId}
                                 onChange={(e) => setFormData({ ...formData, sportId: e.target.value })}
-                                className="w-full px-4 py-2 rounded-lg border-2 border-gray-200 focus:border-blue-500 focus:outline-none"
+                                className="w-full px-4 py-2 rounded-lg border-2 border-white/[0.08] focus:border-blue-500 focus:outline-none"
                             >
                                 <option value="">Choose a sport</option>
                                 {sports.map(sport => (
@@ -244,13 +244,13 @@ export default function EditCourtPage({ params }: { params: Promise<{ id: string
                         </div>
 
                         <div>
-                            <label className="block text-sm font-medium text-gray-700 mb-1">
+                            <label className="block text-sm font-medium text-gray-300 mb-1">
                                 Description (Optional)
                             </label>
                             <textarea
                                 value={formData.description}
                                 onChange={(e) => setFormData({ ...formData, description: e.target.value })}
-                                className="w-full px-4 py-2 rounded-lg border-2 border-gray-200 focus:border-blue-500 focus:outline-none"
+                                className="w-full px-4 py-2 rounded-lg border-2 border-white/[0.08] focus:border-blue-500 focus:outline-none"
                                 rows={3}
                                 placeholder="Any additional details..."
                             />
@@ -263,7 +263,7 @@ export default function EditCourtPage({ params }: { params: Promise<{ id: string
                             <button
                                 type="button"
                                 onClick={() => router.back()}
-                                className="flex-1 px-4 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 transition-colors"
+                                className="flex-1 px-4 py-2 bg-gray-200 text-gray-300 rounded-lg hover:bg-gray-300 transition-colors"
                             >
                                 Cancel
                             </button>

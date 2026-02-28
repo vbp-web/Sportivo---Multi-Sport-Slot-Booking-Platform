@@ -111,27 +111,27 @@ export default function OwnerVenuesPage() {
 
     if (loading) {
         return (
-            <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+            <div className="min-h-screen bg-gray-950 flex items-center justify-center">
                 <div className="text-center">
                     <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto"></div>
-                    <p className="mt-4 text-gray-600">Loading venues...</p>
+                    <p className="mt-4 text-gray-400">Loading venues...</p>
                 </div>
             </div>
         );
     }
 
     return (
-        <div className="min-h-screen bg-gray-50">
+        <div className="min-h-screen bg-gray-950">
             <Navbar />
 
             <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
                 {/* Header */}
                 <div className="mb-8 flex justify-between items-end">
                     <div>
-                        <h1 className="text-4xl font-bold text-gray-900 mb-2">
+                        <h1 className="text-4xl font-bold text-white mb-2">
                             My Venues
                         </h1>
-                        <p className="text-lg text-gray-600">
+                        <p className="text-lg text-gray-400">
                             {subscription ? (
                                 <span>
                                     Using <span className="font-bold text-blue-600">{venues.length}</span> of <span className="font-bold text-blue-600">{subscription.planId?.maxVenues || 0}</span> venues allowed in your <span className="font-bold">{subscription.planId?.name}</span> plan
@@ -159,11 +159,11 @@ export default function OwnerVenuesPage() {
 
                 {/* Venues List */}
                 {venues.length === 0 ? (
-                    <div className="text-center py-12 bg-white rounded-lg shadow">
+                    <div className="text-center py-12 bg-gray-900/60 rounded-lg shadow">
                         <svg className="mx-auto h-12 w-12 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
                         </svg>
-                        <h3 className="mt-2 text-sm font-medium text-gray-900">No venues</h3>
+                        <h3 className="mt-2 text-sm font-medium text-white">No venues</h3>
                         <p className="mt-1 text-sm text-gray-500">Get started by creating a new venue.</p>
                         <div className="mt-6">
                             <Button onClick={handleAddVenue}>
@@ -174,16 +174,16 @@ export default function OwnerVenuesPage() {
                 ) : (
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                         {venues.map((venue) => (
-                            <div key={venue._id} className="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow">
+                            <div key={venue._id} className="bg-gray-900/60 rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow">
                                 <div className="flex justify-between items-start mb-4">
-                                    <h3 className="text-xl font-semibold text-gray-900">{venue.name}</h3>
+                                    <h3 className="text-xl font-semibold text-white">{venue.name}</h3>
                                     <span className={`px-3 py-1 rounded-full text-xs font-medium ${venue.isActive ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'
                                         }`}>
                                         {venue.isActive ? 'Active' : 'Inactive'}
                                     </span>
                                 </div>
 
-                                <div className="space-y-2 text-sm text-gray-600 mb-4">
+                                <div className="space-y-2 text-sm text-gray-400 mb-4">
                                     <p className="flex items-center">
                                         <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />

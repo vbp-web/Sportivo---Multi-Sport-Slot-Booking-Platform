@@ -99,10 +99,10 @@ export default function OwnerDashboardPage() {
 
     if (loading) {
         return (
-            <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+            <div className="min-h-screen bg-gray-950 flex items-center justify-center">
                 <div className="text-center">
                     <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto"></div>
-                    <p className="mt-4 text-gray-600">Loading dashboard...</p>
+                    <p className="mt-4 text-gray-400">Loading dashboard...</p>
                 </div>
             </div>
         );
@@ -110,7 +110,7 @@ export default function OwnerDashboardPage() {
 
     if (error || !stats) {
         return (
-            <div className="min-h-screen bg-gray-50 flex">
+            <div className="min-h-screen bg-gray-950 flex">
                 <Sidebar role="owner" />
                 <main className="flex-1 p-8">
                     <div className="bg-red-50 border border-red-200 rounded-lg p-4">
@@ -122,31 +122,31 @@ export default function OwnerDashboardPage() {
     }
 
     return (
-        <div className="min-h-screen bg-gray-50 flex">
+        <div className="min-h-screen bg-gray-950 flex">
             <Sidebar role="owner" />
 
             <main className="flex-1 p-8">
                 <div className="mb-8">
-                    <h1 className="text-3xl font-bold text-gray-900">Dashboard</h1>
-                    <p className="text-gray-600 mt-2">Welcome back! Here&apos;s your venue overview</p>
+                    <h1 className="text-3xl font-bold text-white">Dashboard</h1>
+                    <p className="text-gray-400 mt-2">Welcome back! Here&apos;s your venue overview</p>
                 </div>
 
                 <DashboardStats stats={stats || defaultStats} />
 
                 {/* Recent Activity */}
-                <div className="mt-8 bg-white rounded-lg shadow-sm p-6">
-                    <h2 className="text-xl font-bold text-gray-900 mb-4">Recent Activity</h2>
+                <div className="mt-8 bg-gray-900/60 rounded-lg shadow-sm p-6">
+                    <h2 className="text-xl font-bold text-white mb-4">Recent Activity</h2>
                     {recentActivity.length === 0 ? (
                         <p className="text-gray-500 text-center py-8">No recent activity</p>
                     ) : (
                         <div className="space-y-3">
                             {recentActivity.map((activity) => (
-                                <div key={activity.id} className="flex items-center gap-3 p-3 bg-gray-50 rounded-lg">
+                                <div key={activity.id} className="flex items-center gap-3 p-3 bg-gray-900 rounded-lg">
                                     <div className="text-2xl">
                                         {activity.type === 'pending' ? '📅' : '✅'}
                                     </div>
                                     <div className="flex-1">
-                                        <p className="text-sm font-medium text-gray-900">{activity.message}</p>
+                                        <p className="text-sm font-medium text-white">{activity.message}</p>
                                         <p className="text-xs text-gray-500">{activity.details}</p>
                                         {activity.amount && (
                                             <p className="text-xs text-green-600 font-medium">₹{activity.amount}</p>

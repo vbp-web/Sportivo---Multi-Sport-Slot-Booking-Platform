@@ -14,11 +14,11 @@ export default function Badge({
     className = ''
 }: BadgeProps) {
     const variants = {
-        success: 'bg-green-100 text-green-800 border-green-200',
-        warning: 'bg-yellow-100 text-yellow-800 border-yellow-200',
-        danger: 'bg-red-100 text-red-800 border-red-200',
-        info: 'bg-blue-100 text-blue-800 border-blue-200',
-        default: 'bg-gray-100 text-gray-800 border-gray-200',
+        success: 'bg-green-500/10 text-green-400 border-green-500/20',
+        warning: 'bg-yellow-500/10 text-yellow-400 border-yellow-500/20',
+        danger: 'bg-red-500/10 text-red-400 border-red-500/20',
+        info: 'bg-blue-500/10 text-blue-400 border-blue-500/20',
+        default: 'bg-white/5 text-gray-300 border-white/10',
     };
 
     const sizes = {

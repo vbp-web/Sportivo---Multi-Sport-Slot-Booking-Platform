@@ -66,7 +66,7 @@ export default function SportForm({ sport, onSubmit, onCancel }: SportFormProps)
     return (
         <Card>
             <CardHeader>
-                <h2 className="text-xl font-bold text-gray-900">
+                <h2 className="text-xl font-bold text-white">
                     {sport ? 'Edit Sport' : 'Add New Sport'}
                 </h2>
             </CardHeader>
@@ -89,7 +89,7 @@ export default function SportForm({ sport, onSubmit, onCancel }: SportFormProps)
 
                     {/* Quick Select Popular Sports */}
                     <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-2">
+                        <label className="block text-sm font-medium text-gray-300 mb-2">
                             Quick Select (Optional)
                         </label>
                         <div className="grid grid-cols-4 gap-2">
@@ -98,10 +98,10 @@ export default function SportForm({ sport, onSubmit, onCancel }: SportFormProps)
                                     key={s.name}
                                     type="button"
                                     onClick={() => setFormData({ ...formData, name: s.name, icon: s.icon })}
-                                    className="p-2 border-2 border-gray-200 rounded-lg hover:border-blue-500 transition-all text-center"
+                                    className="p-2 border-2 border-white/[0.08] rounded-lg hover:border-blue-500 transition-all text-center"
                                 >
                                     <div className="text-2xl mb-1">{s.icon}</div>
-                                    <div className="text-xs text-gray-600">{s.name}</div>
+                                    <div className="text-xs text-gray-400">{s.name}</div>
                                 </button>
                             ))}
                         </div>
@@ -119,11 +119,11 @@ export default function SportForm({ sport, onSubmit, onCancel }: SportFormProps)
                     />
 
                     <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-2">
+                        <label className="block text-sm font-medium text-gray-300 mb-2">
                             Description (Optional)
                         </label>
                         <textarea
-                            className="w-full px-4 py-3 rounded-lg border-2 border-gray-200 focus:border-blue-500 focus:ring-blue-500 focus:outline-none focus:ring-2 transition-all"
+                            className="w-full px-4 py-3 rounded-lg border-2 border-white/[0.08] focus:border-blue-500 focus:ring-blue-500 focus:outline-none focus:ring-2 transition-all"
                             rows={3}
                             placeholder="Brief description of the sport"
                             value={formData.description}
@@ -131,7 +131,7 @@ export default function SportForm({ sport, onSubmit, onCancel }: SportFormProps)
                         />
                     </div>
 
-                    <div className="flex items-center gap-3 p-4 bg-gray-50 rounded-lg">
+                    <div className="flex items-center gap-3 p-4 bg-gray-900 rounded-lg">
                         <input
                             type="checkbox"
                             id="isActive"
@@ -139,7 +139,7 @@ export default function SportForm({ sport, onSubmit, onCancel }: SportFormProps)
                             onChange={(e) => setFormData({ ...formData, isActive: e.target.checked })}
                             className="w-5 h-5 text-blue-600 rounded focus:ring-2 focus:ring-blue-500"
                         />
-                        <label htmlFor="isActive" className="text-sm font-medium text-gray-900 cursor-pointer">
+                        <label htmlFor="isActive" className="text-sm font-medium text-white cursor-pointer">
                             Sport is active and available for venues
                         </label>
                     </div>

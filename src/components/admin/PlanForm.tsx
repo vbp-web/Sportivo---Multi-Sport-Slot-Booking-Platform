@@ -186,7 +186,7 @@ export default function PlanForm({ plan, onSubmit, onCancel }: PlanFormProps) {
     return (
         <Card>
             <CardHeader>
-                <h2 className="text-xl font-bold text-gray-900">
+                <h2 className="text-xl font-bold text-white">
                     {plan ? 'Edit Subscription Plan' : 'Create New Plan'}
                 </h2>
             </CardHeader>
@@ -196,7 +196,7 @@ export default function PlanForm({ plan, onSubmit, onCancel }: PlanFormProps) {
                     {/* Preset Plans */}
                     {!plan && (
                         <div>
-                            <label className="block text-sm font-medium text-gray-700 mb-2">
+                            <label className="block text-sm font-medium text-gray-300 mb-2">
                                 Quick Start with Preset
                             </label>
                             <div className="grid grid-cols-3 gap-3">
@@ -205,9 +205,9 @@ export default function PlanForm({ plan, onSubmit, onCancel }: PlanFormProps) {
                                         key={preset.name}
                                         type="button"
                                         onClick={() => loadPreset(preset)}
-                                        className="p-3 border-2 border-gray-200 rounded-lg hover:border-blue-500 transition-all text-left"
+                                        className="p-3 border-2 border-white/[0.08] rounded-lg hover:border-blue-500 transition-all text-left"
                                     >
-                                        <div className="font-semibold text-gray-900">{preset.name}</div>
+                                        <div className="font-semibold text-white">{preset.name}</div>
                                         <div className="text-sm text-blue-600 font-bold">₹{preset.price}/mo</div>
                                         <div className="text-xs text-gray-500 mt-1">
                                             {preset.maxVenues}V • {preset.maxCourts}C
@@ -247,7 +247,7 @@ export default function PlanForm({ plan, onSubmit, onCancel }: PlanFormProps) {
 
                     <div className="grid md:grid-cols-2 gap-4">
                         <div>
-                            <label className="block text-sm font-medium text-gray-700 mb-1">
+                            <label className="block text-sm font-medium text-gray-300 mb-1">
                                 Duration *
                             </label>
                             <select
@@ -257,28 +257,28 @@ export default function PlanForm({ plan, onSubmit, onCancel }: PlanFormProps) {
                                     duration: e.target.value,
                                     durationType: e.target.value === '30' ? 'monthly' : 'yearly'
                                 })}
-                                className="w-full px-4 py-2 rounded-lg border-2 border-gray-200 focus:border-blue-500 focus:outline-none"
+                                className="w-full px-4 py-2 rounded-lg border-2 border-white/[0.08] focus:border-blue-500 focus:outline-none"
                             >
                                 <option value="30">Monthly (30 Days)</option>
                                 <option value="365">Yearly (365 Days)</option>
                             </select>
                         </div>
                         <div>
-                            <label className="block text-sm font-medium text-gray-700 mb-1">
+                            <label className="block text-sm font-medium text-gray-300 mb-1">
                                 Duration Type
                             </label>
                             <input
                                 type="text"
                                 disabled
                                 value={formData.durationType.toUpperCase()}
-                                className="w-full px-4 py-2 rounded-lg border-2 border-gray-100 bg-gray-50 text-gray-500 outline-none cursor-not-allowed"
+                                className="w-full px-4 py-2 rounded-lg border-2 border-white/[0.06] bg-gray-900 text-gray-500 outline-none cursor-not-allowed"
                             />
                         </div>
                     </div>
 
                     {/* Limits */}
                     <div>
-                        <h3 className="text-lg font-semibold text-gray-900 mb-3 text-sm border-b pb-2">Plan Limits</h3>
+                        <h3 className="text-lg font-semibold text-white mb-3 text-sm border-b pb-2">Plan Limits</h3>
                         <div className="grid md:grid-cols-2 gap-4">
                             <Input
                                 label="Max Venues"
@@ -315,7 +315,7 @@ export default function PlanForm({ plan, onSubmit, onCancel }: PlanFormProps) {
                                         onChange={(e) => setFormData({ ...formData, isUnlimitedBookings: e.target.checked })}
                                         className="w-4 h-4 text-blue-600 rounded"
                                     />
-                                    <label htmlFor="isUnlimitedBookings" className="text-xs text-gray-600">
+                                    <label htmlFor="isUnlimitedBookings" className="text-xs text-gray-400">
                                         Unlimited Bookings
                                     </label>
                                 </div>
@@ -338,7 +338,7 @@ export default function PlanForm({ plan, onSubmit, onCancel }: PlanFormProps) {
                                         onChange={(e) => setFormData({ ...formData, isUnlimitedMessages: e.target.checked })}
                                         className="w-4 h-4 text-blue-600 rounded"
                                     />
-                                    <label htmlFor="isUnlimitedMessages" className="text-xs text-gray-600">
+                                    <label htmlFor="isUnlimitedMessages" className="text-xs text-gray-400">
                                         Unlimited Messages
                                     </label>
                                 </div>
@@ -348,7 +348,7 @@ export default function PlanForm({ plan, onSubmit, onCancel }: PlanFormProps) {
 
                     {/* Features Select */}
                     <div>
-                        <h3 className="text-lg font-semibold text-gray-900 mb-3 text-sm border-b pb-2 flex justify-between">
+                        <h3 className="text-lg font-semibold text-white mb-3 text-sm border-b pb-2 flex justify-between">
                             Unlocks Features
                         </h3>
                         {loadingFeatures ? (
@@ -366,7 +366,7 @@ export default function PlanForm({ plan, onSubmit, onCancel }: PlanFormProps) {
                                                 return (
                                                     <label
                                                         key={feature._id}
-                                                        className={`flex items-center p-3 rounded-lg border-2 transition-all cursor-pointer ${isSelected ? 'border-blue-500 bg-blue-50' : 'border-gray-100 hover:border-gray-200'
+                                                        className={`flex items-center p-3 rounded-lg border-2 transition-all cursor-pointer ${isSelected ? 'border-blue-500 bg-blue-50' : 'border-white/[0.06] hover:border-white/[0.08]'
                                                             }`}
                                                     >
                                                         <input
@@ -383,7 +383,7 @@ export default function PlanForm({ plan, onSubmit, onCancel }: PlanFormProps) {
                                                                 </svg>
                                                             )}
                                                         </div>
-                                                        <span className={`text-sm font-medium ${isSelected ? 'text-blue-900' : 'text-gray-700'}`}>
+                                                        <span className={`text-sm font-medium ${isSelected ? 'text-blue-900' : 'text-gray-300'}`}>
                                                             {feature.name}
                                                         </span>
                                                     </label>
@@ -397,7 +397,7 @@ export default function PlanForm({ plan, onSubmit, onCancel }: PlanFormProps) {
                     </div>
 
                     {/* Active Status */}
-                    <div className="flex items-center gap-3 p-4 bg-gray-50 rounded-lg">
+                    <div className="flex items-center gap-3 p-4 bg-gray-900 rounded-lg">
                         <input
                             type="checkbox"
                             id="isActive"
@@ -405,7 +405,7 @@ export default function PlanForm({ plan, onSubmit, onCancel }: PlanFormProps) {
                             onChange={(e) => setFormData({ ...formData, isActive: e.target.checked })}
                             className="w-5 h-5 text-blue-600 rounded focus:ring-2 focus:ring-blue-500"
                         />
-                        <label htmlFor="isActive" className="text-sm font-medium text-gray-900 cursor-pointer">
+                        <label htmlFor="isActive" className="text-sm font-medium text-white cursor-pointer">
                             Plan is active and available for purchase
                         </label>
                     </div>

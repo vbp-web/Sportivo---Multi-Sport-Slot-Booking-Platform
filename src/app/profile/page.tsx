@@ -117,33 +117,33 @@ export default function ProfilePage() {
 
     if (loading) {
         return (
-            <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+            <div className="min-h-screen bg-gray-950 flex items-center justify-center">
                 <div className="text-center">
                     <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto"></div>
-                    <p className="mt-4 text-gray-600">Loading profile...</p>
+                    <p className="mt-4 text-gray-400">Loading profile...</p>
                 </div>
             </div>
         );
     }
 
     return (
-        <div className="min-h-screen bg-gray-50">
+        <div className="min-h-screen bg-gray-950">
             <Navbar />
 
             <div className="flex">
                 <Sidebar role={(user?.role as 'user' | 'admin' | 'owner') || 'user'} />
 
                 <main className="flex-1 p-8">
-                    <h1 className="text-3xl font-bold text-gray-900 mb-8">My Profile</h1>
+                    <h1 className="text-3xl font-bold text-white mb-8">My Profile</h1>
 
                     {/* Tabs */}
-                    <div className="mb-6 border-b border-gray-200">
+                    <div className="mb-6 border-b border-white/[0.08]">
                         <div className="flex gap-4">
                             <button
                                 onClick={() => setActiveTab('profile')}
                                 className={`px-4 py-2 font-medium border-b-2 transition-colors ${activeTab === 'profile'
                                     ? 'border-blue-600 text-blue-600'
-                                    : 'border-transparent text-gray-600 hover:text-gray-900'
+                                    : 'border-transparent text-gray-400 hover:text-white'
                                     }`}
                             >
                                 Profile Details
@@ -152,7 +152,7 @@ export default function ProfilePage() {
                                 onClick={() => setActiveTab('bookings')}
                                 className={`px-4 py-2 font-medium border-b-2 transition-colors ${activeTab === 'bookings'
                                     ? 'border-blue-600 text-blue-600'
-                                    : 'border-transparent text-gray-600 hover:text-gray-900'
+                                    : 'border-transparent text-gray-400 hover:text-white'
                                     }`}
                             >
                                 My Bookings ({bookings.length})
@@ -162,44 +162,44 @@ export default function ProfilePage() {
 
                     {/* Content */}
                     {activeTab === 'profile' ? (
-                        <div className="bg-white rounded-lg shadow-sm p-6">
-                            <h2 className="text-xl font-bold text-gray-900 mb-4">Profile Information</h2>
+                        <div className="bg-gray-900/60 rounded-lg shadow-sm p-6">
+                            <h2 className="text-xl font-bold text-white mb-4">Profile Information</h2>
                             <form onSubmit={handleUpdateProfile} className="space-y-4">
                                 <div>
-                                    <label className="block text-sm font-medium text-gray-700 mb-1">Name</label>
+                                    <label className="block text-sm font-medium text-gray-300 mb-1">Name</label>
                                     <input
                                         type="text"
                                         name="name"
                                         defaultValue={user?.name}
                                         required
-                                        className="w-full px-4 py-2 rounded-lg border-2 border-gray-200 focus:border-blue-500 focus:outline-none"
+                                        className="w-full px-4 py-2 rounded-lg border-2 border-white/[0.08] focus:border-blue-500 focus:outline-none"
                                     />
                                 </div>
                                 <div>
-                                    <label className="block text-sm font-medium text-gray-700 mb-1">Phone</label>
+                                    <label className="block text-sm font-medium text-gray-300 mb-1">Phone</label>
                                     <input
                                         type="tel"
                                         defaultValue={user?.phone}
-                                        className="w-full px-4 py-2 rounded-lg border-2 border-gray-200 bg-gray-50"
+                                        className="w-full px-4 py-2 rounded-lg border-2 border-white/[0.08] bg-gray-900"
                                         disabled
                                     />
                                     <p className="mt-1 text-xs text-gray-500">Phone number cannot be changed</p>
                                 </div>
                                 <div>
-                                    <label className="block text-sm font-medium text-gray-700 mb-1">Email (Optional)</label>
+                                    <label className="block text-sm font-medium text-gray-300 mb-1">Email (Optional)</label>
                                     <input
                                         type="email"
                                         name="email"
                                         defaultValue={user?.email || ''}
-                                        className="w-full px-4 py-2 rounded-lg border-2 border-gray-200 focus:border-blue-500 focus:outline-none"
+                                        className="w-full px-4 py-2 rounded-lg border-2 border-white/[0.08] focus:border-blue-500 focus:outline-none"
                                     />
                                 </div>
                                 <div>
-                                    <label className="block text-sm font-medium text-gray-700 mb-1">Role</label>
+                                    <label className="block text-sm font-medium text-gray-300 mb-1">Role</label>
                                     <input
                                         type="text"
                                         defaultValue={user?.role.toUpperCase()}
-                                        className="w-full px-4 py-2 rounded-lg border-2 border-gray-200 bg-gray-50 capitalize"
+                                        className="w-full px-4 py-2 rounded-lg border-2 border-white/[0.08] bg-gray-900 capitalize"
                                         disabled
                                     />
                                 </div>
@@ -215,11 +215,11 @@ export default function ProfilePage() {
                     ) : (
                         <div>
                             {bookings.length === 0 ? (
-                                <div className="bg-white rounded-lg shadow-sm p-12 text-center">
+                                <div className="bg-gray-900/60 rounded-lg shadow-sm p-12 text-center">
                                     <svg className="mx-auto h-16 w-16 text-gray-400 mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01" />
                                     </svg>
-                                    <h3 className="text-lg font-medium text-gray-900 mb-2">No bookings yet</h3>
+                                    <h3 className="text-lg font-medium text-white mb-2">No bookings yet</h3>
                                     <p className="text-gray-500 mb-6">You haven&apos;t made any bookings yet. Start by browsing available venues!</p>
                                     <button
                                         onClick={() => router.push('/cities')}

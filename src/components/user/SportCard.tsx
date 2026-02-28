@@ -35,12 +35,12 @@ export default function SportCard({ sport, onClick }: SportCardProps) {
                     {icon}
                 </div>
 
-                <h3 className="text-lg font-bold text-gray-900 mb-2">
+                <h3 className="text-lg font-bold text-white mb-2">
                     {sport.name}
                 </h3>
 
                 {sport.description && (
-                    <p className="text-sm text-gray-600 mb-3 line-clamp-2">
+                    <p className="text-sm text-gray-400 mb-3 line-clamp-2">
                         {sport.description}
                     </p>
                 )}

@@ -179,27 +179,27 @@ export default function OwnerBookingsPage() {
 
     if (loading) {
         return (
-            <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+            <div className="min-h-screen bg-gray-950 flex items-center justify-center">
                 <div className="text-center">
                     <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto"></div>
-                    <p className="mt-4 text-gray-600">Loading bookings...</p>
+                    <p className="mt-4 text-gray-400">Loading bookings...</p>
                 </div>
             </div>
         );
     }
 
     return (
-        <div className="min-h-screen bg-gray-50">
+        <div className="min-h-screen bg-gray-950">
             <Navbar />
 
             <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
                 {/* Header */}
                 <div className="mb-8 flex justify-between items-center">
                     <div>
-                        <h1 className="text-4xl font-bold text-gray-900 mb-2">
+                        <h1 className="text-4xl font-bold text-white mb-2">
                             Bookings
                         </h1>
-                        <p className="text-lg text-gray-600">
+                        <p className="text-lg text-gray-400">
                             Manage and approve booking requests
                         </p>
                         <p className="text-sm text-gray-500 mt-1">
@@ -218,7 +218,7 @@ export default function OwnerBookingsPage() {
                 </div>
 
                 {/* Filter Tabs */}
-                <div className="mb-6 border-b border-gray-200">
+                <div className="mb-6 border-b border-white/[0.08]">
                     <div className="flex gap-4">
                         {(['all', 'pending', 'confirmed', 'rejected', 'cancelled'] as const).map((tab) => (
                             <button
@@ -226,7 +226,7 @@ export default function OwnerBookingsPage() {
                                 onClick={() => setFilter(tab)}
                                 className={`px-4 py-2 font-medium border-b-2 transition-colors capitalize ${filter === tab
                                     ? 'border-blue-600 text-blue-600'
-                                    : 'border-transparent text-gray-600 hover:text-gray-900'
+                                    : 'border-transparent text-gray-400 hover:text-white'
                                     }`}
                             >
                                 {tab}
@@ -237,11 +237,11 @@ export default function OwnerBookingsPage() {
 
                 {/* Bookings List */}
                 {bookings.length === 0 ? (
-                    <div className="text-center py-12 bg-white rounded-lg shadow">
+                    <div className="text-center py-12 bg-gray-900/60 rounded-lg shadow">
                         <svg className="mx-auto h-12 w-12 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
                         </svg>
-                        <h3 className="mt-2 text-sm font-medium text-gray-900">No {filter} bookings</h3>
+                        <h3 className="mt-2 text-sm font-medium text-white">No {filter} bookings</h3>
                         <p className="mt-1 text-sm text-gray-500">
                             {filter === 'pending' ? 'No pending bookings at the moment.' : `No ${filter} bookings found.`}
                         </p>
@@ -249,11 +249,11 @@ export default function OwnerBookingsPage() {
                 ) : (
                     <div className="space-y-4">
                         {bookings.map((booking) => (
-                            <div key={booking._id} className="bg-white rounded-lg shadow-sm p-6 hover:shadow-md transition-shadow">
+                            <div key={booking._id} className="bg-gray-900/60 rounded-lg shadow-sm p-6 hover:shadow-md transition-shadow">
                                 <div className="flex justify-between items-start mb-4">
                                     <div>
                                         <div className="flex items-center gap-3 mb-2">
-                                            <h3 className="text-lg font-semibold text-gray-900">
+                                            <h3 className="text-lg font-semibold text-white">
                                                 {booking.bookingCode}
                                             </h3>
                                             <Badge variant={getStatusBadge(booking.status).variant}>
@@ -274,30 +274,30 @@ export default function OwnerBookingsPage() {
 
                                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
                                     <div>
-                                        <h4 className="text-sm font-medium text-gray-700 mb-2">Customer Details</h4>
-                                        <p className="text-sm text-gray-900">{booking.userId.name}</p>
-                                        <p className="text-sm text-gray-600">{booking.userId.phone}</p>
+                                        <h4 className="text-sm font-medium text-gray-300 mb-2">Customer Details</h4>
+                                        <p className="text-sm text-white">{booking.userId.name}</p>
+                                        <p className="text-sm text-gray-400">{booking.userId.phone}</p>
                                         {booking.userId.email && (
-                                            <p className="text-sm text-gray-600">{booking.userId.email}</p>
+                                            <p className="text-sm text-gray-400">{booking.userId.email}</p>
                                         )}
                                     </div>
                                     <div>
-                                        <h4 className="text-sm font-medium text-gray-700 mb-2">Booking Details</h4>
-                                        <p className="text-sm text-gray-900">
+                                        <h4 className="text-sm font-medium text-gray-300 mb-2">Booking Details</h4>
+                                        <p className="text-sm text-white">
                                             {typeof booking.venueId === 'object' ? booking.venueId.name : 'N/A'}
                                         </p>
-                                        <p className="text-sm text-gray-600">
+                                        <p className="text-sm text-gray-400">
                                             {typeof booking.courtId === 'object' ? booking.courtId.name : 'N/A'} - {typeof booking.sportId === 'object' ? booking.sportId.name : 'N/A'}
                                         </p>
                                     </div>
                                 </div>
 
                                 <div className="mb-4">
-                                    <h4 className="text-sm font-medium text-gray-700 mb-2">Time Slot(s)</h4>
+                                    <h4 className="text-sm font-medium text-gray-300 mb-2">Time Slot(s)</h4>
                                     {booking.slots && booking.slots.length > 0 ? (
                                         <div className="space-y-1">
                                             {booking.slots.map((slot, idx) => (
-                                                <p key={idx} className="text-sm text-gray-900">
+                                                <p key={idx} className="text-sm text-white">
                                                     {formatSlotTime(slot)}
                                                 </p>
                                             ))}
@@ -306,7 +306,7 @@ export default function OwnerBookingsPage() {
                                             </p>
                                         </div>
                                     ) : (
-                                        <p className="text-sm text-gray-900">
+                                        <p className="text-sm text-white">
                                             {formatSlotTime(booking.slotId)}
                                         </p>
                                     )}
@@ -339,7 +339,7 @@ export default function OwnerBookingsPage() {
                                 )}
 
                                 {booking.status === 'pending' && (
-                                    <div className="flex gap-3 pt-4 border-t border-gray-200">
+                                    <div className="flex gap-3 pt-4 border-t border-white/[0.08]">
                                         <button
                                             onClick={() => handleApprove(booking._id)}
                                             className="flex-1 px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors"
@@ -366,21 +366,21 @@ export default function OwnerBookingsPage() {
             {/* Reject Modal */}
             {showRejectModal && selectedBooking && (
                 <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-                    <div className="bg-white rounded-lg p-8 max-w-md w-full mx-4">
-                        <h2 className="text-2xl font-bold text-gray-900 mb-4">
+                    <div className="bg-gray-900/60 rounded-lg p-8 max-w-md w-full mx-4">
+                        <h2 className="text-2xl font-bold text-white mb-4">
                             Reject Booking
                         </h2>
-                        <p className="text-gray-600 mb-4">
+                        <p className="text-gray-400 mb-4">
                             Booking Code: <strong>{selectedBooking.bookingCode}</strong>
                         </p>
                         <div className="mb-6">
-                            <label className="block text-sm font-medium text-gray-700 mb-2">
+                            <label className="block text-sm font-medium text-gray-300 mb-2">
                                 Rejection Reason *
                             </label>
                             <textarea
                                 value={rejectionReason}
                                 onChange={(e) => setRejectionReason(e.target.value)}
-                                className="w-full px-4 py-2 rounded-lg border-2 border-gray-200 focus:border-red-500 focus:outline-none"
+                                className="w-full px-4 py-2 rounded-lg border-2 border-white/[0.08] focus:border-red-500 focus:outline-none"
                                 rows={4}
                                 placeholder="Please provide a reason for rejection..."
                                 required
@@ -400,7 +400,7 @@ export default function OwnerBookingsPage() {
                                     setRejectionReason('');
                                     setSelectedBooking(null);
                                 }}
-                                className="flex-1 px-4 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 transition-colors"
+                                className="flex-1 px-4 py-2 bg-gray-200 text-gray-300 rounded-lg hover:bg-gray-300 transition-colors"
                             >
                                 Cancel
                             </button>

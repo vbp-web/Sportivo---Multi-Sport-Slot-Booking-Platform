@@ -69,10 +69,10 @@ export default function AdminAnalyticsPage() {
 
     if (loading) {
         return (
-            <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+            <div className="min-h-screen bg-gray-950 flex items-center justify-center">
                 <div className="text-center">
                     <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto"></div>
-                    <p className="mt-4 text-gray-600">Loading analytics...</p>
+                    <p className="mt-4 text-gray-400">Loading analytics...</p>
                 </div>
             </div>
         );
@@ -145,7 +145,7 @@ export default function AdminAnalyticsPage() {
     ];
 
     return (
-        <div className="min-h-screen bg-gray-50">
+        <div className="min-h-screen bg-gray-950">
             <Navbar />
 
             <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
@@ -159,10 +159,10 @@ export default function AdminAnalyticsPage() {
                 )}
 
                 <div className="mb-8">
-                    <h1 className="text-4xl font-bold text-gray-900 mb-2">
+                    <h1 className="text-4xl font-bold text-white mb-2">
                         Platform Analytics
                     </h1>
-                    <p className="text-lg text-gray-600">
+                    <p className="text-lg text-gray-400">
                         Overview of platform statistics and metrics
                     </p>
                 </div>
@@ -178,10 +178,10 @@ export default function AdminAnalyticsPage() {
                         >
                             <div className="flex items-center justify-between">
                                 <div>
-                                    <p className="text-sm font-medium text-gray-600 mb-1">
+                                    <p className="text-sm font-medium text-gray-400 mb-1">
                                         {stat.name}
                                     </p>
-                                    <p className="text-3xl font-bold text-gray-900">
+                                    <p className="text-3xl font-bold text-white">
                                         {stat.value}
                                     </p>
                                 </div>
@@ -194,48 +194,48 @@ export default function AdminAnalyticsPage() {
                 </div>
 
                 {/* Quick Actions */}
-                <div className="bg-white rounded-lg shadow-sm p-6">
-                    <h2 className="text-2xl font-bold text-gray-900 mb-6">Quick Actions</h2>
+                <div className="bg-gray-900/60 rounded-lg shadow-sm p-6">
+                    <h2 className="text-2xl font-bold text-white mb-6">Quick Actions</h2>
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
                         <button
                             onClick={() => router.push('/admin/owners')}
                             className="p-4 bg-blue-50 rounded-lg hover:bg-blue-100 transition-colors text-left"
                         >
                             <div className="text-2xl mb-2">👥</div>
-                            <div className="font-semibold text-gray-900">Manage Owners</div>
-                            <div className="text-sm text-gray-600">Approve or reject owner requests</div>
+                            <div className="font-semibold text-white">Manage Owners</div>
+                            <div className="text-sm text-gray-400">Approve or reject owner requests</div>
                         </button>
                         <button
                             onClick={() => router.push('/admin/cities')}
                             className="p-4 bg-green-50 rounded-lg hover:bg-green-100 transition-colors text-left"
                         >
                             <div className="text-2xl mb-2">🌆</div>
-                            <div className="font-semibold text-gray-900">Manage Cities</div>
-                            <div className="text-sm text-gray-600">Add or remove cities</div>
+                            <div className="font-semibold text-white">Manage Cities</div>
+                            <div className="text-sm text-gray-400">Add or remove cities</div>
                         </button>
                         <button
                             onClick={() => router.push('/admin/sports')}
                             className="p-4 bg-purple-50 rounded-lg hover:bg-purple-100 transition-colors text-left"
                         >
                             <div className="text-2xl mb-2">⚽</div>
-                            <div className="font-semibold text-gray-900">Manage Sports</div>
-                            <div className="text-sm text-gray-600">Add or remove sports</div>
+                            <div className="font-semibold text-white">Manage Sports</div>
+                            <div className="text-sm text-gray-400">Add or remove sports</div>
                         </button>
                         <button
                             onClick={() => router.push('/admin/plans')}
                             className="p-4 bg-yellow-50 rounded-lg hover:bg-yellow-100 transition-colors text-left"
                         >
                             <div className="text-2xl mb-2">📋</div>
-                            <div className="font-semibold text-gray-900">Manage Plans</div>
-                            <div className="text-sm text-gray-600">Subscription plans</div>
+                            <div className="font-semibold text-white">Manage Plans</div>
+                            <div className="text-sm text-gray-400">Subscription plans</div>
                         </button>
                         <button
                             onClick={() => router.push('/admin/features')}
                             className="p-4 bg-pink-50 rounded-lg hover:bg-pink-100 transition-colors text-left"
                         >
                             <div className="text-2xl mb-2">✨</div>
-                            <div className="font-semibold text-gray-900">Manage Features</div>
-                            <div className="text-sm text-gray-600">Plan features</div>
+                            <div className="font-semibold text-white">Manage Features</div>
+                            <div className="text-sm text-gray-400">Plan features</div>
                         </button>
                     </div>
                 </div>

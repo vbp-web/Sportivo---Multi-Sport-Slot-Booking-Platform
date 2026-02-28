@@ -66,7 +66,7 @@ export default function CourtForm({ court, sports, onSubmit, onCancel }: CourtFo
     return (
         <Card>
             <CardHeader>
-                <h2 className="text-xl font-bold text-gray-900">
+                <h2 className="text-xl font-bold text-white">
                     {court ? 'Edit Court' : 'Add New Court'}
                 </h2>
             </CardHeader>
@@ -88,13 +88,13 @@ export default function CourtForm({ court, sports, onSubmit, onCancel }: CourtFo
                     />
 
                     <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-2">
+                        <label className="block text-sm font-medium text-gray-300 mb-2">
                             Sport
                         </label>
                         <select
                             className={`w-full px-4 py-3 rounded-lg border-2 transition-all ${errors.sportId
                                 ? 'border-red-300 focus:border-red-500 focus:ring-red-500'
-                                : 'border-gray-200 focus:border-blue-500 focus:ring-blue-500'
+                                : 'border-white/[0.08] focus:border-blue-500 focus:ring-blue-500'
                                 } focus:outline-none focus:ring-2`}
                             value={formData.sportId}
                             onChange={(e) => setFormData({ ...formData, sportId: e.target.value })}
@@ -126,11 +126,11 @@ export default function CourtForm({ court, sports, onSubmit, onCancel }: CourtFo
                     />
 
                     <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-2">
+                        <label className="block text-sm font-medium text-gray-300 mb-2">
                             Description (Optional)
                         </label>
                         <textarea
-                            className="w-full px-4 py-3 rounded-lg border-2 border-gray-200 focus:border-blue-500 focus:ring-blue-500 focus:outline-none focus:ring-2 transition-all"
+                            className="w-full px-4 py-3 rounded-lg border-2 border-white/[0.08] focus:border-blue-500 focus:ring-blue-500 focus:outline-none focus:ring-2 transition-all"
                             rows={3}
                             placeholder="Additional details about the court"
                             value={formData.description}

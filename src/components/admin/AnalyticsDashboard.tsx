@@ -90,7 +90,7 @@ export default function AnalyticsDashboard({ data }: AnalyticsDashboardProps) {
         <div className="space-y-6">
             {/* Overview Stats */}
             <div>
-                <h2 className="text-2xl font-bold text-gray-900 mb-4">Platform Overview</h2>
+                <h2 className="text-2xl font-bold text-white mb-4">Platform Overview</h2>
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                     {stats.map((stat, index) => (
                         <Card
@@ -112,11 +112,11 @@ export default function AnalyticsDashboard({ data }: AnalyticsDashboardProps) {
                                     )}
                                 </div>
 
-                                <div className="text-3xl font-bold text-gray-900 mb-1">
+                                <div className="text-3xl font-bold text-white mb-1">
                                     {stat.value}
                                 </div>
 
-                                <div className="text-sm text-gray-600">
+                                <div className="text-sm text-gray-400">
                                     {stat.title}
                                 </div>
                             </CardBody>
@@ -130,7 +130,7 @@ export default function AnalyticsDashboard({ data }: AnalyticsDashboardProps) {
                 {/* Monthly Revenue Chart */}
                 <Card>
                     <CardHeader>
-                        <h3 className="text-lg font-bold text-gray-900">Monthly Revenue</h3>
+                        <h3 className="text-lg font-bold text-white">Monthly Revenue</h3>
                     </CardHeader>
                     <CardBody>
                         <div className="space-y-3">
@@ -141,8 +141,8 @@ export default function AnalyticsDashboard({ data }: AnalyticsDashboardProps) {
                                 return (
                                     <div key={index}>
                                         <div className="flex items-center justify-between mb-1">
-                                            <span className="text-sm font-medium text-gray-700">{month.month}</span>
-                                            <span className="text-sm font-bold text-gray-900">
+                                            <span className="text-sm font-medium text-gray-300">{month.month}</span>
+                                            <span className="text-sm font-bold text-white">
                                                 ₹{month.revenue.toLocaleString()}
                                             </span>
                                         </div>
@@ -162,18 +162,18 @@ export default function AnalyticsDashboard({ data }: AnalyticsDashboardProps) {
                 {/* Top Venues */}
                 <Card>
                     <CardHeader>
-                        <h3 className="text-lg font-bold text-gray-900">Top Performing Venues</h3>
+                        <h3 className="text-lg font-bold text-white">Top Performing Venues</h3>
                     </CardHeader>
                     <CardBody>
                         <div className="space-y-4">
                             {data.topVenues.map((venue, index) => (
-                                <div key={venue.id} className="flex items-center gap-4 p-3 bg-gray-50 rounded-lg">
+                                <div key={venue.id} className="flex items-center gap-4 p-3 bg-gray-900 rounded-lg">
                                     <div className="w-8 h-8 bg-gradient-to-br from-blue-600 to-purple-600 rounded-lg flex items-center justify-center text-white font-bold">
                                         {index + 1}
                                     </div>
                                     <div className="flex-1">
-                                        <div className="font-semibold text-gray-900">{venue.name}</div>
-                                        <div className="text-sm text-gray-600">{venue.city}</div>
+                                        <div className="font-semibold text-white">{venue.name}</div>
+                                        <div className="text-sm text-gray-400">{venue.city}</div>
                                     </div>
                                     <div className="text-right">
                                         <div className="text-sm font-bold text-blue-600">
@@ -193,15 +193,15 @@ export default function AnalyticsDashboard({ data }: AnalyticsDashboardProps) {
             {/* Recent Activity */}
             <Card>
                 <CardHeader>
-                    <h3 className="text-lg font-bold text-gray-900">Recent Activity</h3>
+                    <h3 className="text-lg font-bold text-white">Recent Activity</h3>
                 </CardHeader>
                 <CardBody>
                     <div className="space-y-3">
                         {data.recentActivity.map((activity) => (
-                            <div key={activity.id} className="flex items-start gap-3 p-3 hover:bg-gray-50 rounded-lg transition-colors">
+                            <div key={activity.id} className="flex items-start gap-3 p-3 hover:bg-gray-900 rounded-lg transition-colors">
                                 <div className="text-2xl">{activityIcons[activity.type]}</div>
                                 <div className="flex-1">
-                                    <p className="text-sm text-gray-900">{activity.message}</p>
+                                    <p className="text-sm text-white">{activity.message}</p>
                                     <p className="text-xs text-gray-500 mt-1">
                                         {new Date(activity.timestamp).toLocaleString('en-IN', {
                                             day: 'numeric',

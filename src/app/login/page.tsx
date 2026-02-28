@@ -72,7 +72,7 @@ export default function LoginPage() {
     };
 
     return (
-        <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50 flex items-center justify-center p-4">
+        <div className="min-h-screen bg-gray-950 flex items-center justify-center p-4">
             {/* Background Decoration */}
             <div className="absolute inset-0 overflow-hidden pointer-events-none">
                 <div className="absolute -top-40 -right-40 w-80 h-80 bg-purple-300 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-blob"></div>
@@ -94,14 +94,14 @@ export default function LoginPage() {
 
                 <Card>
                     <CardHeader>
-                        <h1 className="text-2xl font-bold text-gray-900 text-center">Welcome Back</h1>
-                        <p className="text-gray-600 text-center mt-2">Login to your account</p>
+                        <h1 className="text-2xl font-bold text-white text-center">Welcome Back</h1>
+                        <p className="text-gray-400 text-center mt-2">Login to your account</p>
                     </CardHeader>
 
                     <CardBody className="space-y-6">
                         {/* Role Selection */}
                         <div>
-                            <label className="block text-sm font-medium text-gray-700 mb-3">
+                            <label className="block text-sm font-medium text-gray-300 mb-3">
                                 Select Your Role
                             </label>
                             <div className="grid grid-cols-3 gap-3">
@@ -118,12 +118,12 @@ export default function LoginPage() {
                       p-4 rounded-lg border-2 transition-all duration-200
                       ${role === item.value
                                                 ? 'border-blue-600 bg-blue-50 shadow-md'
-                                                : 'border-gray-200 hover:border-gray-300'
+                                                : 'border-white/[0.08] hover:border-gray-300'
                                             }
                     `}
                                     >
                                         <div className="text-2xl mb-1">{item.icon}</div>
-                                        <div className={`text-sm font-medium ${role === item.value ? 'text-blue-600' : 'text-gray-700'}`}>
+                                        <div className={`text-sm font-medium ${role === item.value ? 'text-blue-600' : 'text-gray-300'}`}>
                                             {item.label}
                                         </div>
                                     </button>
@@ -181,10 +181,10 @@ export default function LoginPage() {
                         {/* Divider */}
                         <div className="relative">
                             <div className="absolute inset-0 flex items-center">
-                                <div className="w-full border-t border-gray-200"></div>
+                                <div className="w-full border-t border-white/[0.08]"></div>
                             </div>
                             <div className="relative flex justify-center text-sm">
-                                <span className="px-2 bg-white text-gray-500">Don&apos;t have an account?</span>
+                                <span className="px-2 bg-gray-900/60 text-gray-500">Don&apos;t have an account?</span>
                             </div>
                         </div>
 
@@ -206,7 +206,7 @@ export default function LoginPage() {
 
                 {/* Back to Home */}
                 <div className="text-center mt-6">
-                    <Link href="/" className="text-sm text-gray-600 hover:text-gray-900 flex items-center justify-center gap-1">
+                    <Link href="/" className="text-sm text-gray-400 hover:text-white flex items-center justify-center gap-1">
                         <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
                         </svg>

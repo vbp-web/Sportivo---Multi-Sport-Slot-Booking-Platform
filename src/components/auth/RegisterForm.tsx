@@ -159,8 +159,8 @@ export default function RegisterForm({
             {/* Owner Specific Fields */}
             {role === 'owner' && (
                 <>
-                    <div className="pt-4 border-t border-gray-200">
-                        <h3 className="text-lg font-semibold text-gray-900 mb-4">Venue Details</h3>
+                    <div className="pt-4 border-t border-white/[0.08]">
+                        <h3 className="text-lg font-semibold text-white mb-4">Venue Details</h3>
                     </div>
 
                     <div className="grid md:grid-cols-2 gap-4">

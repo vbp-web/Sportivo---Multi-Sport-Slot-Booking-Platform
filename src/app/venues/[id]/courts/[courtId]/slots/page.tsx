@@ -154,10 +154,10 @@ export default function CourtSlotsPage({ params }: { params: Promise<{ id: strin
 
     if (loading) {
         return (
-            <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+            <div className="min-h-screen bg-gray-900 flex items-center justify-center">
                 <div className="text-center">
                     <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto"></div>
-                    <p className="mt-4 text-gray-600">Loading slots...</p>
+                    <p className="mt-4 text-gray-400">Loading slots...</p>
                 </div>
             </div>
         );
@@ -165,10 +165,10 @@ export default function CourtSlotsPage({ params }: { params: Promise<{ id: strin
 
     if (error || !venue || !court) {
         return (
-            <div className="min-h-screen bg-gray-50">
+            <div className="min-h-screen bg-gray-900">
                 <Navbar />
                 <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-                    <div className="text-center py-12 bg-white rounded-lg shadow">
+                    <div className="text-center py-12 bg-gray-900/60 rounded-lg shadow">
                         <p className="text-red-600">{error || 'Data not found'}</p>
                         <button
                             onClick={() => router.back()}
@@ -184,7 +184,7 @@ export default function CourtSlotsPage({ params }: { params: Promise<{ id: strin
     }
 
     return (
-        <div className="min-h-screen bg-gray-50">
+        <div className="min-h-screen bg-gray-900">
             <Navbar />
 
             <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
@@ -200,17 +200,17 @@ export default function CourtSlotsPage({ params }: { params: Promise<{ id: strin
                 </button>
 
                 {/* Header */}
-                <div className="bg-white rounded-lg shadow-md p-6 mb-6">
+                <div className="bg-gray-900/60 rounded-lg shadow-md p-6 mb-6">
                     <div className="flex flex-col md:flex-row md:items-center md:justify-between">
                         <div>
-                            <h1 className="text-3xl font-bold text-gray-900 mb-2">{court.name}</h1>
-                            <p className="text-lg text-gray-600">{venue.name}, {venue.city}</p>
+                            <h1 className="text-3xl font-bold text-white mb-2">{court.name}</h1>
+                            <p className="text-lg text-gray-400">{venue.name}, {venue.city}</p>
                             <div className="flex items-center gap-2 mt-2">
                                 <span className="px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-sm font-medium">
                                     {court.sportId.name}
                                 </span>
                                 {court.capacity && (
-                                    <span className="text-sm text-gray-600">
+                                    <span className="text-sm text-gray-400">
                                         Capacity: {court.capacity} players
                                     </span>
                                 )}
@@ -218,19 +218,19 @@ export default function CourtSlotsPage({ params }: { params: Promise<{ id: strin
                         </div>
                     </div>
                     {court.description && (
-                        <p className="mt-4 text-gray-700">{court.description}</p>
+                        <p className="mt-4 text-gray-300">{court.description}</p>
                     )}
                 </div>
 
                 {/* Date Filter */}
                 <div className="mb-6">
-                    <p className="font-medium text-gray-900 mb-3">Select Date</p>
+                    <p className="font-medium text-white mb-3">Select Date</p>
                     <div className="flex flex-wrap gap-2">
                         <button
                             onClick={() => setSelectedDate('')}
                             className={`px-4 py-2 rounded-lg font-medium transition-colors ${selectedDate === ''
                                 ? 'bg-blue-600 text-white'
-                                : 'bg-white text-gray-700 hover:bg-gray-100'
+                                : 'bg-white text-gray-300 hover:bg-white/5'
                                 }`}
                         >
                             All Dates
@@ -241,7 +241,7 @@ export default function CourtSlotsPage({ params }: { params: Promise<{ id: strin
                                 onClick={() => setSelectedDate(date)}
                                 className={`px-4 py-2 rounded-lg font-medium transition-colors ${selectedDate === date
                                     ? 'bg-blue-600 text-white'
-                                    : 'bg-white text-gray-700 hover:bg-gray-100'
+                                    : 'bg-white text-gray-300 hover:bg-white/5'
                                     }`}
                             >
                                 {date}
@@ -252,7 +252,7 @@ export default function CourtSlotsPage({ params }: { params: Promise<{ id: strin
 
                 {/* Booking Mode Toggle */}
                 <div className="mb-6 flex items-center justify-between">
-                    <h2 className="text-2xl font-bold text-gray-900">
+                    <h2 className="text-2xl font-bold text-white">
                         Available Slots ({slots.filter(s => s.status === 'available').length})
                     </h2>
                     <Button
@@ -271,7 +271,7 @@ export default function CourtSlotsPage({ params }: { params: Promise<{ id: strin
                     <div className="mb-6 p-6 bg-gradient-to-r from-blue-50 to-purple-50 rounded-lg border-2 border-blue-200">
                         <div className="flex items-center justify-between">
                             <div>
-                                <p className="text-lg font-bold text-gray-900">
+                                <p className="text-lg font-bold text-white">
                                     {selectedSlots.length} Slot{selectedSlots.length > 1 ? 's' : ''} Selected
                                 </p>
                                 <p className="text-2xl font-bold text-blue-600 mt-1">
@@ -295,11 +295,11 @@ export default function CourtSlotsPage({ params }: { params: Promise<{ id: strin
 
                 {/* Slots Grid */}
                 {slots.length === 0 ? (
-                    <div className="text-center py-12 bg-white rounded-lg shadow">
+                    <div className="text-center py-12 bg-gray-900/60 rounded-lg shadow">
                         <svg className="mx-auto h-12 w-12 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
                         </svg>
-                        <h3 className="mt-2 text-sm font-medium text-gray-900">No slots available</h3>
+                        <h3 className="mt-2 text-sm font-medium text-white">No slots available</h3>
                         <p className="mt-1 text-sm text-gray-500">
                             No slots have been created for this court yet.
                         </p>

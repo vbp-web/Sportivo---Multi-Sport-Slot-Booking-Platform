@@ -26,7 +26,7 @@ export default function RoleSelector({
 
     return (
         <div>
-            <label className="block text-sm font-medium text-gray-700 mb-3">
+            <label className="block text-sm font-medium text-gray-300 mb-3">
                 Select Your Role
             </label>
             <div className={gridClass}>
@@ -39,14 +39,14 @@ export default function RoleSelector({
               p-4 rounded-lg border-2 transition-all duration-200 text-left
               ${selectedRole === role.value
                                 ? 'border-blue-600 bg-blue-50 shadow-md'
-                                : 'border-gray-200 hover:border-gray-300'
+                                : 'border-white/[0.08] hover:border-gray-300'
                             }
             `}
                     >
                         <div className={`text-3xl mb-2 ${layout === 'horizontal' ? 'text-center' : ''}`}>
                             {role.icon}
                         </div>
-                        <div className={`font-semibold ${selectedRole === role.value ? 'text-blue-600' : 'text-gray-900'
+                        <div className={`font-semibold ${selectedRole === role.value ? 'text-blue-600' : 'text-white'
                             } ${layout === 'horizontal' ? 'text-center' : ''}`}>
                             {role.label}
                         </div>

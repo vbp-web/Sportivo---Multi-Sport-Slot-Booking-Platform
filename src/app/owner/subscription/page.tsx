@@ -99,26 +99,26 @@ export default function OwnerSubscriptionPage() {
 
     if (loading) {
         return (
-            <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+            <div className="min-h-screen bg-gray-950 flex items-center justify-center">
                 <div className="text-center">
                     <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto"></div>
-                    <p className="mt-4 text-gray-600">Loading subscription...</p>
+                    <p className="mt-4 text-gray-400">Loading subscription...</p>
                 </div>
             </div>
         );
     }
 
     return (
-        <div className="min-h-screen bg-gray-50">
+        <div className="min-h-screen bg-gray-950">
             <Navbar />
 
             <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
                 {/* Header */}
                 <div className="mb-8">
-                    <h1 className="text-4xl font-bold text-gray-900 mb-2">
+                    <h1 className="text-4xl font-bold text-white mb-2">
                         Subscription
                     </h1>
-                    <p className="text-lg text-gray-600">
+                    <p className="text-lg text-gray-400">
                         Manage your subscription plan
                     </p>
                 </div>
@@ -208,18 +208,18 @@ export default function OwnerSubscriptionPage() {
 
                 {/* Available Plans */}
                 <div>
-                    <h2 className="text-2xl font-bold text-gray-900 mb-6">
+                    <h2 className="text-2xl font-bold text-white mb-6">
                         {currentSubscription ? 'Upgrade Your Plan' : 'Choose a Plan'}
                     </h2>
 
                     {plans.length === 0 ? (
-                        <div className="text-center py-12 bg-white rounded-lg shadow">
+                        <div className="text-center py-12 bg-gray-900/60 rounded-lg shadow">
                             <p className="text-gray-500">No subscription plans available at the moment.</p>
                         </div>
                     ) : (
                         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                             {plans.map((plan) => (
-                                <div key={plan._id} className="bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow">
+                                <div key={plan._id} className="bg-gray-900/60 rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow">
                                     <div className="bg-gradient-to-r from-blue-500 to-blue-600 px-6 py-8 text-white">
                                         <h3 className="text-2xl font-bold mb-2">{plan.name}</h3>
                                         <div className="flex items-baseline">
@@ -231,36 +231,36 @@ export default function OwnerSubscriptionPage() {
 
                                     <div className="px-6 py-8">
                                         {plan.description && (
-                                            <p className="text-gray-600 mb-6">{plan.description}</p>
+                                            <p className="text-gray-400 mb-6">{plan.description}</p>
                                         )}
 
                                         <ul className="space-y-3 mb-8">
-                                            <li className="flex items-center text-gray-700">
+                                            <li className="flex items-center text-gray-300">
                                                 <svg className="w-5 h-5 mr-3 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                                                 </svg>
                                                 {plan.isUnlimitedBookings ? 'Unlimited' : `${plan.maxBookings || 0}`} bookings
                                             </li>
-                                            <li className="flex items-center text-gray-700">
+                                            <li className="flex items-center text-gray-300">
                                                 <svg className="w-5 h-5 mr-3 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                                                 </svg>
                                                 {plan.isUnlimitedMessages ? 'Unlimited' : `${plan.maxMessages || 0}`} messages
                                             </li>
-                                            <li className="flex items-center text-gray-700">
+                                            <li className="flex items-center text-gray-300">
                                                 <svg className="w-5 h-5 mr-3 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                                                 </svg>
                                                 Up to {plan.maxVenues} venues
                                             </li>
-                                            <li className="flex items-center text-gray-700">
+                                            <li className="flex items-center text-gray-300">
                                                 <svg className="w-5 h-5 mr-3 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                                                 </svg>
                                                 Up to {plan.maxCourts} courts
                                             </li>
                                             {plan.features && plan.features.length > 0 && plan.features.map((feature, idx) => (
-                                                <li key={idx} className="flex items-center text-gray-700">
+                                                <li key={idx} className="flex items-center text-gray-300">
                                                     <svg className="w-5 h-5 mr-3 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                                                     </svg>

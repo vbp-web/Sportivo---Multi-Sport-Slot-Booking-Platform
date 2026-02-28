@@ -143,26 +143,26 @@ export default function AdminSubscriptionsPage() {
 
     if (loading) {
         return (
-            <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+            <div className="min-h-screen bg-gray-950 flex items-center justify-center">
                 <div className="text-center">
                     <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto"></div>
-                    <p className="mt-4 text-gray-600">Loading subscriptions...</p>
+                    <p className="mt-4 text-gray-400">Loading subscriptions...</p>
                 </div>
             </div>
         );
     }
 
     return (
-        <div className="min-h-screen bg-gray-50">
+        <div className="min-h-screen bg-gray-950">
             <Navbar />
 
             <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
                 {/* Header */}
                 <div className="mb-8">
-                    <h1 className="text-4xl font-bold text-gray-900 mb-2">
+                    <h1 className="text-4xl font-bold text-white mb-2">
                         Subscription Payments
                     </h1>
-                    <p className="text-lg text-gray-600">
+                    <p className="text-lg text-gray-400">
                         Manage and approve owner subscription payments
                     </p>
                 </div>
@@ -179,7 +179,7 @@ export default function AdminSubscriptionsPage() {
                         onClick={() => setFilter('pending')}
                         className={`px-4 py-2 rounded-lg font-medium transition-colors ${filter === 'pending'
                             ? 'bg-blue-600 text-white'
-                            : 'bg-white text-gray-700 border border-gray-300 hover:bg-gray-50'
+                            : 'bg-white text-gray-300 border border-gray-300 hover:bg-white/5'
                             }`}
                     >
                         Pending
@@ -188,7 +188,7 @@ export default function AdminSubscriptionsPage() {
                         onClick={() => setFilter('active')}
                         className={`px-4 py-2 rounded-lg font-medium transition-colors ${filter === 'active'
                             ? 'bg-blue-600 text-white'
-                            : 'bg-white text-gray-700 border border-gray-300 hover:bg-gray-50'
+                            : 'bg-white text-gray-300 border border-gray-300 hover:bg-white/5'
                             }`}
                     >
                         Active
@@ -197,7 +197,7 @@ export default function AdminSubscriptionsPage() {
                         onClick={() => setFilter('expired')}
                         className={`px-4 py-2 rounded-lg font-medium transition-colors ${filter === 'expired'
                             ? 'bg-blue-600 text-white'
-                            : 'bg-white text-gray-700 border border-gray-300 hover:bg-gray-50'
+                            : 'bg-white text-gray-300 border border-gray-300 hover:bg-white/5'
                             }`}
                     >
                         Expired
@@ -206,7 +206,7 @@ export default function AdminSubscriptionsPage() {
                         onClick={() => setFilter('all')}
                         className={`px-4 py-2 rounded-lg font-medium transition-colors ${filter === 'all'
                             ? 'bg-blue-600 text-white'
-                            : 'bg-white text-gray-700 border border-gray-300 hover:bg-gray-50'
+                            : 'bg-white text-gray-300 border border-gray-300 hover:bg-white/5'
                             }`}
                     >
                         All
@@ -215,13 +215,13 @@ export default function AdminSubscriptionsPage() {
 
                 {/* Subscriptions List */}
                 {subscriptions.length === 0 ? (
-                    <div className="text-center py-12 bg-white rounded-lg shadow">
+                    <div className="text-center py-12 bg-gray-900/60 rounded-lg shadow">
                         <p className="text-gray-500">No subscriptions found</p>
                     </div>
                 ) : (
-                    <div className="bg-white rounded-lg shadow overflow-hidden">
+                    <div className="bg-gray-900/60 rounded-lg shadow overflow-hidden">
                         <table className="min-w-full divide-y divide-gray-200">
-                            <thead className="bg-gray-50">
+                            <thead className="bg-gray-900">
                                 <tr>
                                     <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                                         Owner
@@ -246,12 +246,12 @@ export default function AdminSubscriptionsPage() {
                                     </th>
                                 </tr>
                             </thead>
-                            <tbody className="bg-white divide-y divide-gray-200">
+                            <tbody className="bg-gray-900/60 divide-y divide-gray-200">
                                 {subscriptions.map((subscription) => (
-                                    <tr key={subscription._id} className="hover:bg-gray-50">
+                                    <tr key={subscription._id} className="hover:bg-white/5">
                                         <td className="px-6 py-4 whitespace-nowrap">
                                             <div>
-                                                <div className="text-sm font-medium text-gray-900">
+                                                <div className="text-sm font-medium text-white">
                                                     {subscription.ownerId?.ownerName || 'N/A'}
                                                 </div>
                                                 <div className="text-sm text-gray-500">
@@ -263,17 +263,17 @@ export default function AdminSubscriptionsPage() {
                                             </div>
                                         </td>
                                         <td className="px-6 py-4 whitespace-nowrap">
-                                            <div className="text-sm text-gray-900">
+                                            <div className="text-sm text-white">
                                                 {subscription.planId?.name || 'N/A'}
                                             </div>
                                         </td>
                                         <td className="px-6 py-4 whitespace-nowrap">
-                                            <div className="text-sm font-semibold text-gray-900">
+                                            <div className="text-sm font-semibold text-white">
                                                 ₹{subscription.amount}
                                             </div>
                                         </td>
                                         <td className="px-6 py-4 whitespace-nowrap">
-                                            <div className="text-sm text-gray-900">
+                                            <div className="text-sm text-white">
                                                 {subscription.utr || '-'}
                                             </div>
                                         </td>
@@ -325,13 +325,13 @@ export default function AdminSubscriptionsPage() {
             {/* Modal for viewing details */}
             {showModal && selectedSubscription && (
                 <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
-                    <div className="bg-white rounded-lg max-w-2xl w-full max-h-[90vh] overflow-y-auto">
+                    <div className="bg-gray-900/60 rounded-lg max-w-2xl w-full max-h-[90vh] overflow-y-auto">
                         <div className="p-6">
                             <div className="flex justify-between items-start mb-6">
-                                <h2 className="text-2xl font-bold text-gray-900">Subscription Details</h2>
+                                <h2 className="text-2xl font-bold text-white">Subscription Details</h2>
                                 <button
                                     onClick={() => setShowModal(false)}
-                                    className="text-gray-400 hover:text-gray-600"
+                                    className="text-gray-400 hover:text-gray-400"
                                 >
                                     <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
@@ -341,42 +341,42 @@ export default function AdminSubscriptionsPage() {
 
                             <div className="space-y-4">
                                 {/* Owner Info */}
-                                <div className="bg-gray-50 p-4 rounded-lg">
-                                    <h3 className="font-semibold text-gray-900 mb-2">Owner Information</h3>
-                                    <p className="text-sm text-gray-600">Name: {selectedSubscription.ownerId?.ownerName}</p>
-                                    <p className="text-sm text-gray-600">Venue: {selectedSubscription.ownerId?.venueName}</p>
-                                    <p className="text-sm text-gray-600">City: {selectedSubscription.ownerId?.city}</p>
+                                <div className="bg-gray-900 p-4 rounded-lg">
+                                    <h3 className="font-semibold text-white mb-2">Owner Information</h3>
+                                    <p className="text-sm text-gray-400">Name: {selectedSubscription.ownerId?.ownerName}</p>
+                                    <p className="text-sm text-gray-400">Venue: {selectedSubscription.ownerId?.venueName}</p>
+                                    <p className="text-sm text-gray-400">City: {selectedSubscription.ownerId?.city}</p>
                                 </div>
 
                                 {/* Plan Info */}
-                                <div className="bg-gray-50 p-4 rounded-lg">
-                                    <h3 className="font-semibold text-gray-900 mb-2">Plan Information</h3>
-                                    <p className="text-sm text-gray-600">Plan: {selectedSubscription.planId?.name}</p>
-                                    <p className="text-sm text-gray-600">Amount: ₹{selectedSubscription.amount}</p>
-                                    <p className="text-sm text-gray-600">
+                                <div className="bg-gray-900 p-4 rounded-lg">
+                                    <h3 className="font-semibold text-white mb-2">Plan Information</h3>
+                                    <p className="text-sm text-gray-400">Plan: {selectedSubscription.planId?.name}</p>
+                                    <p className="text-sm text-gray-400">Amount: ₹{selectedSubscription.amount}</p>
+                                    <p className="text-sm text-gray-400">
                                         Period: {new Date(selectedSubscription.startDate).toLocaleDateString()} - {new Date(selectedSubscription.endDate).toLocaleDateString()}
                                     </p>
                                 </div>
 
                                 {/* Payment Info */}
-                                <div className="bg-gray-50 p-4 rounded-lg">
-                                    <h3 className="font-semibold text-gray-900 mb-2">Payment Information</h3>
-                                    <p className="text-sm text-gray-600">UTR: {selectedSubscription.utr || 'Not provided'}</p>
-                                    <p className="text-sm text-gray-600">Status: {selectedSubscription.status.toUpperCase()}</p>
-                                    <p className="text-sm text-gray-600">Submitted: {new Date(selectedSubscription.createdAt).toLocaleString()}</p>
+                                <div className="bg-gray-900 p-4 rounded-lg">
+                                    <h3 className="font-semibold text-white mb-2">Payment Information</h3>
+                                    <p className="text-sm text-gray-400">UTR: {selectedSubscription.utr || 'Not provided'}</p>
+                                    <p className="text-sm text-gray-400">Status: {selectedSubscription.status.toUpperCase()}</p>
+                                    <p className="text-sm text-gray-400">Submitted: {new Date(selectedSubscription.createdAt).toLocaleString()}</p>
                                 </div>
 
                                 {/* Payment Proof */}
                                 {selectedSubscription.paymentProof && (
-                                    <div className="bg-gray-50 p-4 rounded-lg">
-                                        <h3 className="font-semibold text-gray-900 mb-2">Payment Proof</h3>
+                                    <div className="bg-gray-900 p-4 rounded-lg">
+                                        <h3 className="font-semibold text-white mb-2">Payment Proof</h3>
                                         <div className="mt-2">
                                             <Image
                                                 src={selectedSubscription.paymentProof.startsWith('http') ? selectedSubscription.paymentProof : getApiUrl(selectedSubscription.paymentProof)}
                                                 alt="Payment Proof"
                                                 width={400}
                                                 height={400}
-                                                className="rounded-lg border border-gray-200"
+                                                className="rounded-lg border border-white/[0.08]"
                                             />
                                         </div>
                                     </div>
@@ -404,7 +404,7 @@ export default function AdminSubscriptionsPage() {
                             <div className="mt-4">
                                 <Button
                                     onClick={() => setShowModal(false)}
-                                    className="w-full bg-gray-500 hover:bg-gray-600"
+                                    className="w-full bg-gray-9000 hover:bg-gray-600"
                                 >
                                     Close
                                 </Button>

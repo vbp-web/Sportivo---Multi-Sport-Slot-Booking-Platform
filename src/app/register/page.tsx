@@ -99,7 +99,7 @@ export default function RegisterPage() {
     };
 
     return (
-        <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50 flex items-center justify-center p-4 py-12">
+        <div className="min-h-screen bg-gray-950 flex items-center justify-center p-4 py-12">
             <div className="w-full max-w-2xl relative z-10">
                 {/* Logo */}
                 <Link href="/" className="flex items-center justify-center space-x-2 mb-8">
@@ -115,14 +115,14 @@ export default function RegisterPage() {
 
                 <Card>
                     <CardHeader>
-                        <h1 className="text-2xl font-bold text-gray-900 text-center">Create Account</h1>
-                        <p className="text-gray-600 text-center mt-2">Join Sportivo today</p>
+                        <h1 className="text-2xl font-bold text-white text-center">Create Account</h1>
+                        <p className="text-gray-400 text-center mt-2">Join Sportivo today</p>
                     </CardHeader>
 
                     <CardBody className="space-y-6">
                         {/* Role Selection */}
                         <div>
-                            <label className="block text-sm font-medium text-gray-700 mb-3">
+                            <label className="block text-sm font-medium text-gray-300 mb-3">
                                 I want to register as
                             </label>
                             <div className="grid grid-cols-2 gap-4">
@@ -138,12 +138,12 @@ export default function RegisterPage() {
                       p-4 rounded-lg border-2 transition-all duration-200 text-left
                       ${role === item.value
                                                 ? 'border-blue-600 bg-blue-50 shadow-md'
-                                                : 'border-gray-200 hover:border-gray-300'
+                                                : 'border-white/[0.08] hover:border-gray-300'
                                             }
                     `}
                                     >
                                         <div className="text-3xl mb-2">{item.icon}</div>
-                                        <div className={`font-semibold ${role === item.value ? 'text-blue-600' : 'text-gray-900'}`}>
+                                        <div className={`font-semibold ${role === item.value ? 'text-blue-600' : 'text-white'}`}>
                                             {item.label}
                                         </div>
                                         <div className="text-sm text-gray-500 mt-1">{item.desc}</div>
@@ -207,8 +207,8 @@ export default function RegisterPage() {
                             {/* Owner Specific Fields */}
                             {role === 'owner' && (
                                 <>
-                                    <div className="pt-4 border-t border-gray-200">
-                                        <h3 className="text-lg font-semibold text-gray-900 mb-4">Venue Details</h3>
+                                    <div className="pt-4 border-t border-white/[0.08]">
+                                        <h3 className="text-lg font-semibold text-white mb-4">Venue Details</h3>
                                     </div>
 
                                     <div className="grid md:grid-cols-2 gap-4">
@@ -277,10 +277,10 @@ export default function RegisterPage() {
                         {/* Divider */}
                         <div className="relative">
                             <div className="absolute inset-0 flex items-center">
-                                <div className="w-full border-t border-gray-200"></div>
+                                <div className="w-full border-t border-white/[0.08]"></div>
                             </div>
                             <div className="relative flex justify-center text-sm">
-                                <span className="px-2 bg-white text-gray-500">Already have an account?</span>
+                                <span className="px-2 bg-gray-900/60 text-gray-500">Already have an account?</span>
                             </div>
                         </div>
 
@@ -295,7 +295,7 @@ export default function RegisterPage() {
 
                 {/* Back to Home */}
                 <div className="text-center mt-6">
-                    <Link href="/" className="text-sm text-gray-600 hover:text-gray-900 flex items-center justify-center gap-1">
+                    <Link href="/" className="text-sm text-gray-400 hover:text-white flex items-center justify-center gap-1">
                         <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
                         </svg>

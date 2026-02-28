@@ -140,17 +140,17 @@ export default function AddVenuePage() {
 
     if (loading) {
         return (
-            <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+            <div className="min-h-screen bg-gray-950 flex items-center justify-center">
                 <div className="text-center">
                     <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto"></div>
-                    <p className="mt-4 text-gray-600">Loading...</p>
+                    <p className="mt-4 text-gray-400">Loading...</p>
                 </div>
             </div>
         );
     }
 
     return (
-        <div className="min-h-screen bg-gray-50">
+        <div className="min-h-screen bg-gray-950">
             <Navbar />
 
             <main className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
@@ -164,15 +164,15 @@ export default function AddVenuePage() {
                         </svg>
                         Back to Venues
                     </button>
-                    <h1 className="text-4xl font-bold text-gray-900">Add New Venue</h1>
-                    <p className="text-lg text-gray-600 mt-2">Fill in the details to add a new venue</p>
+                    <h1 className="text-4xl font-bold text-white">Add New Venue</h1>
+                    <p className="text-lg text-gray-400 mt-2">Fill in the details to add a new venue</p>
                 </div>
 
-                <div className="bg-white rounded-lg shadow-sm p-8">
+                <div className="bg-gray-900/60 rounded-lg shadow-sm p-8">
                     <form onSubmit={handleSubmit} className="space-y-6">
                         {/* Basic Information */}
                         <div>
-                            <h2 className="text-xl font-semibold text-gray-900 mb-4">Basic Information</h2>
+                            <h2 className="text-xl font-semibold text-white mb-4">Basic Information</h2>
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                                 <div className="md:col-span-2">
                                     <Input
@@ -185,13 +185,13 @@ export default function AddVenuePage() {
                                     />
                                 </div>
                                 <div className="md:col-span-2">
-                                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                                    <label className="block text-sm font-medium text-gray-300 mb-1">
                                         Description
                                     </label>
                                     <textarea
                                         value={formData.description}
                                         onChange={(e) => setFormData({ ...formData, description: e.target.value })}
-                                        className="w-full px-4 py-2 rounded-lg border-2 border-gray-200 focus:border-blue-500 focus:outline-none"
+                                        className="w-full px-4 py-2 rounded-lg border-2 border-white/[0.08] focus:border-blue-500 focus:outline-none"
                                         rows={3}
                                         placeholder="Brief description of your venue..."
                                     />
@@ -201,7 +201,7 @@ export default function AddVenuePage() {
 
                         {/* Location */}
                         <div>
-                            <h2 className="text-xl font-semibold text-gray-900 mb-4">Location</h2>
+                            <h2 className="text-xl font-semibold text-white mb-4">Location</h2>
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                                 <div className="md:col-span-2">
                                     <Input
@@ -214,13 +214,13 @@ export default function AddVenuePage() {
                                     />
                                 </div>
                                 <div>
-                                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                                    <label className="block text-sm font-medium text-gray-300 mb-1">
                                         City *
                                     </label>
                                     <select
                                         value={formData.city}
                                         onChange={(e) => setFormData({ ...formData, city: e.target.value })}
-                                        className="w-full px-4 py-2 rounded-lg border-2 border-gray-200 focus:border-blue-500 focus:outline-none"
+                                        className="w-full px-4 py-2 rounded-lg border-2 border-white/[0.08] focus:border-blue-500 focus:outline-none"
                                     >
                                         <option value="">Select City</option>
                                         {cities.map(city => (
@@ -252,7 +252,7 @@ export default function AddVenuePage() {
 
                         {/* Sports Offered */}
                         <div>
-                            <h2 className="text-xl font-semibold text-gray-900 mb-4">Sports Offered *</h2>
+                            <h2 className="text-xl font-semibold text-white mb-4">Sports Offered *</h2>
                             <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
                                 {sports.map(sport => (
                                     <button
@@ -261,7 +261,7 @@ export default function AddVenuePage() {
                                         onClick={() => handleSportToggle(sport._id)}
                                         className={`p-3 rounded-lg border-2 transition-all ${formData.selectedSports.includes(sport._id)
                                             ? 'border-blue-600 bg-blue-50 text-blue-600'
-                                            : 'border-gray-200 hover:border-gray-300'
+                                            : 'border-white/[0.08] hover:border-gray-300'
                                             }`}
                                     >
                                         {sport.name}
@@ -273,7 +273,7 @@ export default function AddVenuePage() {
 
                         {/* Amenities */}
                         <div>
-                            <h2 className="text-xl font-semibold text-gray-900 mb-4">Amenities</h2>
+                            <h2 className="text-xl font-semibold text-white mb-4">Amenities</h2>
                             <Input
                                 label="Amenities (comma separated)"
                                 type="text"
@@ -285,7 +285,7 @@ export default function AddVenuePage() {
 
                         {/* Timings */}
                         <div>
-                            <h2 className="text-xl font-semibold text-gray-900 mb-4">Operating Hours</h2>
+                            <h2 className="text-xl font-semibold text-white mb-4">Operating Hours</h2>
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                                 <Input
                                     label="Opening Time"
@@ -310,7 +310,7 @@ export default function AddVenuePage() {
                             <button
                                 type="button"
                                 onClick={() => router.back()}
-                                className="flex-1 px-4 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 transition-colors"
+                                className="flex-1 px-4 py-2 bg-gray-200 text-gray-300 rounded-lg hover:bg-gray-300 transition-colors"
                             >
                                 Cancel
                             </button>

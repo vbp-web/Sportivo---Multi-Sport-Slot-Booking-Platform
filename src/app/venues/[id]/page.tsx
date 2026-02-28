@@ -85,10 +85,10 @@ export default function VenueDetailsPage({ params }: { params: Promise<{ id: str
 
     if (loading) {
         return (
-            <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+            <div className="min-h-screen bg-gray-900 flex items-center justify-center">
                 <div className="text-center">
                     <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto"></div>
-                    <p className="mt-4 text-gray-600">Loading venue details...</p>
+                    <p className="mt-4 text-gray-400">Loading venue details...</p>
                 </div>
             </div>
         );
@@ -96,10 +96,10 @@ export default function VenueDetailsPage({ params }: { params: Promise<{ id: str
 
     if (error || !venue) {
         return (
-            <div className="min-h-screen bg-gray-50">
+            <div className="min-h-screen bg-gray-900">
                 <Navbar />
                 <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-                    <div className="text-center py-12 bg-white rounded-lg shadow">
+                    <div className="text-center py-12 bg-gray-900/60 rounded-lg shadow">
                         <p className="text-red-600">{error || 'Venue not found'}</p>
                         <button
                             onClick={() => router.back()}
@@ -115,7 +115,7 @@ export default function VenueDetailsPage({ params }: { params: Promise<{ id: str
     }
 
     return (
-        <div className="min-h-screen bg-gray-50">
+        <div className="min-h-screen bg-gray-900">
             <Navbar />
 
             <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
@@ -131,11 +131,11 @@ export default function VenueDetailsPage({ params }: { params: Promise<{ id: str
                 </button>
 
                 {/* Venue Header */}
-                <div className="bg-white rounded-lg shadow-md p-8 mb-8">
+                <div className="bg-gray-900/60 rounded-lg shadow-md p-8 mb-8">
                     <div className="flex justify-between items-start mb-6">
                         <div>
-                            <h1 className="text-4xl font-bold text-gray-900 mb-2">{venue.name}</h1>
-                            <p className="text-lg text-gray-600">{venue.city}</p>
+                            <h1 className="text-4xl font-bold text-white mb-2">{venue.name}</h1>
+                            <p className="text-lg text-gray-400">{venue.city}</p>
                         </div>
                         <span className="px-4 py-2 rounded-full text-sm font-medium bg-green-100 text-green-800">
                             Active
@@ -143,7 +143,7 @@ export default function VenueDetailsPage({ params }: { params: Promise<{ id: str
                     </div>
 
                     {venue.description && (
-                        <p className="text-gray-700 mb-6">{venue.description}</p>
+                        <p className="text-gray-300 mb-6">{venue.description}</p>
                     )}
 
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
@@ -153,9 +153,9 @@ export default function VenueDetailsPage({ params }: { params: Promise<{ id: str
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
                             </svg>
                             <div>
-                                <p className="font-medium text-gray-900">Address</p>
-                                <p className="text-gray-600">{venue.address}</p>
-                                <p className="text-gray-600">{venue.city}, {venue.pincode}</p>
+                                <p className="font-medium text-white">Address</p>
+                                <p className="text-gray-400">{venue.address}</p>
+                                <p className="text-gray-400">{venue.city}, {venue.pincode}</p>
                             </div>
                         </div>
 
@@ -164,16 +164,16 @@ export default function VenueDetailsPage({ params }: { params: Promise<{ id: str
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
                             </svg>
                             <div>
-                                <p className="font-medium text-gray-900">Contact</p>
-                                <p className="text-gray-600">{venue.phone}</p>
-                                {venue.email && <p className="text-gray-600">{venue.email}</p>}
+                                <p className="font-medium text-white">Contact</p>
+                                <p className="text-gray-400">{venue.phone}</p>
+                                {venue.email && <p className="text-gray-400">{venue.email}</p>}
                             </div>
                         </div>
                     </div>
 
                     {venue.amenities && venue.amenities.length > 0 && (
                         <div>
-                            <p className="font-medium text-gray-900 mb-3">Amenities</p>
+                            <p className="font-medium text-white mb-3">Amenities</p>
                             <div className="flex flex-wrap gap-2">
                                 {venue.amenities.map((amenity, index) => (
                                     <span
@@ -191,13 +191,13 @@ export default function VenueDetailsPage({ params }: { params: Promise<{ id: str
                 {/* Sports Filter */}
                 {sports.length > 0 && (
                     <div className="mb-6">
-                        <p className="font-medium text-gray-900 mb-3">Filter by Sport</p>
+                        <p className="font-medium text-white mb-3">Filter by Sport</p>
                         <div className="flex flex-wrap gap-2">
                             <button
                                 onClick={() => setSelectedSport('all')}
                                 className={`px-4 py-2 rounded-lg font-medium transition-colors ${selectedSport === 'all'
                                     ? 'bg-blue-600 text-white'
-                                    : 'bg-white text-gray-700 hover:bg-gray-100'
+                                    : 'bg-white text-gray-300 hover:bg-white/5'
                                     }`}
                             >
                                 All Sports
@@ -208,7 +208,7 @@ export default function VenueDetailsPage({ params }: { params: Promise<{ id: str
                                     onClick={() => setSelectedSport(sport._id)}
                                     className={`px-4 py-2 rounded-lg font-medium transition-colors ${selectedSport === sport._id
                                         ? 'bg-blue-600 text-white'
-                                        : 'bg-white text-gray-700 hover:bg-gray-100'
+                                        : 'bg-white text-gray-300 hover:bg-white/5'
                                         }`}
                                 >
                                     {sport.name}
@@ -220,16 +220,16 @@ export default function VenueDetailsPage({ params }: { params: Promise<{ id: str
 
                 {/* Courts */}
                 <div>
-                    <h2 className="text-2xl font-bold text-gray-900 mb-4">
+                    <h2 className="text-2xl font-bold text-white mb-4">
                         Available Courts ({filteredCourts.length})
                     </h2>
 
                     {filteredCourts.length === 0 ? (
-                        <div className="text-center py-12 bg-white rounded-lg shadow">
+                        <div className="text-center py-12 bg-gray-900/60 rounded-lg shadow">
                             <svg className="mx-auto h-12 w-12 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
                             </svg>
-                            <h3 className="mt-2 text-sm font-medium text-gray-900">No courts</h3>
+                            <h3 className="mt-2 text-sm font-medium text-white">No courts</h3>
                             <p className="mt-1 text-sm text-gray-500">
                                 {selectedSport === 'all'
                                     ? 'No courts available at this venue.'
@@ -241,21 +241,21 @@ export default function VenueDetailsPage({ params }: { params: Promise<{ id: str
                             {filteredCourts.map((court) => (
                                 <div
                                     key={court._id}
-                                    className="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow"
+                                    className="bg-gray-900/60 rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow"
                                 >
                                     <div className="flex justify-between items-start mb-4">
-                                        <h3 className="text-xl font-semibold text-gray-900">{court.name}</h3>
+                                        <h3 className="text-xl font-semibold text-white">{court.name}</h3>
                                         <span className="px-3 py-1 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
                                             {court.sportId.name}
                                         </span>
                                     </div>
 
                                     {court.description && (
-                                        <p className="text-gray-600 text-sm mb-4">{court.description}</p>
+                                        <p className="text-gray-400 text-sm mb-4">{court.description}</p>
                                     )}
 
                                     {court.capacity && (
-                                        <p className="text-gray-600 text-sm mb-4">
+                                        <p className="text-gray-400 text-sm mb-4">
                                             <span className="font-medium">Capacity:</span> {court.capacity} players
                                         </p>
                                     )}

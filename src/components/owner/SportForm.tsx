@@ -51,7 +51,7 @@ export default function SportForm({ sport, onSubmit, onCancel }: SportFormProps)
     return (
         <Card>
             <CardHeader>
-                <h2 className="text-xl font-bold text-gray-900">
+                <h2 className="text-xl font-bold text-white">
                     {sport ? 'Edit Sport' : 'Add New Sport'}
                 </h2>
             </CardHeader>
@@ -73,11 +73,11 @@ export default function SportForm({ sport, onSubmit, onCancel }: SportFormProps)
                     />
 
                     <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-2">
+                        <label className="block text-sm font-medium text-gray-300 mb-2">
                             Description (Optional)
                         </label>
                         <textarea
-                            className="w-full px-4 py-3 rounded-lg border-2 border-gray-200 focus:border-blue-500 focus:ring-blue-500 focus:outline-none focus:ring-2 transition-all"
+                            className="w-full px-4 py-3 rounded-lg border-2 border-white/[0.08] focus:border-blue-500 focus:ring-blue-500 focus:outline-none focus:ring-2 transition-all"
                             rows={3}
                             placeholder="Brief description of the sport"
                             value={formData.description}

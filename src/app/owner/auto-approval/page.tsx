@@ -116,14 +116,14 @@ export default function AutoApprovalPage() {
 
     if (loading) {
         return (
-            <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+            <div className="min-h-screen bg-gray-950 flex items-center justify-center">
                 <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
             </div>
         );
     }
 
     return (
-        <div className="min-h-screen bg-gray-50">
+        <div className="min-h-screen bg-gray-950">
             <Navbar />
             <div className="flex">
                 <Sidebar role="owner" />
@@ -132,11 +132,11 @@ export default function AutoApprovalPage() {
                         {/* Header */}
                         <div className="flex justify-between items-center mb-8">
                             <div>
-                                <h1 className="text-3xl font-bold text-gray-900 flex items-center gap-3">
+                                <h1 className="text-3xl font-bold text-white flex items-center gap-3">
                                     🤖 Auto Approval System
                                     <span className="px-3 py-1 bg-blue-100 text-blue-700 text-xs rounded-full">Pro Feature</span>
                                 </h1>
-                                <p className="text-gray-600 mt-2">Manage how your bookings are automatically confirmed</p>
+                                <p className="text-gray-400 mt-2">Manage how your bookings are automatically confirmed</p>
                             </div>
                             <button
                                 onClick={handleSave}
@@ -160,10 +160,10 @@ export default function AutoApprovalPage() {
                         )}
 
                         {!settings && !error ? (
-                            <div className="bg-white rounded-xl shadow-sm p-12 text-center">
+                            <div className="bg-gray-900/60 rounded-xl shadow-sm p-12 text-center">
                                 <div className="text-6xl mb-4">🔒</div>
-                                <h2 className="text-2xl font-bold text-gray-900 mb-2">Feature Locked</h2>
-                                <p className="text-gray-600 mb-6">Upgrade your subscription to use the Auto Approval System and automate your business.</p>
+                                <h2 className="text-2xl font-bold text-white mb-2">Feature Locked</h2>
+                                <p className="text-gray-400 mb-6">Upgrade your subscription to use the Auto Approval System and automate your business.</p>
                                 <button
                                     onClick={() => router.push('/owner/subscription')}
                                     className="px-6 py-3 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-lg font-bold hover:shadow-lg transition-all"
@@ -176,10 +176,10 @@ export default function AutoApprovalPage() {
                                 {/* Left Column: Rules */}
                                 <div className="lg:col-span-2 space-y-6">
                                     {/* Main Toggle */}
-                                    <div className="bg-white rounded-xl shadow-sm overflow-hidden">
-                                        <div className="p-6 flex items-center justify-between border-b bg-gray-50/50">
+                                    <div className="bg-gray-900/60 rounded-xl shadow-sm overflow-hidden">
+                                        <div className="p-6 flex items-center justify-between border-b bg-gray-900/50">
                                             <div>
-                                                <h3 className="font-bold text-gray-900">System Status</h3>
+                                                <h3 className="font-bold text-white">System Status</h3>
                                                 <p className="text-sm text-gray-500">Enable or disable automatic booking confirmations</p>
                                             </div>
                                             <label className="relative inline-flex items-center cursor-pointer">
@@ -202,7 +202,7 @@ export default function AutoApprovalPage() {
                                                     className="mt-1 w-4 h-4 text-blue-600 rounded"
                                                 />
                                                 <label htmlFor="paymentProof" className="cursor-pointer">
-                                                    <span className="block font-medium text-gray-900">Require Payment Proof</span>
+                                                    <span className="block font-medium text-white">Require Payment Proof</span>
                                                     <span className="text-sm text-gray-500">Only auto-approve if the customer has uploaded a screenshot of payment.</span>
                                                 </label>
                                             </div>
@@ -215,7 +215,7 @@ export default function AutoApprovalPage() {
                                                     className="mt-1 w-4 h-4 text-blue-600 rounded"
                                                 />
                                                 <label htmlFor="notify" className="cursor-pointer">
-                                                    <span className="block font-medium text-gray-900">Notify me on Auto-Approval</span>
+                                                    <span className="block font-medium text-white">Notify me on Auto-Approval</span>
                                                     <span className="text-sm text-gray-500">Receive a notification whenever a booking is automatically accepted.</span>
                                                 </label>
                                             </div>
@@ -225,9 +225,9 @@ export default function AutoApprovalPage() {
                                     {/* Advanced Rules */}
                                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                                         {/* Amount Rules */}
-                                        <div className="bg-white rounded-xl shadow-sm p-6 border-l-4 border-yellow-400">
+                                        <div className="bg-gray-900/60 rounded-xl shadow-sm p-6 border-l-4 border-yellow-400">
                                             <div className="flex items-center justify-between mb-4">
-                                                <h4 className="font-bold text-gray-900">💰 Price Limits</h4>
+                                                <h4 className="font-bold text-white">💰 Price Limits</h4>
                                                 <input
                                                     type="checkbox"
                                                     checked={settings.amountRules.enabled}
@@ -242,7 +242,7 @@ export default function AutoApprovalPage() {
                                                 <p className="text-xs text-gray-500 mb-3">Auto-approve only for bookings below a certain amount.</p>
                                                 <div className="space-y-3">
                                                     <label className="block">
-                                                        <span className="text-xs font-bold text-gray-600 uppercase">Max Amount (₹)</span>
+                                                        <span className="text-xs font-bold text-gray-400 uppercase">Max Amount (₹)</span>
                                                         <input
                                                             type="number"
                                                             value={settings.amountRules.maxAutoApproveAmount || ''}
@@ -251,7 +251,7 @@ export default function AutoApprovalPage() {
                                                                 amountRules: { ...settings.amountRules, maxAutoApproveAmount: Number(e.target.value) }
                                                             })}
                                                             disabled={!settings.amountRules.enabled}
-                                                            className="mt-1 block w-full px-3 py-2 bg-gray-50 border border-gray-200 rounded-lg focus:ring-2 focus:ring-yellow-400 focus:outline-none"
+                                                            className="mt-1 block w-full px-3 py-2 bg-gray-900 border border-white/[0.08] rounded-lg focus:ring-2 focus:ring-yellow-400 focus:outline-none"
                                                             placeholder="e.g. 2000"
                                                         />
                                                     </label>
@@ -260,9 +260,9 @@ export default function AutoApprovalPage() {
                                         </div>
 
                                         {/* Customer Rules */}
-                                        <div className="bg-white rounded-xl shadow-sm p-6 border-l-4 border-green-400">
+                                        <div className="bg-gray-900/60 rounded-xl shadow-sm p-6 border-l-4 border-green-400">
                                             <div className="flex items-center justify-between mb-4">
-                                                <h4 className="font-bold text-gray-900">👥 Customer Rules</h4>
+                                                <h4 className="font-bold text-white">👥 Customer Rules</h4>
                                                 <input
                                                     type="checkbox"
                                                     checked={settings.customerRules.enabled}
@@ -277,7 +277,7 @@ export default function AutoApprovalPage() {
                                                 <p className="text-xs text-gray-500 mb-3">Target trustable repeat customers.</p>
                                                 <div className="space-y-4">
                                                     <label className="block">
-                                                        <span className="text-xs font-bold text-gray-600 uppercase">Min. Previous Bookings</span>
+                                                        <span className="text-xs font-bold text-gray-400 uppercase">Min. Previous Bookings</span>
                                                         <input
                                                             type="number"
                                                             value={settings.customerRules.minimumPreviousBookings}
@@ -286,7 +286,7 @@ export default function AutoApprovalPage() {
                                                                 customerRules: { ...settings.customerRules, minimumPreviousBookings: Number(e.target.value) }
                                                             })}
                                                             disabled={!settings.customerRules.enabled}
-                                                            className="mt-1 block w-full px-3 py-2 bg-gray-50 border border-gray-200 rounded-lg focus:ring-2 focus:ring-green-400 focus:outline-none"
+                                                            className="mt-1 block w-full px-3 py-2 bg-gray-900 border border-white/[0.08] rounded-lg focus:ring-2 focus:ring-green-400 focus:outline-none"
                                                         />
                                                     </label>
                                                     <div className="flex items-center gap-2">
@@ -301,7 +301,7 @@ export default function AutoApprovalPage() {
                                                             disabled={!settings.customerRules.enabled}
                                                             className="w-4 h-4 text-green-600 rounded"
                                                         />
-                                                        <label htmlFor="verifiedPhone" className="text-sm text-gray-600">Verified Phone Only</label>
+                                                        <label htmlFor="verifiedPhone" className="text-sm text-gray-400">Verified Phone Only</label>
                                                     </div>
                                                 </div>
                                             </div>
@@ -330,8 +330,8 @@ export default function AutoApprovalPage() {
 
                                 {/* Right Column: Stats */}
                                 <div className="space-y-6">
-                                    <div className="bg-white rounded-xl shadow-sm p-6 overflow-hidden relative">
-                                        <h4 className="font-bold text-gray-900 mb-6 flex items-center gap-2">
+                                    <div className="bg-gray-900/60 rounded-xl shadow-sm p-6 overflow-hidden relative">
+                                        <h4 className="font-bold text-white mb-6 flex items-center gap-2">
                                             📊 Performance
                                             <span className="text-[10px] text-gray-400 font-normal">(Last 30 Days)</span>
                                         </h4>
@@ -341,7 +341,7 @@ export default function AutoApprovalPage() {
                                                     <span className="text-gray-500">Auto-Approval Rate</span>
                                                     <span className="font-bold text-blue-600">{stats?.autoApprovalRate || '0'}%</span>
                                                 </div>
-                                                <div className="h-4 w-full bg-gray-100 rounded-full overflow-hidden">
+                                                <div className="h-4 w-full bg-white/[0.05] rounded-full overflow-hidden">
                                                     <div
                                                         className="h-full bg-gradient-to-r from-blue-500 to-blue-600 transition-all duration-1000"
                                                         style={{ width: `${stats?.autoApprovalRate || 0}%` }}
@@ -354,8 +354,8 @@ export default function AutoApprovalPage() {
                                                     <div className="text-2xl font-bold text-blue-700">{stats?.autoApproved || 0}</div>
                                                     <div className="text-[10px] font-bold text-blue-400 uppercase tracking-tighter">Auto Accepted</div>
                                                 </div>
-                                                <div className="p-4 bg-gray-50 rounded-xl text-center">
-                                                    <div className="text-2xl font-bold text-gray-700">{stats?.manualApproved || 0}</div>
+                                                <div className="p-4 bg-gray-900 rounded-xl text-center">
+                                                    <div className="text-2xl font-bold text-gray-300">{stats?.manualApproved || 0}</div>
                                                     <div className="text-[10px] font-bold text-gray-400 uppercase tracking-tighter">Manual Reviews</div>
                                                 </div>
                                             </div>

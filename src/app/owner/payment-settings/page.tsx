@@ -112,26 +112,26 @@ export default function OwnerPaymentSettingsPage() {
 
     if (loading) {
         return (
-            <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+            <div className="min-h-screen bg-gray-950 flex items-center justify-center">
                 <div className="text-center">
                     <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto"></div>
-                    <p className="mt-4 text-gray-600">Loading settings...</p>
+                    <p className="mt-4 text-gray-400">Loading settings...</p>
                 </div>
             </div>
         );
     }
 
     return (
-        <div className="min-h-screen bg-gray-50">
+        <div className="min-h-screen bg-gray-950">
             <Navbar />
 
             <main className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
                 {/* Header */}
                 <div className="mb-8">
-                    <h1 className="text-4xl font-bold text-gray-900 mb-2">
+                    <h1 className="text-4xl font-bold text-white mb-2">
                         Payment Settings
                     </h1>
-                    <p className="text-lg text-gray-600">
+                    <p className="text-lg text-gray-400">
                         Configure your UPI payment details for receiving booking payments
                     </p>
                 </div>
@@ -150,11 +150,11 @@ export default function OwnerPaymentSettingsPage() {
                 )}
 
                 {/* Settings Form */}
-                <div className="bg-white rounded-lg shadow-lg p-8">
+                <div className="bg-gray-900/60 rounded-lg shadow-lg p-8">
                     <form onSubmit={handleSubmit} className="space-y-6">
                         {/* UPI ID */}
                         <div>
-                            <label className="block text-sm font-medium text-gray-700 mb-2">
+                            <label className="block text-sm font-medium text-gray-300 mb-2">
                                 UPI ID <span className="text-red-500">*</span>
                             </label>
                             <input
@@ -172,14 +172,14 @@ export default function OwnerPaymentSettingsPage() {
 
                         {/* QR Code Upload */}
                         <div>
-                            <label className="block text-sm font-medium text-gray-700 mb-2">
+                            <label className="block text-sm font-medium text-gray-300 mb-2">
                                 UPI QR Code <span className="text-red-500">*</span>
                             </label>
 
                             {/* Current QR Code Preview */}
                             {qrCodeUrl && (
                                 <div className="mb-4 text-center">
-                                    <div className="inline-block p-4 bg-white border-2 border-gray-200 rounded-lg">
+                                    <div className="inline-block p-4 bg-gray-900/60 border-2 border-white/[0.08] rounded-lg">
                                         <Image
                                             src={qrCodeUrl}
                                             alt="UPI QR Code"
@@ -188,7 +188,7 @@ export default function OwnerPaymentSettingsPage() {
                                             className="mx-auto"
                                         />
                                     </div>
-                                    <p className="mt-2 text-sm text-gray-600">Current QR Code</p>
+                                    <p className="mt-2 text-sm text-gray-400">Current QR Code</p>
                                 </div>
                             )}
 
@@ -205,7 +205,7 @@ export default function OwnerPaymentSettingsPage() {
                                     <svg className="mx-auto h-12 w-12 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
                                     </svg>
-                                    <p className="mt-2 text-sm text-gray-600">
+                                    <p className="mt-2 text-sm text-gray-400">
                                         {qrCodeFile ? qrCodeFile.name : 'Click to upload QR code image'}
                                     </p>
                                     <p className="text-xs text-gray-500 mt-1">PNG, JPG up to 5MB</p>
@@ -232,7 +232,7 @@ export default function OwnerPaymentSettingsPage() {
                             <Button
                                 type="button"
                                 onClick={() => router.push('/owner/dashboard')}
-                                className="flex-1 bg-gray-500 hover:bg-gray-600"
+                                className="flex-1 bg-gray-9000 hover:bg-gray-600"
                             >
                                 Cancel
                             </Button>

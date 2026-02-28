@@ -102,11 +102,11 @@ export default function DashboardStats({ stats }: DashboardStatsProps) {
                             )}
                         </div>
 
-                        <div className="text-3xl font-bold text-gray-900 mb-1">
+                        <div className="text-3xl font-bold text-white mb-1">
                             {stat.value}
                         </div>
 
-                        <div className="text-sm text-gray-600">
+                        <div className="text-sm text-gray-400">
                             {stat.title}
                         </div>
 

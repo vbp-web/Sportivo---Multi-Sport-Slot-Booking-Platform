@@ -9,9 +9,9 @@ interface CardProps {
 }
 
 export default function Card({ children, className = '', hover = false, gradient = false, onClick }: CardProps) {
-    const baseStyles = 'bg-white rounded-2xl shadow-lg overflow-hidden';
-    const hoverStyles = hover ? 'transition-all duration-300 hover:shadow-2xl hover:-translate-y-1 cursor-pointer' : '';
-    const gradientStyles = gradient ? 'bg-gradient-to-br from-white to-blue-50' : '';
+    const baseStyles = 'bg-gray-900/60 border border-white/[0.06] rounded-2xl shadow-lg overflow-hidden';
+    const hoverStyles = hover ? 'transition-all duration-300 hover:shadow-2xl hover:shadow-indigo-500/10 hover:-translate-y-1 cursor-pointer hover:border-white/[0.12]' : '';
+    const gradientStyles = gradient ? 'bg-gradient-to-br from-gray-900/80 to-gray-800/50' : '';
 
     return (
         <div className={`${baseStyles} ${hoverStyles} ${gradientStyles} ${className}`} onClick={onClick}>
@@ -22,7 +22,7 @@ export default function Card({ children, className = '', hover = false, gradient
 
 export function CardHeader({ children, className = '' }: { children: React.ReactNode; className?: string }) {
     return (
-        <div className={`px-6 py-4 border-b border-gray-100 ${className}`}>
+        <div className={`px-6 py-4 border-b border-white/[0.06] ${className}`}>
             {children}
         </div>
     );
@@ -38,7 +38,7 @@ export function CardBody({ children, className = '' }: { children: React.ReactNo
 
 export function CardFooter({ children, className = '' }: { children: React.ReactNode; className?: string }) {
     return (
-        <div className={`px-6 py-4 bg-gray-50 border-t border-gray-100 ${className}`}>
+        <div className={`px-6 py-4 bg-white/[0.02] border-t border-white/[0.06] ${className}`}>
             {children}
         </div>
     );

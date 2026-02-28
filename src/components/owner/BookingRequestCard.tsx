@@ -78,8 +78,8 @@ export default function BookingRequestCard({ booking, onApprove, onReject }: Boo
             <CardHeader>
                 <div className="flex items-center justify-between">
                     <div>
-                        <div className="text-sm text-gray-600">Booking Request</div>
-                        <div className="font-mono font-bold text-gray-900">
+                        <div className="text-sm text-gray-400">Booking Request</div>
+                        <div className="font-mono font-bold text-white">
                             {booking.bookingCode}
                         </div>
                     </div>
@@ -92,19 +92,19 @@ export default function BookingRequestCard({ booking, onApprove, onReject }: Boo
             <CardBody className="space-y-4">
                 {/* User Info */}
                 <div className="p-4 bg-blue-50 rounded-lg">
-                    <div className="font-semibold text-gray-900 mb-2">Customer Details</div>
+                    <div className="font-semibold text-white mb-2">Customer Details</div>
                     <div className="space-y-1 text-sm">
                         <div className="flex items-center gap-2">
-                            <svg className="w-4 h-4 text-gray-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <svg className="w-4 h-4 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
                             </svg>
-                            <span className="text-gray-900">{booking.userName}</span>
+                            <span className="text-white">{booking.userName}</span>
                         </div>
                         <div className="flex items-center gap-2">
-                            <svg className="w-4 h-4 text-gray-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <svg className="w-4 h-4 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
                             </svg>
-                            <span className="text-gray-900">{booking.userPhone}</span>
+                            <span className="text-white">{booking.userPhone}</span>
                         </div>
                     </div>
                 </div>
@@ -112,25 +112,25 @@ export default function BookingRequestCard({ booking, onApprove, onReject }: Boo
                 {/* Booking Details */}
                 <div className="grid grid-cols-2 gap-4">
                     <div>
-                        <div className="text-sm text-gray-600 mb-1">Sport & Court</div>
-                        <div className="font-semibold text-gray-900">
+                        <div className="text-sm text-gray-400 mb-1">Sport & Court</div>
+                        <div className="font-semibold text-white">
                             {booking.sportName} - {booking.courtName}
                         </div>
                     </div>
                     <div>
-                        <div className="text-sm text-gray-600 mb-1">Date</div>
-                        <div className="font-semibold text-gray-900">
+                        <div className="text-sm text-gray-400 mb-1">Date</div>
+                        <div className="font-semibold text-white">
                             {formatDate(booking.date)}
                         </div>
                     </div>
                     <div>
-                        <div className="text-sm text-gray-600 mb-1">Time</div>
-                        <div className="font-semibold text-gray-900">
+                        <div className="text-sm text-gray-400 mb-1">Time</div>
+                        <div className="font-semibold text-white">
                             {formatTime(booking.startTime)} - {formatTime(booking.endTime)}
                         </div>
                     </div>
                     <div>
-                        <div className="text-sm text-gray-600 mb-1">Amount</div>
+                        <div className="text-sm text-gray-400 mb-1">Amount</div>
                         <div className="text-xl font-bold text-blue-600">
                             ₹{booking.amount}
                         </div>
@@ -140,10 +140,10 @@ export default function BookingRequestCard({ booking, onApprove, onReject }: Boo
                 {/* Payment Info */}
                 {(booking.paymentProof || booking.utr) && (
                     <div className="p-4 bg-green-50 rounded-lg">
-                        <div className="font-semibold text-gray-900 mb-2">Payment Details</div>
+                        <div className="font-semibold text-white mb-2">Payment Details</div>
                         {booking.utr && (
                             <div className="text-sm mb-2">
-                                <span className="text-gray-600">UTR: </span>
+                                <span className="text-gray-400">UTR: </span>
                                 <span className="font-mono font-semibold">{booking.utr}</span>
                             </div>
                         )}
@@ -162,7 +162,7 @@ export default function BookingRequestCard({ booking, onApprove, onReject }: Boo
 
                 {/* Action Buttons */}
                 {!showRejectForm ? (
-                    <div className="flex gap-3 pt-4 border-t border-gray-200">
+                    <div className="flex gap-3 pt-4 border-t border-white/[0.08]">
                         <Button
                             variant="primary"
                             className="flex-1"
@@ -180,7 +180,7 @@ export default function BookingRequestCard({ booking, onApprove, onReject }: Boo
                         </Button>
                     </div>
                 ) : (
-                    <div className="space-y-3 pt-4 border-t border-gray-200">
+                    <div className="space-y-3 pt-4 border-t border-white/[0.08]">
                         <Input
                             label="Rejection Reason"
                             placeholder="Enter reason for rejection"

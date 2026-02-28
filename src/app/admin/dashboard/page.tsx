@@ -75,10 +75,10 @@ export default function AdminDashboardPage() {
 
     if (loading) {
         return (
-            <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+            <div className="min-h-screen bg-gray-950 flex items-center justify-center">
                 <div className="text-center">
                     <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto"></div>
-                    <p className="mt-4 text-gray-600">Loading analytics...</p>
+                    <p className="mt-4 text-gray-400">Loading analytics...</p>
                 </div>
             </div>
         );
@@ -86,7 +86,7 @@ export default function AdminDashboardPage() {
 
     if (error || !analyticsData) {
         return (
-            <div className="min-h-screen bg-gray-50 flex">
+            <div className="min-h-screen bg-gray-950 flex">
                 <Sidebar role="admin" />
                 <main className="flex-1 p-8">
                     <div className="bg-red-50 border border-red-200 rounded-lg p-4">
@@ -98,13 +98,13 @@ export default function AdminDashboardPage() {
     }
 
     return (
-        <div className="min-h-screen bg-gray-50 flex">
+        <div className="min-h-screen bg-gray-950 flex">
             <Sidebar role="admin" />
 
             <main className="flex-1 p-8">
                 <div className="mb-8">
-                    <h1 className="text-3xl font-bold text-gray-900">Admin Dashboard</h1>
-                    <p className="text-gray-600 mt-2">Platform overview and analytics</p>
+                    <h1 className="text-3xl font-bold text-white">Admin Dashboard</h1>
+                    <p className="text-gray-400 mt-2">Platform overview and analytics</p>
                 </div>
 
                 <AnalyticsDashboard data={analyticsData} />
